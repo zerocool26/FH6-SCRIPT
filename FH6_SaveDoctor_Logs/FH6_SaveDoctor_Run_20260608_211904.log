@@ -1,0 +1,14 @@
+﻿FH6 Save Doctor run started: 06/08/2026 21:19:04
+[21:19:04] Scan complete. Found 14 FH6-related records.
+[21:19:05] Local FH6 crash report folders: 4 |   report_2026_06_08_23_48_20: build=364933 gpu=NVIDIA GeForce RTX 5080 Laptop GPU driver=32.0.15.9649 |   report_2026_06_08_04_50_47: build=364933 gpu=NVIDIA GeForce RTX 5080 Laptop GPU driver=32.0.15.9649 |   report_2026_06_08_01_44_34: build=364933 gpu=NVIDIA GeForce RTX 5080 Laptop GPU driver=32.0.15.9649 |   report_2026_06_07_23_10_58: build=364933 gpu=NVIDIA GeForce RTX 5080 Laptop GPU driver=32.0.15.9649 | Recent Windows FH6 crash events: 5 |   06/08/2026 18:49:01: BEX64 c0000005 |   06/08/2026 18:49:00: BEX64 c0000005 |   06/08/2026 18:48:57: Application Error 0xc0000005 |   06/07/2026 10:55:27: BEX64 c0000005 |   06/07/2026 10:55:26: BEX64 c0000005
+[21:20:41] Backing up: C:\Users\boss\AppData\Local\ForzaHorizon6\LocalStorage_Shared\ForzaUserConfigSelections
+[21:20:41] Backing up: C:\Users\boss\AppData\Local\ForzaHorizon6\LocalStorage_Shared\InputTranslationManager_901FEE4E1EC4D
+[21:20:41] Backing up: C:\Users\boss\AppData\Local\ForzaHorizon6\LocalStorage_Shared\User_901FEE4E1EC4D
+[21:20:41] Backing up: C:\XboxGames\GameSave\pgs\u_2535469063728205_16D460
+[21:20:47] Backup written: C:\Users\boss\Downloads\FH6_SaveDoctor_Backups\FH6_SaveDoctor_Backup_20260608_212041.zip
+[21:20:47] Deleted: C:\Users\boss\AppData\Local\ForzaHorizon6\LocalStorage_Shared\ForzaUserConfigSelections
+[21:20:47] Deleted: C:\Users\boss\AppData\Local\ForzaHorizon6\LocalStorage_Shared\InputTranslationManager_901FEE4E1EC4D
+[21:20:47] Deleted: C:\Users\boss\AppData\Local\ForzaHorizon6\LocalStorage_Shared\User_901FEE4E1EC4D
+[21:20:47] Deleted: C:\XboxGames\GameSave\pgs\u_2535469063728205_16D460
+[21:20:47] Scan complete. Found 10 FH6-related records.
+[21:20:48] Local FH6 crash report folders: 4 |   report_2026_06_08_23_48_20: build=364933 gpu=NVIDIA GeForce RTX 5080 Laptop GPU driver=32.0.15.9649 |   report_2026_06_08_04_50_47: build=364933 gpu=NVIDIA GeForce RTX 5080 Laptop GPU driver=32.0.15.9649 |   report_2026_06_08_01_44_34: build=364933 gpu=NVIDIA GeForce RTX 5080 Laptop GPU driver=32.0.15.9649 |   report_2026_06_07_23_10_58: build=364933 gpu=NVIDIA GeForce RTX 5080 Laptop GPU driver=32.0.15.9649 | Recent Windows FH6 crash events: 5 |   06/08/2026 18:49:01: BEX64 c0000005 |   06/08/2026 18:49:00: BEX64 c0000005 |   06/08/2026 18:48:57: Application Error 0xc0000005 |   06/07/2026 10:55:27: BEX64 c0000005 |   06/07/2026 10:55:26: BEX64 c0000005

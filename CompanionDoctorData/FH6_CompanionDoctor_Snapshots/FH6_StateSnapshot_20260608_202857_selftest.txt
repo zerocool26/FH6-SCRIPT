@@ -1,0 +1,106 @@
+﻿FH6 Companion Doctor State Snapshot
+Generated: 06/08/2026 20:29:18
+Label: selftest
+
+== Status ==
+Game process running: False
+Gaming Services: 36.113.14003.0
+Steam install: C:\Program Files (x86)\Steam\steamapps\common\ForzaHorizon6\forzahorizon6.exe exists=True
+Local FH6 root: C:\Users\boss\AppData\Local\ForzaHorizon6
+Xbox GameSave root: C:\XboxGames\GameSave\pgs
+Backups: C:\Users\boss\Downloads\FH6_CompanionDoctor_Backups
+Reports: C:\Users\boss\Downloads\FH6_CompanionDoctor_Reports
+Support packages: C:\Users\boss\Downloads\FH6_CompanionDoctor_SupportPackages
+Logs: C:\Users\boss\Downloads\FH6_CompanionDoctor_Logs
+Snapshots: C:\Users\boss\Downloads\FH6_CompanionDoctor_Snapshots
+Sessions: C:\Users\boss\Downloads\FH6_CompanionDoctor_Sessions
+Portable bundles: C:\Users\boss\Downloads\FH6_CompanionDoctor_PortableBundles
+Telemetry: configure FH6 Data Out to IP 127.0.0.1 and the port shown in the Telemetry tab.
+Steam Cloud: turn it off in Steam > FH6 > Properties > General before deleting saves.
+
+== Health Warnings ==
+[Info] Account / Administrator: User=boss
+  Some official troubleshooting steps require admin, but routine scans do not.
+[Info] Steam / Manifest state: StateFlags=4; LastUpdated=1779927869
+  StateFlags 4 usually means installed/ready.
+[Info] Windows / OS: Microsoft Windows 11 Enterprise build 26200
+  Keep Windows updated.
+[Info] Windows / Free memory: 12.1 GB free physical memory
+  Close heavy background apps before crash testing.
+[Info] GPU / NVIDIA GeForce RTX 5080 Laptop GPU: Driver=32.0.15.9649; Date=05/04/2026 19:00:00
+  Use the latest stable vendor driver; test without overlays.
+[Info] GPU / Intel(R) Graphics: Driver=32.0.101.8424; Date=01/05/2026 18:00:00
+  Use the latest stable vendor driver; test without overlays.
+[Info] Drivers / Driver inventory: 184 display/HID/USB/media/system driver row(s)
+  Use Driver Inventory when comparing graphics/input/USB driver state after changes.
+[Warn] Windows Gaming / Game Bar/Capture settings: 2 capture/overlay-related setting(s) appear enabled
+  Disable Game Bar/capture features during a clean crash repro test.
+[Info] Power / Active power profile: Power Scheme GUID: 8c5e7fda-e8bf-4a96-9a85-a6e23a8c635c  (High performance)
+  Use AC power and a high-performance profile during crash testing.
+[Warn] Reliability / Reliability Monitor records: 9 FH6 reliability record(s)
+  Reliability Monitor records can confirm crash timing even when local FH6 reports are sparse.
+[Info] Display / GPU/display topology: 4 GPU/monitor row(s)
+  Use Display Topology to compare resolution, refresh, GPU, and monitor context.
+[Info] Security / Security product inventory: 1 security product row(s)
+  Security software can block writes or inject scanning hooks; test with controlled exclusions only if trusted and necessary.
+[Info] Storage / C:: Free=675.3 GB Total=1,862.0 GB
+  Keep enough free disk space for updates and shader/cache writes.
+[Info] Storage / D:: Free=659.1 GB Total=1,863.0 GB
+  Keep enough free disk space for updates and shader/cache writes.
+[Info] Storage / E:: Free=14.0 GB Total=50.0 GB
+  Keep enough free disk space for updates and shader/cache writes.
+[Warn] Processes / Overlay/conflict scan: 1 possible match(es)
+  Disable overlays, monitoring, capture, input-hook, and tuning tools while testing.
+[Info] Xbox Services / GamingServices: Running Automatic
+  If FH6 authentication/cloud/game-save issues appear, repair Gaming Services and Xbox app components.
+[Info] Xbox Services / GamingServicesNet: Running Automatic
+  If FH6 authentication/cloud/game-save issues appear, repair Gaming Services and Xbox app components.
+[Info] Xbox Services / XblAuthManager: Running Manual
+  If FH6 authentication/cloud/game-save issues appear, repair Gaming Services and Xbox app components.
+[Info] Xbox Services / XblGameSave: Stopped Manual
+  If FH6 authentication/cloud/game-save issues appear, repair Gaming Services and Xbox app components.
+[Info] Xbox Services / XboxGipSvc: Stopped Manual
+  If FH6 authentication/cloud/game-save issues appear, repair Gaming Services and Xbox app components.
+[Info] Xbox Services / XboxNetApiSvc: Stopped Manual
+  If FH6 authentication/cloud/game-save issues appear, repair Gaming Services and Xbox app components.
+[Info] Xbox Services / InstallService: Running Manual
+  If FH6 authentication/cloud/game-save issues appear, repair Gaming Services and Xbox app components.
+[Info] Xbox Services / ClipSVC: Stopped Manual
+  If FH6 authentication/cloud/game-save issues appear, repair Gaming Services and Xbox app components.
+[Info] Xbox Services / TokenBroker: Running Manual
+  If FH6 authentication/cloud/game-save issues appear, repair Gaming Services and Xbox app components.
+[Warn] Crash Lab / WER report folders: 9 FH6 WER folder(s) found
+  Include WER data in a support package after reproducing the crash.
+[Info] Steam / Log matches: 321 FH6/app/cloud log match(es)
+  Use Steam Logs to inspect cloud/sync/content activity around launch attempts.
+[Warn] Crash Lab / Latest crash: 06/08/2026 18:49:01 BEX64 c0000005
+  Export support package after reproducing a crash.
+
+== Latest Crashes ==
+06/08/2026 18:49:01 BEX64 c0000005 module=
+06/08/2026 18:49:00 BEX64 c0000005 module=
+06/08/2026 18:48:57 Application Error 0xc0000005 module=unknown
+06/07/2026 10:55:27 BEX64 c0000005 module=
+06/07/2026 10:55:26 BEX64 c0000005 module=
+06/07/2026 10:55:24 Application Error 0xc0000005 module=unknown
+06/07/2026 10:53:45 BEX64 c0000005 module=
+06/07/2026 10:53:44 BEX64 c0000005 module=
+06/07/2026 10:53:42 Application Error 0xc0000005 module=unknown
+06/07/2026 07:50:16 BEX64 c0000005 module=
+
+== Top Recommendations ==
+[P1] Crash Pattern: Repeated access-violation/BEX-style crashes detected.
+  Prioritize conflict process isolation, clean boot, graphics/runtime repair, and support package capture over more save wipes.
+[P1] Background Processes: Possible overlay/hook/conflict process detected.
+  Stop these tools before launching FH6, especially capture overlays, performance monitors, tuning tools, and input hooks.
+[P2] Windows Gaming Settings: Game Bar or capture stack appears enabled.
+  Disable Windows capture/Game Bar features for one clean repro attempt.
+[P2] Crash Evidence: WER report folders exist for FH6.
+  Build a support package after reproducing the crash so WER/FH6/Event Viewer data is bundled together.
+[P3] Reliability Monitor: FH6 appears in Windows Reliability Monitor records.
+  Compare Reliability records with Event Timeline and session snapshots after the next crash.
+
+== Conflicts ==
+PresentMonService pid=8848 
+
+JSON: C:\Users\boss\Downloads\FH6_CompanionDoctor_Snapshots\FH6_StateSnapshot_20260608_202857_selftest.json

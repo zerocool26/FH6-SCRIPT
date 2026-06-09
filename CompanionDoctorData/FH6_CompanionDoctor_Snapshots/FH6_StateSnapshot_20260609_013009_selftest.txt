@@ -1,0 +1,195 @@
+﻿FH6 Companion Doctor State Snapshot
+Generated: 06/09/2026 01:32:09
+Label: selftest
+
+== Status ==
+Game process running: False
+Toolbelt mode: True
+Tool root: C:\Users\boss\Downloads\FH6TOOLBELT\Tools
+Project root: C:\Users\boss\Downloads\FH6TOOLBELT
+Data root: C:\Users\boss\Downloads\FH6TOOLBELT\CompanionDoctorData
+Gaming Services: 36.113.14003.0
+Steam install: C:\Program Files (x86)\Steam\steamapps\common\ForzaHorizon6\forzahorizon6.exe exists=True
+Local FH6 root: C:\Users\boss\AppData\Local\ForzaHorizon6
+Xbox GameSave root: C:\XboxGames\GameSave\pgs
+Backups: C:\Users\boss\Downloads\FH6TOOLBELT\CompanionDoctorData\FH6_CompanionDoctor_Backups
+Reports: C:\Users\boss\Downloads\FH6TOOLBELT\CompanionDoctorData\FH6_CompanionDoctor_Reports
+Support packages: C:\Users\boss\Downloads\FH6TOOLBELT\CompanionDoctorData\FH6_CompanionDoctor_SupportPackages
+Logs: C:\Users\boss\Downloads\FH6TOOLBELT\CompanionDoctorData\FH6_CompanionDoctor_Logs
+Snapshots: C:\Users\boss\Downloads\FH6TOOLBELT\CompanionDoctorData\FH6_CompanionDoctor_Snapshots
+Sessions: C:\Users\boss\Downloads\FH6TOOLBELT\CompanionDoctorData\FH6_CompanionDoctor_Sessions
+Portable bundles: C:\Users\boss\Downloads\FH6TOOLBELT\CompanionDoctorData\FH6_CompanionDoctor_PortableBundles
+CrashScope universal: C:\Users\boss\Downloads\FH6TOOLBELT\CompanionDoctorData\CrashScope_Universal
+Telemetry: configure FH6 Data Out to IP 127.0.0.1 and the port shown in the Telemetry tab.
+Steam Cloud: turn it off in Steam > FH6 > Properties > General before deleting saves.
+
+== Health Warnings ==
+[Info] Account / Administrator: User=boss
+  Some official troubleshooting steps require admin, but routine scans do not.
+[Info] Steam / Manifest state: StateFlags=4; LastUpdated=1779927869
+  StateFlags 4 usually means installed/ready.
+[Info] Windows / OS: Microsoft Windows 11 Enterprise build 26200
+  Keep Windows updated.
+[Info] Windows / Free memory: 11.8 GB free physical memory
+  Close heavy background apps before crash testing.
+[Info] GPU / NVIDIA GeForce RTX 5080 Laptop GPU: Driver=32.0.15.9649; Date=05/04/2026 19:00:00
+  Use the latest stable vendor driver; test without overlays.
+[Info] GPU / Intel(R) Graphics: Driver=32.0.101.8424; Date=01/05/2026 18:00:00
+  Use the latest stable vendor driver; test without overlays.
+[Info] Drivers / Driver inventory: 185 display/HID/USB/media/system driver row(s)
+  Use Driver Inventory when comparing graphics/input/USB driver state after changes.
+[Warn] Windows Gaming / Game Bar/Capture settings: 2 capture/overlay-related setting(s) appear enabled
+  Disable Game Bar/capture features during a clean crash repro test.
+[Info] Power / Active power profile: Power Scheme GUID: 8c5e7fda-e8bf-4a96-9a85-a6e23a8c635c  (High performance)
+  Use AC power and a high-performance profile during crash testing.
+[Warn] Reliability / Reliability Monitor records: 9 FH6 reliability record(s)
+  Reliability Monitor records can confirm crash timing even when local FH6 reports are sparse.
+[Info] Display / GPU/display topology: 4 GPU/monitor row(s)
+  Use Display Topology to compare resolution, refresh, GPU, and monitor context.
+[Info] Security / Security product inventory: 1 security product row(s)
+  Security software can block writes or inject scanning hooks; test with controlled exclusions only if trusted and necessary.
+[Info] Storage / C:: Free=673.6 GB Total=1,862.0 GB
+  Keep enough free disk space for updates and shader/cache writes.
+[Info] Storage / D:: Free=659.1 GB Total=1,863.0 GB
+  Keep enough free disk space for updates and shader/cache writes.
+[Info] Storage / E:: Free=14.0 GB Total=50.0 GB
+  Keep enough free disk space for updates and shader/cache writes.
+[Info] Storage / F:: Free=274.9 GB Total=1,863.0 GB
+  Keep enough free disk space for updates and shader/cache writes.
+[Warn] Processes / Overlay/conflict scan: 1 possible match(es)
+  Disable overlays, monitoring, capture, input-hook, and tuning tools while testing.
+[Info] Xbox Services / GamingServices: Running Automatic
+  If FH6 authentication/cloud/game-save issues appear, repair Gaming Services and Xbox app components.
+[Info] Xbox Services / GamingServicesNet: Running Automatic
+  If FH6 authentication/cloud/game-save issues appear, repair Gaming Services and Xbox app components.
+[Info] Xbox Services / XblAuthManager: Running Manual
+  If FH6 authentication/cloud/game-save issues appear, repair Gaming Services and Xbox app components.
+[Info] Xbox Services / XblGameSave: Stopped Manual
+  If FH6 authentication/cloud/game-save issues appear, repair Gaming Services and Xbox app components.
+[Info] Xbox Services / XboxGipSvc: Stopped Manual
+  If FH6 authentication/cloud/game-save issues appear, repair Gaming Services and Xbox app components.
+[Info] Xbox Services / XboxNetApiSvc: Stopped Manual
+  If FH6 authentication/cloud/game-save issues appear, repair Gaming Services and Xbox app components.
+[Info] Xbox Services / InstallService: Running Manual
+  If FH6 authentication/cloud/game-save issues appear, repair Gaming Services and Xbox app components.
+[Info] Xbox Services / ClipSVC: Stopped Manual
+  If FH6 authentication/cloud/game-save issues appear, repair Gaming Services and Xbox app components.
+[Info] Xbox Services / TokenBroker: Running Manual
+  If FH6 authentication/cloud/game-save issues appear, repair Gaming Services and Xbox app components.
+[Warn] Crash Lab / WER report folders: 9 FH6 WER folder(s) found
+  Include WER data in a support package after reproducing the crash.
+[Info] Steam / Log matches: 321 FH6/app/cloud log match(es)
+  Use Steam Logs to inspect cloud/sync/content activity around launch attempts.
+[Warn] Crash Lab / Latest crash: 06/08/2026 18:49:01 BEX64 c0000005
+  Export support package after reproducing a crash.
+
+== Latest Crashes ==
+06/08/2026 18:49:01 BEX64 c0000005 module=
+06/08/2026 18:49:00 BEX64 c0000005 module=
+06/08/2026 18:48:57 Application Error 0xc0000005 module=unknown
+06/07/2026 10:55:27 BEX64 c0000005 module=
+06/07/2026 10:55:26 BEX64 c0000005 module=
+06/07/2026 10:55:24 Application Error 0xc0000005 module=unknown
+06/07/2026 10:53:45 BEX64 c0000005 module=
+06/07/2026 10:53:44 BEX64 c0000005 module=
+06/07/2026 10:53:42 Application Error 0xc0000005 module=unknown
+06/07/2026 07:50:16 BEX64 c0000005 module=
+
+== Guided Workflow ==
+[P1] Isolation [Warn]: Stop possible overlay/hook/monitor processes before the next FH6 launch.
+  PresentMonService
+[P1] Evidence [Ready]: Build a support package immediately after the latest crash.
+  Windows crash event: BEX64 c0000005 at 06/08/2026 18:49:01
+[P1] Crash Fingerprint [Warn]: Track whether the same signature survives each change.
+  16x BEX64 c0000005 module=
+[P2] User Data [Ready]: With Steam Cloud off, use Deep Fresh for a clean local save/cache test.
+  0 save root(s), 5 cache/settings root(s).
+[P2] Capture Stack [Warn]: Disable Windows Game Bar/capture for one clean repro attempt.
+  App capture=1; GameDVR enabled=1
+[P3] Escalation [Ready]: If the same fingerprint remains after isolation and fresh local data, export a redacted summary for support.
+  Keeps private paths reduced while preserving crash pattern and environment evidence.
+[P4] Runtime [OK]: Media Foundation and modern Visual C++ redists are present.
+  12 Visual C++ entries found.
+
+== Crash Intelligence Scores ==
+[Medium 44] Memory/runtime fault: Repair VC++/.NET/DirectX/media dependencies and verify install integrity, then rescan fingerprints.
+  16x Access violation c0000005 module=StackHash_2264; 8x Access violation 0xc0000005 module=unknown
+[Medium 40] Overlay/hook/capture conflict: Stop overlay/hook/capture/tuning/input tools and run one clean repro, then verify whether the fingerprint changes or disappears.
+  PresentMonService; App capture=1; GameDVR enabled=1
+[Medium 40] System-wide instability: Use DISM/SFC, driver health checks, memory/storage checks, and all-app CrashScope scan because failures are not isolated to one game.
+  15 distinct crashing app(s) in recent Application/WER evidence
+[Low 37] GPU driver/device path: Use CrashScope commands for WPR/LocalDumps, clean-install GPU driver, disable overlays/capture/HAGS-style variables for one repro, and compare TDR/DXGI evidence.
+  11 GPU/System display event(s) in 30 days
+[Low 15] Repeated reliability failure: Follow the CrashScope action plan and collect stronger evidence before changing more variables.
+  9 Reliability Monitor row(s)
+[Low 10] Recent system change correlation: Review recent driver/update/software changes around the crash anchor; roll back or isolate one change at a time.
+  8 recent software install(s)
+
+== Stability Insights ==
+[Medium] Root Cause: count=44 signal=Memory/runtime fault
+  Repair VC++/.NET/DirectX/media dependencies and verify install integrity, then rescan fingerprints.
+[Medium] Root Cause: count=40 signal=Overlay/hook/capture conflict
+  Stop overlay/hook/capture/tuning/input tools and run one clean repro, then verify whether the fingerprint changes or disappears.
+[Medium] Root Cause: count=40 signal=System-wide instability
+  Use DISM/SFC, driver health checks, memory/storage checks, and all-app CrashScope scan because failures are not isolated to one game.
+[Low] Root Cause: count=37 signal=GPU driver/device path
+  Use CrashScope commands for WPR/LocalDumps, clean-install GPU driver, disable overlays/capture/HAGS-style variables for one repro, and compare TDR/DXGI evidence.
+[Low] Root Cause: count=15 signal=Repeated reliability failure
+  Follow the CrashScope action plan and collect stronger evidence before changing more variables.
+[Low] Root Cause: count=10 signal=Recent system change correlation
+  Review recent driver/update/software changes around the crash anchor; roll back or isolate one change at a time.
+[Medium] Change: count=62 signal=Software Install
+  Compare the latest crash anchor with driver/update/install timing; roll back or isolate a single change.
+[High] Crash: count=28 signal=BEX64 c0000005
+  Group by code/module, run one controlled test, and compare whether the top fingerprint persists.
+[High] GPU/TDR: count=11 signal=Microsoft-Windows-Kernel-Power 41
+  Use the generated WPR/DxDiag/GPU playbook, disable overlays/capture, and test a clean GPU-driver path.
+[Medium] User Data: count=10 signal=Low
+  Use the runbook below to pick the next low-risk step.
+
+== Stability Runbook ==
+1. Anchor Evidence [Read-only, risk=Low]: Export Stability Workbench and build a support package immediately after a crash.
+  Success: A new export/support zip exists after the latest crash timestamp.
+2. Clean Overlay Repro [Safe test, risk=Low]: Stop overlay, capture, tuning, input-hook, and performance-monitor tools for one launch.
+  Success: The same crash fingerprint disappears, changes module/code, or still reproduces without those processes.
+3. GPU Path [Manual, risk=Medium]: Collect DxDiag/WPR evidence, clean-install the GPU driver if needed, and test without capture/HAGS-style variables.
+  Success: GPU/TDR rows stop appearing near the app crash, or the crash code/module changes.
+4. Runtime/Memory Path [Repair, risk=Low]: Repair Visual C++/.NET/DirectX/media prerequisites and keep a before/after fingerprint comparison.
+  Success: The top access-violation/dependency fingerprint stops repeating after repair.
+5. Recent Change Isolation [One variable, risk=Medium]: Compare crashes against recent driver/update/software changes and isolate or roll back one suspect at a time.
+  Success: A single isolated change alters or removes the crash fingerprint.
+6. FH6 Local State [Backup first, risk=Medium]: With Steam Cloud off, use Deep Fresh for save/cache/settings user-data only, then launch once.
+  Success: New local state is created and the crash either clears or repeats with the same fingerprint.
+7. Escalation Package [Read-only, risk=Low]: If the fingerprint survives clean tests, export CrashScope, Stability, support package, DxDiag, and dump evidence for vendor/support escalation.
+  Success: Package contains timeline, scores, WER, Reliability, GPU, security, and dump/config evidence.
+
+== CrashScope Universal Action Plan ==
+[P1] Overlay/Hook Isolation [Warn]: Stop visible overlay, capture, performance, tuning, and input-hook tools before a clean repro.
+  PresentMonService
+[P1] High Severity Pattern [Warn]: Capture a dump, isolate overlays/hooks, test clean boot, repair runtimes, and compare the fault module.
+  Access violation: 16x c0000005
+[P1] Fingerprint [Active]: Group the top crash signature and test whether it changes after each fix.
+  24 event(s); top=forzahorizon6.exe c0000005 StackHash_2264
+[P3] Windows Health [Ready]: Run DISM/SFC from an elevated terminal if crashes span multiple unrelated games/apps.
+  Use the generated command playbook; this tool does not silently run repairs.
+[P3] Tooling [Info]: ProcDump is not on PATH. Use Sysinternals ProcDump when dump evidence is needed.
+  ProcDump missing from PATH.
+[P4] Packaging [Ready]: Export a Universal CrashScope report after every major repro or fix attempt.
+  Universal data root: C:\Users\boss\Downloads\FH6TOOLBELT\CompanionDoctorData\CrashScope_Universal
+
+== Top Recommendations ==
+[P1] Crash Pattern: Repeated access-violation/BEX-style crashes detected.
+  Prioritize conflict process isolation, clean boot, graphics/runtime repair, and support package capture over more save wipes.
+[P1] Background Processes: Possible overlay/hook/conflict process detected.
+  Stop these tools before launching FH6, especially capture overlays, performance monitors, tuning tools, and input hooks.
+[P2] Windows Gaming Settings: Game Bar or capture stack appears enabled.
+  Disable Windows capture/Game Bar features for one clean repro attempt.
+[P2] Crash Evidence: WER report folders exist for FH6.
+  Build a support package after reproducing the crash so WER/FH6/Event Viewer data is bundled together.
+[P3] Reliability Monitor: FH6 appears in Windows Reliability Monitor records.
+  Compare Reliability records with Event Timeline and session snapshots after the next crash.
+
+== Conflicts ==
+PresentMonService pid=8848 
+
+JSON: C:\Users\boss\Downloads\FH6TOOLBELT\CompanionDoctorData\FH6_CompanionDoctor_Snapshots\FH6_StateSnapshot_20260609_013009_selftest.json

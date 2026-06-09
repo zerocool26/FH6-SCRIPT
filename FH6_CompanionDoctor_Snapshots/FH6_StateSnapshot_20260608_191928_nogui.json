@@ -1,0 +1,2964 @@
+﻿{
+    "GeneratedAt":  "2026-06-08T19:19:28.0701876-05:00",
+    "Label":  "nogui",
+    "Status":  "Game process running: False\nGaming Services: 36.113.14003.0\nSteam install: C:\\Program Files (x86)\\Steam\\steamapps\\common\\ForzaHorizon6\\forzahorizon6.exe exists=True\nLocal FH6 root: C:\\Users\\boss\\AppData\\Local\\ForzaHorizon6\nXbox GameSave root: C:\\XboxGames\\GameSave\\pgs\nBackups: C:\\Users\\boss\\Downloads\\FH6_CompanionDoctor_Backups\nReports: C:\\Users\\boss\\Downloads\\FH6_CompanionDoctor_Reports\nSupport packages: C:\\Users\\boss\\Downloads\\FH6_CompanionDoctor_SupportPackages\nLogs: C:\\Users\\boss\\Downloads\\FH6_CompanionDoctor_Logs\nSnapshots: C:\\Users\\boss\\Downloads\\FH6_CompanionDoctor_Snapshots\nTelemetry: configure FH6 Data Out to IP 127.0.0.1 and the port shown in the Telemetry tab.\nSteam Cloud: turn it off in Steam \u003e FH6 \u003e Properties \u003e General before deleting saves.",
+    "Health":  [
+                   {
+                       "Area":  "Account",
+                       "Check":  "Administrator",
+                       "Status":  "Info",
+                       "Detail":  "User=boss",
+                       "Recommendation":  "Some official troubleshooting steps require admin, but routine scans do not."
+                   },
+                   {
+                       "Area":  "Gaming Services",
+                       "Check":  "Version",
+                       "Status":  "OK",
+                       "Detail":  "36.113.14003.0",
+                       "Recommendation":  "FH6 requires Gaming Services 36.113.2002.0 or newer."
+                   },
+                   {
+                       "Area":  "Steam",
+                       "Check":  "Library path length",
+                       "Status":  "OK",
+                       "Detail":  "28 chars: C:\\Program Files (x86)\\Steam",
+                       "Recommendation":  "FH6 Steam library path should be 59 characters or shorter."
+                   },
+                   {
+                       "Area":  "Steam",
+                       "Check":  "Game executable",
+                       "Status":  "OK",
+                       "Detail":  "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ForzaHorizon6\\forzahorizon6.exe",
+                       "Recommendation":  "Use Steam verify integrity if the executable is missing."
+                   },
+                   {
+                       "Area":  "Steam",
+                       "Check":  "Manifest state",
+                       "Status":  "Info",
+                       "Detail":  "StateFlags=4; LastUpdated=1779927869",
+                       "Recommendation":  "StateFlags 4 usually means installed/ready."
+                   },
+                   {
+                       "Area":  "Windows",
+                       "Check":  "OS",
+                       "Status":  "Info",
+                       "Detail":  "Microsoft Windows 11 Enterprise build 26200",
+                       "Recommendation":  "Keep Windows updated."
+                   },
+                   {
+                       "Area":  "Windows",
+                       "Check":  "Free memory",
+                       "Status":  "Info",
+                       "Detail":  "8.5 GB free physical memory",
+                       "Recommendation":  "Close heavy background apps before crash testing."
+                   },
+                   {
+                       "Area":  "GPU",
+                       "Check":  "NVIDIA GeForce RTX 5080 Laptop GPU",
+                       "Status":  "Info",
+                       "Detail":  "Driver=32.0.15.9649; Date=05/04/2026 19:00:00",
+                       "Recommendation":  "Use the latest stable vendor driver; test without overlays."
+                   },
+                   {
+                       "Area":  "GPU",
+                       "Check":  "Intel(R) Graphics",
+                       "Status":  "Info",
+                       "Detail":  "Driver=32.0.101.8424; Date=01/05/2026 18:00:00",
+                       "Recommendation":  "Use the latest stable vendor driver; test without overlays."
+                   },
+                   {
+                       "Area":  "Storage",
+                       "Check":  "C:",
+                       "Status":  "Info",
+                       "Detail":  "Free=675.6 GB Total=1,862.0 GB",
+                       "Recommendation":  "Keep enough free disk space for updates and shader/cache writes."
+                   },
+                   {
+                       "Area":  "Storage",
+                       "Check":  "D:",
+                       "Status":  "Info",
+                       "Detail":  "Free=659.1 GB Total=1,863.0 GB",
+                       "Recommendation":  "Keep enough free disk space for updates and shader/cache writes."
+                   },
+                   {
+                       "Area":  "Storage",
+                       "Check":  "E:",
+                       "Status":  "Info",
+                       "Detail":  "Free=14.0 GB Total=50.0 GB",
+                       "Recommendation":  "Keep enough free disk space for updates and shader/cache writes."
+                   },
+                   {
+                       "Area":  "Processes",
+                       "Check":  "Overlay/conflict scan",
+                       "Status":  "Warn",
+                       "Detail":  "1 possible match(es)",
+                       "Recommendation":  "Disable overlays, monitoring, capture, input-hook, and tuning tools while testing."
+                   },
+                   {
+                       "Area":  "Crash Lab",
+                       "Check":  "Latest crash",
+                       "Status":  "Warn",
+                       "Detail":  "06/08/2026 18:49:01 BEX64 c0000005",
+                       "Recommendation":  "Export support package after reproducing a crash."
+                   }
+               ],
+    "Inventory":  [
+                      {
+                          "Id":  "a9ad42e2901f4804884b29a791c4f34b",
+                          "Category":  "Save",
+                          "Path":  "C:\\Users\\boss\\AppData\\Local\\ForzaHorizon6\\LocalStorage_Shared\\ForzaUserConfigSelections",
+                          "Exists":  true,
+                          "Items":  1,
+                          "SizeBytes":  6421,
+                          "SizeMB":  0.01,
+                          "LastWriteTime":  "\/Date(1780847870441)\/",
+                          "Description":  "FH6 AppData account/profile save or user-setting container.",
+                          "Cleanable":  true,
+                          "DefaultSelected":  true,
+                          "Risk":  "Save"
+                      },
+                      {
+                          "Id":  "c104858f3d464f688c1607aea36a1ab8",
+                          "Category":  "Save",
+                          "Path":  "C:\\Users\\boss\\AppData\\Local\\ForzaHorizon6\\LocalStorage_Shared\\InputTranslationManager_901FEE4E1EC4D",
+                          "Exists":  true,
+                          "Items":  1,
+                          "SizeBytes":  271,
+                          "SizeMB":  0,
+                          "LastWriteTime":  "\/Date(1780848026031)\/",
+                          "Description":  "FH6 AppData account/profile save or user-setting container.",
+                          "Cleanable":  true,
+                          "DefaultSelected":  true,
+                          "Risk":  "Save"
+                      },
+                      {
+                          "Id":  "fb7298d5d7ed44f7a7d9090754a94438",
+                          "Category":  "Save",
+                          "Path":  "C:\\Users\\boss\\AppData\\Local\\ForzaHorizon6\\LocalStorage_Shared\\User_901FEE4E1EC4D",
+                          "Exists":  true,
+                          "Items":  2,
+                          "SizeBytes":  1971624,
+                          "SizeMB":  1.88,
+                          "LastWriteTime":  "\/Date(1780848026896)\/",
+                          "Description":  "FH6 AppData account/profile save or user-setting container.",
+                          "Cleanable":  true,
+                          "DefaultSelected":  true,
+                          "Risk":  "Save"
+                      },
+                      {
+                          "Id":  "3b7e86312ff647efbe6860ad204750e6",
+                          "Category":  "Save",
+                          "Path":  "C:\\XboxGames\\GameSave\\pgs\\u_2535469063728205_16D460",
+                          "Exists":  true,
+                          "Items":  372,
+                          "SizeBytes":  16981422,
+                          "SizeMB":  16.19,
+                          "LastWriteTime":  "\/Date(1780894288639)\/",
+                          "Description":  "Xbox Gaming Services FH6 account save container: profile, liveries, tunes, photos, garage/estate data, and save version.",
+                          "Cleanable":  true,
+                          "DefaultSelected":  true,
+                          "Risk":  "Save"
+                      },
+                      {
+                          "Id":  "ae7f69e0065b431581e5dcf4ff71a18b",
+                          "Category":  "Cache/Settings",
+                          "Path":  "C:\\Users\\boss\\AppData\\Local\\ForzaHorizon6\\CmsCache",
+                          "Exists":  true,
+                          "Items":  45,
+                          "SizeBytes":  310944,
+                          "SizeMB":  0.3,
+                          "LastWriteTime":  "\/Date(1779491525360)\/",
+                          "Description":  "FH6 content-management cache.",
+                          "Cleanable":  true,
+                          "DefaultSelected":  false,
+                          "Risk":  "Low"
+                      },
+                      {
+                          "Id":  "884db188e4ba46c78ce9e65412335145",
+                          "Category":  "Cache/Settings",
+                          "Path":  "C:\\Users\\boss\\AppData\\Local\\ForzaHorizon6\\LocalStorage_Cache",
+                          "Exists":  true,
+                          "Items":  111,
+                          "SizeBytes":  10999811,
+                          "SizeMB":  10.49,
+                          "LastWriteTime":  "\/Date(1778818939314)\/",
+                          "Description":  "FH6 local cache and thumbnails.",
+                          "Cleanable":  true,
+                          "DefaultSelected":  false,
+                          "Risk":  "Low"
+                      },
+                      {
+                          "Id":  "d03344d1a5fb45c8b6ea36c074eefb6a",
+                          "Category":  "Cache/Settings",
+                          "Path":  "C:\\Users\\boss\\AppData\\Local\\ForzaHorizon6\\fullscreen_choice",
+                          "Exists":  true,
+                          "Items":  1,
+                          "SizeBytes":  1,
+                          "SizeMB":  0,
+                          "LastWriteTime":  "\/Date(1780962503943)\/",
+                          "Description":  "FH6 fullscreen/display startup choice.",
+                          "Cleanable":  true,
+                          "DefaultSelected":  false,
+                          "Risk":  "Low"
+                      },
+                      {
+                          "Id":  "371a34a7d2e34584906bc61eca6df318",
+                          "Category":  "Cache/Settings",
+                          "Path":  "C:\\Users\\boss\\AppData\\Local\\ForzaHorizon6\\LastLaunch.timestamp",
+                          "Exists":  true,
+                          "Items":  1,
+                          "SizeBytes":  0,
+                          "SizeMB":  0,
+                          "LastWriteTime":  "\/Date(1780962508189)\/",
+                          "Description":  "FH6 last launch marker.",
+                          "Cleanable":  true,
+                          "DefaultSelected":  false,
+                          "Risk":  "Low"
+                      },
+                      {
+                          "Id":  "46d20c1446654e49a07611a5b5978b06",
+                          "Category":  "Cache/Settings",
+                          "Path":  "C:\\Users\\boss\\AppData\\Local\\ForzaHorizon6\\NarratorCachedSetting",
+                          "Exists":  true,
+                          "Items":  1,
+                          "SizeBytes":  10,
+                          "SizeMB":  0,
+                          "LastWriteTime":  "\/Date(1778819058701)\/",
+                          "Description":  "Cached accessibility startup setting.",
+                          "Cleanable":  true,
+                          "DefaultSelected":  false,
+                          "Risk":  "Low"
+                      },
+                      {
+                          "Id":  "0816d57c1a9b4c50a162c3556c21116a",
+                          "Category":  "Crash Report",
+                          "Path":  "C:\\Users\\boss\\AppData\\Local\\ForzaHorizon6\\report_2026_06_07_23_10_58",
+                          "Exists":  true,
+                          "Items":  1,
+                          "SizeBytes":  1713,
+                          "SizeMB":  0,
+                          "LastWriteTime":  "\/Date(1780873868857)\/",
+                          "Description":  "Local FH6 pre-crash report folder. Useful for diagnosis, safe to clear after exporting.",
+                          "Cleanable":  true,
+                          "DefaultSelected":  false,
+                          "Risk":  "Diagnostic"
+                      },
+                      {
+                          "Id":  "d25d79845bf94aff8fe0dc3606bde906",
+                          "Category":  "Crash Report",
+                          "Path":  "C:\\Users\\boss\\AppData\\Local\\ForzaHorizon6\\report_2026_06_08_01_44_34",
+                          "Exists":  true,
+                          "Items":  1,
+                          "SizeBytes":  1713,
+                          "SizeMB":  0,
+                          "LastWriteTime":  "\/Date(1780883083486)\/",
+                          "Description":  "Local FH6 pre-crash report folder. Useful for diagnosis, safe to clear after exporting.",
+                          "Cleanable":  true,
+                          "DefaultSelected":  false,
+                          "Risk":  "Diagnostic"
+                      },
+                      {
+                          "Id":  "29d75b9cecfa426ea3b52df0a2be0db0",
+                          "Category":  "Crash Report",
+                          "Path":  "C:\\Users\\boss\\AppData\\Local\\ForzaHorizon6\\report_2026_06_08_04_50_47",
+                          "Exists":  true,
+                          "Items":  1,
+                          "SizeBytes":  1713,
+                          "SizeMB":  0,
+                          "LastWriteTime":  "\/Date(1780894254492)\/",
+                          "Description":  "Local FH6 pre-crash report folder. Useful for diagnosis, safe to clear after exporting.",
+                          "Cleanable":  true,
+                          "DefaultSelected":  false,
+                          "Risk":  "Diagnostic"
+                      },
+                      {
+                          "Id":  "b3fee8e4a5b641a99b3131f6a75ba6a6",
+                          "Category":  "Crash Report",
+                          "Path":  "C:\\Users\\boss\\AppData\\Local\\ForzaHorizon6\\report_2026_06_08_23_48_20",
+                          "Exists":  true,
+                          "Items":  1,
+                          "SizeBytes":  1713,
+                          "SizeMB":  0,
+                          "LastWriteTime":  "\/Date(1780962508181)\/",
+                          "Description":  "Local FH6 pre-crash report folder. Useful for diagnosis, safe to clear after exporting.",
+                          "Cleanable":  true,
+                          "DefaultSelected":  false,
+                          "Risk":  "Diagnostic"
+                      },
+                      {
+                          "Id":  "7bf7123248da4a059acd596e1c3afbe5",
+                          "Category":  "Install Info",
+                          "Path":  "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ForzaHorizon6\\forzahorizon6.exe",
+                          "Exists":  true,
+                          "Items":  1,
+                          "SizeBytes":  183282136,
+                          "SizeMB":  174.79,
+                          "LastWriteTime":  "\/Date(1780894997982)\/",
+                          "Description":  "Steam install detected. This tool will not modify game files. Library: C:\\Program Files (x86)\\Steam",
+                          "Cleanable":  false,
+                          "DefaultSelected":  false,
+                          "Risk":  "Never delete"
+                      }
+                  ],
+    "CrashReports":  [
+                         {
+                             "Time":  "\/Date(1780962508181)\/",
+                             "Name":  "report_2026_06_08_23_48_20",
+                             "Build":  "364933",
+                             "GPU":  "NVIDIA GeForce RTX 5080 Laptop GPU",
+                             "Driver":  "32.0.15.9649",
+                             "Path":  "C:\\Users\\boss\\AppData\\Local\\ForzaHorizon6\\report_2026_06_08_23_48_20"
+                         },
+                         {
+                             "Time":  "\/Date(1780894254492)\/",
+                             "Name":  "report_2026_06_08_04_50_47",
+                             "Build":  "364933",
+                             "GPU":  "NVIDIA GeForce RTX 5080 Laptop GPU",
+                             "Driver":  "32.0.15.9649",
+                             "Path":  "C:\\Users\\boss\\AppData\\Local\\ForzaHorizon6\\report_2026_06_08_04_50_47"
+                         },
+                         {
+                             "Time":  "\/Date(1780883083486)\/",
+                             "Name":  "report_2026_06_08_01_44_34",
+                             "Build":  "364933",
+                             "GPU":  "NVIDIA GeForce RTX 5080 Laptop GPU",
+                             "Driver":  "32.0.15.9649",
+                             "Path":  "C:\\Users\\boss\\AppData\\Local\\ForzaHorizon6\\report_2026_06_08_01_44_34"
+                         },
+                         {
+                             "Time":  "\/Date(1780873868857)\/",
+                             "Name":  "report_2026_06_07_23_10_58",
+                             "Build":  "364933",
+                             "GPU":  "NVIDIA GeForce RTX 5080 Laptop GPU",
+                             "Driver":  "32.0.15.9649",
+                             "Path":  "C:\\Users\\boss\\AppData\\Local\\ForzaHorizon6\\report_2026_06_07_23_10_58"
+                         }
+                     ],
+    "CrashEvents":  [
+                        {
+                            "Time":  "\/Date(1780962541558)\/",
+                            "Provider":  "Windows Error Reporting",
+                            "EventName":  "BEX64",
+                            "Code":  "c0000005",
+                            "Module":  "",
+                            "Message":  "Fault bucket 1688858953868832106, type 5 Event Name: BEX64 Response: Not available Cab Id: 0  Problem signature: P1: forzahorizon6.exe P2: 6.364.933.0 P3: 00000000 P4: StackHash_2264 P5: 0.0.0.0 P6: 00000000 P7: PCH_84_FROM_unknown+0x0000000000000000 P8: c0000005 P9: 0000000000000008 P10:   Attached files: \\\\?\\C:\\ProgramData\\Microsoft\\Windows\\WER\\Temp\\WER.eba735c2-a4bd-4702-adce-1a5aa71f33e7.tmp.WERInternalMetadata.xml  These files may be available here: \\\\?\\C:\\ProgramData\\Microsoft\\Windows\\WER\\ReportArchive\\AppCrash_forzahorizon6.ex_eb8ee1b3e4d7503be71975783ffc86bea685d0d2_4eb93054_dc4d369e-5a06-4c64-aa90-12f2ebdf5b43  Analysis symbol:  Rechecking for solution: 0 Report Id: 0076efdd-0ed9-4508-9133-24304688ea45 Report Status: 268435456 Hashed bucket: 95a4f7e15a1edf11877008454516ed6a Cab Guid: 0"
+                        },
+                        {
+                            "Time":  "\/Date(1780962540369)\/",
+                            "Provider":  "Windows Error Reporting",
+                            "EventName":  "BEX64",
+                            "Code":  "c0000005",
+                            "Module":  "",
+                            "Message":  "Fault bucket , type 0 Event Name: BEX64 Response: Not available Cab Id: 0  Problem signature: P1: forzahorizon6.exe P2: 6.364.933.0 P3: 00000000 P4: StackHash_2264 P5: 0.0.0.0 P6: 00000000 P7: PCH_84_FROM_unknown+0x0000000000000000 P8: c0000005 P9: 0000000000000008 P10:   Attached files:  These files may be available here: \\\\?\\C:\\ProgramData\\Microsoft\\Windows\\WER\\ReportQueue\\AppCrash_forzahorizon6.ex_eb8ee1b3e4d7503be71975783ffc86bea685d0d2_4eb93054_dc4d369e-5a06-4c64-aa90-12f2ebdf5b43  Analysis symbol:  Rechecking for solution: 0 Report Id: 0076efdd-0ed9-4508-9133-24304688ea45 Report Status: 4 Hashed bucket:  Cab Guid: 0"
+                        },
+                        {
+                            "Time":  "\/Date(1780962537949)\/",
+                            "Provider":  "Application Error",
+                            "EventName":  "Application Error",
+                            "Code":  "0xc0000005",
+                            "Module":  "unknown",
+                            "Message":  "Faulting application name: forzahorizon6.exe, version: 6.364.933.0, time stamp: 0x00000000 Faulting module name: unknown, version: 0.0.0.0, time stamp: 0x00000000 Exception code: 0xc0000005 Fault offset: 0x0000000000000000 Faulting process id: 0x2B3C Faulting application start time: 0x1DCF7A144ADE8D3 Faulting application path: C:\\Program Files (x86)\\Steam\\steamapps\\common\\ForzaHorizon6\\forzahorizon6.exe Faulting module path: unknown Report Id: 0076efdd-0ed9-4508-9133-24304688ea45 Faulting package full name:  Faulting package-relative application ID: "
+                        },
+                        {
+                            "Time":  "\/Date(1780847727607)\/",
+                            "Provider":  "Windows Error Reporting",
+                            "EventName":  "BEX64",
+                            "Code":  "c0000005",
+                            "Module":  "",
+                            "Message":  "Fault bucket 1688858953868832106, type 5 Event Name: BEX64 Response: Not available Cab Id: 0  Problem signature: P1: forzahorizon6.exe P2: 6.364.933.0 P3: 00000000 P4: StackHash_2264 P5: 0.0.0.0 P6: 00000000 P7: PCH_84_FROM_unknown+0x0000000000000000 P8: c0000005 P9: 0000000000000008 P10:   Attached files: \\\\?\\C:\\ProgramData\\Microsoft\\Windows\\WER\\Temp\\WER.3b0733b4-8e6b-4145-b19f-1c25ffebc870.tmp.WERInternalMetadata.xml  These files may be available here: \\\\?\\C:\\ProgramData\\Microsoft\\Windows\\WER\\ReportArchive\\AppCrash_forzahorizon6.ex_eb8ee1b3e4d7503be71975783ffc86bea685d0d2_4eb93054_65fe15df-adeb-49c6-8065-da7e9320ee54  Analysis symbol:  Rechecking for solution: 0 Report Id: 671c65ef-85dd-4ccf-a5a2-ce850bb552ba Report Status: 268435456 Hashed bucket: 95a4f7e15a1edf11877008454516ed6a Cab Guid: 0"
+                        },
+                        {
+                            "Time":  "\/Date(1780847726703)\/",
+                            "Provider":  "Windows Error Reporting",
+                            "EventName":  "BEX64",
+                            "Code":  "c0000005",
+                            "Module":  "",
+                            "Message":  "Fault bucket , type 0 Event Name: BEX64 Response: Not available Cab Id: 0  Problem signature: P1: forzahorizon6.exe P2: 6.364.933.0 P3: 00000000 P4: StackHash_2264 P5: 0.0.0.0 P6: 00000000 P7: PCH_84_FROM_unknown+0x0000000000000000 P8: c0000005 P9: 0000000000000008 P10:   Attached files:  These files may be available here: \\\\?\\C:\\ProgramData\\Microsoft\\Windows\\WER\\ReportQueue\\AppCrash_forzahorizon6.ex_eb8ee1b3e4d7503be71975783ffc86bea685d0d2_4eb93054_65fe15df-adeb-49c6-8065-da7e9320ee54  Analysis symbol:  Rechecking for solution: 0 Report Id: 671c65ef-85dd-4ccf-a5a2-ce850bb552ba Report Status: 4 Hashed bucket:  Cab Guid: 0"
+                        },
+                        {
+                            "Time":  "\/Date(1780847724118)\/",
+                            "Provider":  "Application Error",
+                            "EventName":  "Application Error",
+                            "Code":  "0xc0000005",
+                            "Module":  "unknown",
+                            "Message":  "Faulting application name: forzahorizon6.exe, version: 6.364.933.0, time stamp: 0x00000000 Faulting module name: unknown, version: 0.0.0.0, time stamp: 0x00000000 Exception code: 0xc0000005 Fault offset: 0x0000000000000000 Faulting process id: 0xA328 Faulting application start time: 0x1DCF695F3294B9B Faulting application path: C:\\Program Files (x86)\\Steam\\steamapps\\common\\ForzaHorizon6\\forzahorizon6.exe Faulting module path: unknown Report Id: 671c65ef-85dd-4ccf-a5a2-ce850bb552ba Faulting package full name:  Faulting package-relative application ID: "
+                        },
+                        {
+                            "Time":  "\/Date(1780847625175)\/",
+                            "Provider":  "Windows Error Reporting",
+                            "EventName":  "BEX64",
+                            "Code":  "c0000005",
+                            "Module":  "",
+                            "Message":  "Fault bucket 1688858953868832106, type 5 Event Name: BEX64 Response: Not available Cab Id: 0  Problem signature: P1: forzahorizon6.exe P2: 6.364.933.0 P3: 00000000 P4: StackHash_2264 P5: 0.0.0.0 P6: 00000000 P7: PCH_84_FROM_unknown+0x0000000000000000 P8: c0000005 P9: 0000000000000008 P10:   Attached files: \\\\?\\C:\\ProgramData\\Microsoft\\Windows\\WER\\Temp\\WER.2ecc0a6e-4218-4798-a923-b60be0857d68.tmp.WERInternalMetadata.xml  These files may be available here: \\\\?\\C:\\ProgramData\\Microsoft\\Windows\\WER\\ReportArchive\\AppCrash_forzahorizon6.ex_eb8ee1b3e4d7503be71975783ffc86bea685d0d2_4eb93054_d2f2cc81-0e5c-4340-84f8-ab8ab0153272  Analysis symbol:  Rechecking for solution: 0 Report Id: 6569ebd4-075d-4c55-bdb7-33efe93c3c3b Report Status: 268435456 Hashed bucket: 95a4f7e15a1edf11877008454516ed6a Cab Guid: 0"
+                        },
+                        {
+                            "Time":  "\/Date(1780847624541)\/",
+                            "Provider":  "Windows Error Reporting",
+                            "EventName":  "BEX64",
+                            "Code":  "c0000005",
+                            "Module":  "",
+                            "Message":  "Fault bucket , type 0 Event Name: BEX64 Response: Not available Cab Id: 0  Problem signature: P1: forzahorizon6.exe P2: 6.364.933.0 P3: 00000000 P4: StackHash_2264 P5: 0.0.0.0 P6: 00000000 P7: PCH_84_FROM_unknown+0x0000000000000000 P8: c0000005 P9: 0000000000000008 P10:   Attached files:  These files may be available here: \\\\?\\C:\\ProgramData\\Microsoft\\Windows\\WER\\ReportQueue\\AppCrash_forzahorizon6.ex_eb8ee1b3e4d7503be71975783ffc86bea685d0d2_4eb93054_d2f2cc81-0e5c-4340-84f8-ab8ab0153272  Analysis symbol:  Rechecking for solution: 0 Report Id: 6569ebd4-075d-4c55-bdb7-33efe93c3c3b Report Status: 4 Hashed bucket:  Cab Guid: 0"
+                        },
+                        {
+                            "Time":  "\/Date(1780847622001)\/",
+                            "Provider":  "Application Error",
+                            "EventName":  "Application Error",
+                            "Code":  "0xc0000005",
+                            "Module":  "unknown",
+                            "Message":  "Faulting application name: forzahorizon6.exe, version: 6.364.933.0, time stamp: 0x00000000 Faulting module name: unknown, version: 0.0.0.0, time stamp: 0x00000000 Exception code: 0xc0000005 Fault offset: 0x0000000000000000 Faulting process id: 0xA054 Faulting application start time: 0x1DCF695B463D970 Faulting application path: C:\\Program Files (x86)\\Steam\\steamapps\\common\\ForzaHorizon6\\forzahorizon6.exe Faulting module path: unknown Report Id: 6569ebd4-075d-4c55-bdb7-33efe93c3c3b Faulting package full name:  Faulting package-relative application ID: "
+                        },
+                        {
+                            "Time":  "\/Date(1780836616929)\/",
+                            "Provider":  "Windows Error Reporting",
+                            "EventName":  "BEX64",
+                            "Code":  "c0000005",
+                            "Module":  "",
+                            "Message":  "Fault bucket 1688858953868832106, type 5 Event Name: BEX64 Response: Not available Cab Id: 0  Problem signature: P1: forzahorizon6.exe P2: 6.364.933.0 P3: 00000000 P4: StackHash_2264 P5: 0.0.0.0 P6: 00000000 P7: PCH_84_FROM_unknown+0x0000000000000000 P8: c0000005 P9: 0000000000000008 P10:   Attached files: \\\\?\\C:\\ProgramData\\Microsoft\\Windows\\WER\\Temp\\WER.f36ece1b-a1df-424b-b86c-485d82ab6e63.tmp.WERInternalMetadata.xml  These files may be available here: \\\\?\\C:\\ProgramData\\Microsoft\\Windows\\WER\\ReportArchive\\AppCrash_forzahorizon6.ex_eb8ee1b3e4d7503be71975783ffc86bea685d0d2_4eb93054_27b27361-26ff-403e-b946-268187979594  Analysis symbol:  Rechecking for solution: 0 Report Id: c7888f55-88fb-4dfe-be23-008824fb0414 Report Status: 268435456 Hashed bucket: 95a4f7e15a1edf11877008454516ed6a Cab Guid: 0"
+                        },
+                        {
+                            "Time":  "\/Date(1780836616023)\/",
+                            "Provider":  "Windows Error Reporting",
+                            "EventName":  "BEX64",
+                            "Code":  "c0000005",
+                            "Module":  "",
+                            "Message":  "Fault bucket , type 0 Event Name: BEX64 Response: Not available Cab Id: 0  Problem signature: P1: forzahorizon6.exe P2: 6.364.933.0 P3: 00000000 P4: StackHash_2264 P5: 0.0.0.0 P6: 00000000 P7: PCH_84_FROM_unknown+0x0000000000000000 P8: c0000005 P9: 0000000000000008 P10:   Attached files:  These files may be available here: \\\\?\\C:\\ProgramData\\Microsoft\\Windows\\WER\\ReportQueue\\AppCrash_forzahorizon6.ex_eb8ee1b3e4d7503be71975783ffc86bea685d0d2_4eb93054_27b27361-26ff-403e-b946-268187979594  Analysis symbol:  Rechecking for solution: 0 Report Id: c7888f55-88fb-4dfe-be23-008824fb0414 Report Status: 4 Hashed bucket:  Cab Guid: 0"
+                        },
+                        {
+                            "Time":  "\/Date(1780836613622)\/",
+                            "Provider":  "Application Error",
+                            "EventName":  "Application Error",
+                            "Code":  "0xc0000005",
+                            "Module":  "unknown",
+                            "Message":  "Faulting application name: forzahorizon6.exe, version: 6.364.933.0, time stamp: 0x00000000 Faulting module name: unknown, version: 0.0.0.0, time stamp: 0x00000000 Exception code: 0xc0000005 Fault offset: 0x0000000000000000 Faulting process id: 0x46C Faulting application start time: 0x1DCF67C145FF62A Faulting application path: C:\\Program Files (x86)\\Steam\\steamapps\\common\\ForzaHorizon6\\forzahorizon6.exe Faulting module path: unknown Report Id: c7888f55-88fb-4dfe-be23-008824fb0414 Faulting package full name:  Faulting package-relative application ID: "
+                        },
+                        {
+                            "Time":  "\/Date(1780834260233)\/",
+                            "Provider":  "Windows Error Reporting",
+                            "EventName":  "BEX64",
+                            "Code":  "c0000005",
+                            "Module":  "",
+                            "Message":  "Fault bucket 1688858953868832106, type 5 Event Name: BEX64 Response: Not available Cab Id: 0  Problem signature: P1: forzahorizon6.exe P2: 6.364.933.0 P3: 00000000 P4: StackHash_2264 P5: 0.0.0.0 P6: 00000000 P7: PCH_84_FROM_unknown+0x0000000000000000 P8: c0000005 P9: 0000000000000008 P10:   Attached files: \\\\?\\C:\\ProgramData\\Microsoft\\Windows\\WER\\Temp\\WER.e6dff95e-3a2a-4434-8a30-57c8e45bf7d3.tmp.WERInternalMetadata.xml  These files may be available here: \\\\?\\C:\\ProgramData\\Microsoft\\Windows\\WER\\ReportArchive\\AppCrash_forzahorizon6.ex_eb8ee1b3e4d7503be71975783ffc86bea685d0d2_4eb93054_5dfd6cb4-81ee-4af7-a1ad-a72e655e0a67  Analysis symbol:  Rechecking for solution: 0 Report Id: 254519dc-49f5-47b6-ad00-12d527747c27 Report Status: 268435456 Hashed bucket: 95a4f7e15a1edf11877008454516ed6a Cab Guid: 0"
+                        },
+                        {
+                            "Time":  "\/Date(1780834259463)\/",
+                            "Provider":  "Windows Error Reporting",
+                            "EventName":  "BEX64",
+                            "Code":  "c0000005",
+                            "Module":  "",
+                            "Message":  "Fault bucket , type 0 Event Name: BEX64 Response: Not available Cab Id: 0  Problem signature: P1: forzahorizon6.exe P2: 6.364.933.0 P3: 00000000 P4: StackHash_2264 P5: 0.0.0.0 P6: 00000000 P7: PCH_84_FROM_unknown+0x0000000000000000 P8: c0000005 P9: 0000000000000008 P10:   Attached files:  These files may be available here: \\\\?\\C:\\ProgramData\\Microsoft\\Windows\\WER\\ReportQueue\\AppCrash_forzahorizon6.ex_eb8ee1b3e4d7503be71975783ffc86bea685d0d2_4eb93054_5dfd6cb4-81ee-4af7-a1ad-a72e655e0a67  Analysis symbol:  Rechecking for solution: 0 Report Id: 254519dc-49f5-47b6-ad00-12d527747c27 Report Status: 4 Hashed bucket:  Cab Guid: 0"
+                        },
+                        {
+                            "Time":  "\/Date(1780834256218)\/",
+                            "Provider":  "Application Error",
+                            "EventName":  "Application Error",
+                            "Code":  "0xc0000005",
+                            "Module":  "unknown",
+                            "Message":  "Faulting application name: forzahorizon6.exe, version: 6.364.933.0, time stamp: 0x00000000 Faulting module name: unknown, version: 0.0.0.0, time stamp: 0x00000000 Exception code: 0xc0000005 Fault offset: 0x0000000000000000 Faulting process id: 0x26F0 Faulting application start time: 0x1DCF676968F616C Faulting application path: C:\\Program Files (x86)\\Steam\\steamapps\\common\\ForzaHorizon6\\forzahorizon6.exe Faulting module path: unknown Report Id: 254519dc-49f5-47b6-ad00-12d527747c27 Faulting package full name:  Faulting package-relative application ID: "
+                        },
+                        {
+                            "Time":  "\/Date(1780833279328)\/",
+                            "Provider":  "Windows Error Reporting",
+                            "EventName":  "BEX64",
+                            "Code":  "c0000005",
+                            "Module":  "",
+                            "Message":  "Fault bucket 1688858953868832106, type 5 Event Name: BEX64 Response: Not available Cab Id: 0  Problem signature: P1: forzahorizon6.exe P2: 6.364.933.0 P3: 00000000 P4: StackHash_2264 P5: 0.0.0.0 P6: 00000000 P7: PCH_84_FROM_unknown+0x0000000000000000 P8: c0000005 P9: 0000000000000008 P10:   Attached files: \\\\?\\C:\\ProgramData\\Microsoft\\Windows\\WER\\Temp\\WER.d1717394-f8bb-4688-893e-a04e391a032f.tmp.WERInternalMetadata.xml  These files may be available here: \\\\?\\C:\\ProgramData\\Microsoft\\Windows\\WER\\ReportArchive\\AppCrash_forzahorizon6.ex_eb8ee1b3e4d7503be71975783ffc86bea685d0d2_4eb93054_ffd2421c-a624-4fbb-bf0f-2057e73a842d  Analysis symbol:  Rechecking for solution: 0 Report Id: 764a6326-a9e4-4aa6-995b-6d5cc594e9e5 Report Status: 268435456 Hashed bucket: 95a4f7e15a1edf11877008454516ed6a Cab Guid: 0"
+                        },
+                        {
+                            "Time":  "\/Date(1780833278210)\/",
+                            "Provider":  "Windows Error Reporting",
+                            "EventName":  "BEX64",
+                            "Code":  "c0000005",
+                            "Module":  "",
+                            "Message":  "Fault bucket , type 0 Event Name: BEX64 Response: Not available Cab Id: 0  Problem signature: P1: forzahorizon6.exe P2: 6.364.933.0 P3: 00000000 P4: StackHash_2264 P5: 0.0.0.0 P6: 00000000 P7: PCH_84_FROM_unknown+0x0000000000000000 P8: c0000005 P9: 0000000000000008 P10:   Attached files:  These files may be available here: \\\\?\\C:\\ProgramData\\Microsoft\\Windows\\WER\\ReportQueue\\AppCrash_forzahorizon6.ex_eb8ee1b3e4d7503be71975783ffc86bea685d0d2_4eb93054_ffd2421c-a624-4fbb-bf0f-2057e73a842d  Analysis symbol:  Rechecking for solution: 0 Report Id: 764a6326-a9e4-4aa6-995b-6d5cc594e9e5 Report Status: 4 Hashed bucket:  Cab Guid: 0"
+                        },
+                        {
+                            "Time":  "\/Date(1780833275659)\/",
+                            "Provider":  "Application Error",
+                            "EventName":  "Application Error",
+                            "Code":  "0xc0000005",
+                            "Module":  "unknown",
+                            "Message":  "Faulting application name: forzahorizon6.exe, version: 6.364.933.0, time stamp: 0x00000000 Faulting module name: unknown, version: 0.0.0.0, time stamp: 0x00000000 Exception code: 0xc0000005 Fault offset: 0x0000000000000000 Faulting process id: 0x7164 Faulting application start time: 0x1DCF6744FA1BCA5 Faulting application path: C:\\Program Files (x86)\\Steam\\steamapps\\common\\ForzaHorizon6\\forzahorizon6.exe Faulting module path: unknown Report Id: 764a6326-a9e4-4aa6-995b-6d5cc594e9e5 Faulting package full name:  Faulting package-relative application ID: "
+                        },
+                        {
+                            "Time":  "\/Date(1780832996133)\/",
+                            "Provider":  "Windows Error Reporting",
+                            "EventName":  "BEX64",
+                            "Code":  "c0000005",
+                            "Module":  "",
+                            "Message":  "Fault bucket 1688858953868832106, type 5 Event Name: BEX64 Response: Not available Cab Id: 0  Problem signature: P1: forzahorizon6.exe P2: 6.364.933.0 P3: 00000000 P4: StackHash_2264 P5: 0.0.0.0 P6: 00000000 P7: PCH_84_FROM_unknown+0x0000000000000000 P8: c0000005 P9: 0000000000000008 P10:   Attached files: \\\\?\\C:\\ProgramData\\Microsoft\\Windows\\WER\\Temp\\WER.06f246a1-4000-4e10-a5e5-aa8bd2dd2ffc.tmp.WERInternalMetadata.xml  These files may be available here: \\\\?\\C:\\ProgramData\\Microsoft\\Windows\\WER\\ReportArchive\\AppCrash_forzahorizon6.ex_eb8ee1b3e4d7503be71975783ffc86bea685d0d2_4eb93054_d49d9cdc-d713-4505-a89d-3da07b54e3b3  Analysis symbol:  Rechecking for solution: 0 Report Id: ac5a2300-695c-4aee-abb9-9376a727e87d Report Status: 268435456 Hashed bucket: 95a4f7e15a1edf11877008454516ed6a Cab Guid: 0"
+                        },
+                        {
+                            "Time":  "\/Date(1780832995549)\/",
+                            "Provider":  "Windows Error Reporting",
+                            "EventName":  "BEX64",
+                            "Code":  "c0000005",
+                            "Module":  "",
+                            "Message":  "Fault bucket , type 0 Event Name: BEX64 Response: Not available Cab Id: 0  Problem signature: P1: forzahorizon6.exe P2: 6.364.933.0 P3: 00000000 P4: StackHash_2264 P5: 0.0.0.0 P6: 00000000 P7: PCH_84_FROM_unknown+0x0000000000000000 P8: c0000005 P9: 0000000000000008 P10:   Attached files:  These files may be available here: \\\\?\\C:\\ProgramData\\Microsoft\\Windows\\WER\\ReportQueue\\AppCrash_forzahorizon6.ex_eb8ee1b3e4d7503be71975783ffc86bea685d0d2_4eb93054_d49d9cdc-d713-4505-a89d-3da07b54e3b3  Analysis symbol:  Rechecking for solution: 0 Report Id: ac5a2300-695c-4aee-abb9-9376a727e87d Report Status: 4 Hashed bucket:  Cab Guid: 0"
+                        },
+                        {
+                            "Time":  "\/Date(1780832993091)\/",
+                            "Provider":  "Application Error",
+                            "EventName":  "Application Error",
+                            "Code":  "0xc0000005",
+                            "Module":  "unknown",
+                            "Message":  "Faulting application name: forzahorizon6.exe, version: 6.364.933.0, time stamp: 0x00000000 Faulting module name: unknown, version: 0.0.0.0, time stamp: 0x00000000 Exception code: 0xc0000005 Fault offset: 0x0000000000000000 Faulting process id: 0x4C68 Faulting application start time: 0x1DCF673A74C2205 Faulting application path: C:\\Program Files (x86)\\Steam\\steamapps\\common\\ForzaHorizon6\\forzahorizon6.exe Faulting module path: unknown Report Id: ac5a2300-695c-4aee-abb9-9376a727e87d Faulting package full name:  Faulting package-relative application ID: "
+                        },
+                        {
+                            "Time":  "\/Date(1780831448656)\/",
+                            "Provider":  "Windows Error Reporting",
+                            "EventName":  "BEX64",
+                            "Code":  "c0000005",
+                            "Module":  "",
+                            "Message":  "Fault bucket 1688858953868832106, type 5 Event Name: BEX64 Response: Not available Cab Id: 0  Problem signature: P1: forzahorizon6.exe P2: 6.364.933.0 P3: 00000000 P4: StackHash_2264 P5: 0.0.0.0 P6: 00000000 P7: PCH_84_FROM_unknown+0x0000000000000000 P8: c0000005 P9: 0000000000000008 P10:   Attached files: \\\\?\\C:\\ProgramData\\Microsoft\\Windows\\WER\\Temp\\WER.6b2a9b80-6b70-4f43-bb76-5c2bc2e26a21.tmp.WERInternalMetadata.xml  These files may be available here: \\\\?\\C:\\ProgramData\\Microsoft\\Windows\\WER\\ReportArchive\\AppCrash_forzahorizon6.ex_eb8ee1b3e4d7503be71975783ffc86bea685d0d2_4eb93054_5863a832-cebf-4fdc-8049-a08257be25a5  Analysis symbol:  Rechecking for solution: 0 Report Id: 5fdb361d-3588-4c6f-9937-a5fea4bcab45 Report Status: 268435456 Hashed bucket: 95a4f7e15a1edf11877008454516ed6a Cab Guid: 0"
+                        },
+                        {
+                            "Time":  "\/Date(1780831447754)\/",
+                            "Provider":  "Windows Error Reporting",
+                            "EventName":  "BEX64",
+                            "Code":  "c0000005",
+                            "Module":  "",
+                            "Message":  "Fault bucket , type 0 Event Name: BEX64 Response: Not available Cab Id: 0  Problem signature: P1: forzahorizon6.exe P2: 6.364.933.0 P3: 00000000 P4: StackHash_2264 P5: 0.0.0.0 P6: 00000000 P7: PCH_84_FROM_unknown+0x0000000000000000 P8: c0000005 P9: 0000000000000008 P10:   Attached files:  These files may be available here: \\\\?\\C:\\ProgramData\\Microsoft\\Windows\\WER\\ReportQueue\\AppCrash_forzahorizon6.ex_eb8ee1b3e4d7503be71975783ffc86bea685d0d2_4eb93054_5863a832-cebf-4fdc-8049-a08257be25a5  Analysis symbol:  Rechecking for solution: 0 Report Id: 5fdb361d-3588-4c6f-9937-a5fea4bcab45 Report Status: 4 Hashed bucket:  Cab Guid: 0"
+                        },
+                        {
+                            "Time":  "\/Date(1780831444947)\/",
+                            "Provider":  "Application Error",
+                            "EventName":  "Application Error",
+                            "Code":  "0xc0000005",
+                            "Module":  "unknown",
+                            "Message":  "Faulting application name: forzahorizon6.exe, version: 6.364.933.0, time stamp: 0x00000000 Faulting module name: unknown, version: 0.0.0.0, time stamp: 0x00000000 Exception code: 0xc0000005 Fault offset: 0x0000000000000000 Faulting process id: 0x749C Faulting application start time: 0x1DCF6700BBB1419 Faulting application path: C:\\Program Files (x86)\\Steam\\steamapps\\common\\ForzaHorizon6\\forzahorizon6.exe Faulting module path: unknown Report Id: 5fdb361d-3588-4c6f-9937-a5fea4bcab45 Faulting package full name:  Faulting package-relative application ID: "
+                        }
+                    ],
+    "Conflicts":  [
+                      {
+                          "ProcessName":  "PresentMonService",
+                          "Id":  8848,
+                          "Path":  null
+                      }
+                  ],
+    "SteamInstalls":  [
+                          {
+                              "Library":  "C:\\Program Files (x86)\\Steam",
+                              "LibraryLength":  28,
+                              "Manifest":  "C:\\Program Files (x86)\\Steam\\steamapps\\appmanifest_2483190.acf",
+                              "Name":  "Forza Horizon 6",
+                              "InstallDir":  "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ForzaHorizon6",
+                              "Exe":  "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ForzaHorizon6\\forzahorizon6.exe",
+                              "ExeExists":  true,
+                              "StateFlags":  "4",
+                              "LastUpdated":  "1779927869"
+                          }
+                      ],
+    "SteamLogRows":  [
+                         {
+                             "File":  "appinfo_log.txt",
+                             "LineNumber":  18721,
+                             "Text":  "[2026-05-14 22:22:20] Apps changed: 2483190=35878454,443030=35878409,",
+                             "Path":  "C:\\Program Files (x86)\\Steam\\logs\\appinfo_log.txt"
+                         },
+                         {
+                             "File":  "appinfo_log.txt",
+                             "LineNumber":  18737,
+                             "Text":  "[2026-05-14 23:06:29] Apps changed: 2483190=35878998,4439300=35878998,",
+                             "Path":  "C:\\Program Files (x86)\\Steam\\logs\\appinfo_log.txt"
+                         },
+                         {
+                             "File":  "appinfo_log.txt",
+                             "LineNumber":  18795,
+                             "Text":  "[2026-05-15 22:27:15] Apps changed: 2483190=35903219,",
+                             "Path":  "C:\\Program Files (x86)\\Steam\\logs\\appinfo_log.txt"
+                         },
+                         {
+                             "File":  "appinfo_log.txt",
+                             "LineNumber":  18799,
+                             "Text":  "[2026-05-15 22:42:41] Apps changed: 443030=35903370,2483190=35903339,",
+                             "Path":  "C:\\Program Files (x86)\\Steam\\logs\\appinfo_log.txt"
+                         },
+                         {
+                             "File":  "appinfo_log.txt",
+                             "LineNumber":  18804,
+                             "Text":  "[2026-05-15 22:57:21] Apps changed: 2483190=35903428,",
+                             "Path":  "C:\\Program Files (x86)\\Steam\\logs\\appinfo_log.txt"
+                         },
+                         {
+                             "File":  "appinfo_log.txt",
+                             "LineNumber":  18809,
+                             "Text":  "[2026-05-15 23:26:03] Apps changed: 2483190=35903686,",
+                             "Path":  "C:\\Program Files (x86)\\Steam\\logs\\appinfo_log.txt"
+                         },
+                         {
+                             "File":  "appinfo_log.txt",
+                             "LineNumber":  18814,
+                             "Text":  "[2026-05-15 23:57:59] Apps changed: 2483190=35903956,",
+                             "Path":  "C:\\Program Files (x86)\\Steam\\logs\\appinfo_log.txt"
+                         },
+                         {
+                             "File":  "appinfo_log.txt",
+                             "LineNumber":  18915,
+                             "Text":  "[2026-05-16 18:20:49] Apps changed: 2483190=35914255,443030=35914084,",
+                             "Path":  "C:\\Program Files (x86)\\Steam\\logs\\appinfo_log.txt"
+                         },
+                         {
+                             "File":  "appinfo_log.txt",
+                             "LineNumber":  18952,
+                             "Text":  "[2026-05-16 22:55:42] Apps changed: 2483190=35916024,443030=35915771,",
+                             "Path":  "C:\\Program Files (x86)\\Steam\\logs\\appinfo_log.txt"
+                         },
+                         {
+                             "File":  "appinfo_log.txt",
+                             "LineNumber":  18960,
+                             "Text":  "[2026-05-16 23:10:34] Apps changed: 2483190=35916295,",
+                             "Path":  "C:\\Program Files (x86)\\Steam\\logs\\appinfo_log.txt"
+                         },
+                         {
+                             "File":  "appinfo_log.txt",
+                             "LineNumber":  18964,
+                             "Text":  "[2026-05-16 23:26:11] Apps changed: 2483190=35916356,",
+                             "Path":  "C:\\Program Files (x86)\\Steam\\logs\\appinfo_log.txt"
+                         },
+                         {
+                             "File":  "appinfo_log.txt",
+                             "LineNumber":  19024,
+                             "Text":  "[2026-05-17 09:38:35] Apps changed: 2483190=35920961,",
+                             "Path":  "C:\\Program Files (x86)\\Steam\\logs\\appinfo_log.txt"
+                         },
+                         {
+                             "File":  "appinfo_log.txt",
+                             "LineNumber":  19111,
+                             "Text":  "[2026-05-17 16:39:13] Apps changed: 2483190=35925390,",
+                             "Path":  "C:\\Program Files (x86)\\Steam\\logs\\appinfo_log.txt"
+                         },
+                         {
+                             "File":  "appinfo_log.txt",
+                             "LineNumber":  19193,
+                             "Text":  "[2026-05-17 22:41:26] Apps changed: 2483190=35928765,",
+                             "Path":  "C:\\Program Files (x86)\\Steam\\logs\\appinfo_log.txt"
+                         },
+                         {
+                             "File":  "appinfo_log.txt",
+                             "LineNumber":  19197,
+                             "Text":  "[2026-05-17 22:57:41] Apps changed: 2483190=35928840,",
+                             "Path":  "C:\\Program Files (x86)\\Steam\\logs\\appinfo_log.txt"
+                         },
+                         {
+                             "File":  "appinfo_log.txt",
+                             "LineNumber":  19201,
+                             "Text":  "[2026-05-17 23:12:37] Apps changed: 2483190=35929030,",
+                             "Path":  "C:\\Program Files (x86)\\Steam\\logs\\appinfo_log.txt"
+                         },
+                         {
+                             "File":  "appinfo_log.txt",
+                             "LineNumber":  19278,
+                             "Text":  "[2026-05-18 22:18:02] Apps changed: 4439800=35952076,2483190=35952054,4439280=35952054,443030=35951917,",
+                             "Path":  "C:\\Program Files (x86)\\Steam\\logs\\appinfo_log.txt"
+                         },
+                         {
+                             "File":  "appinfo_log.txt",
+                             "LineNumber":  19290,
+                             "Text":  "[2026-05-18 22:48:05] Apps changed: 2483190=35952418,",
+                             "Path":  "C:\\Program Files (x86)\\Steam\\logs\\appinfo_log.txt"
+                         },
+                         {
+                             "File":  "appinfo_log.txt",
+                             "LineNumber":  19295,
+                             "Text":  "[2026-05-18 23:03:25] Apps changed: 891390=35952682,1493710=35952623,4439290=35952594,2483190=35952593,4439250=35952592,4439240=35952589,4439790=35952580,4520350=35952571,4439800=35952567,4439280=35952559,4439260=35952550,4440380=35952543,4439270=35952515,",
+                             "Path":  "C:\\Program Files (x86)\\Steam\\logs\\appinfo_log.txt"
+                         },
+                         {
+                             "File":  "appinfo_log.txt",
+                             "LineNumber":  19304,
+                             "Text":  "[2026-05-18 23:17:40] Apps changed: 2483190=35952817,",
+                             "Path":  "C:\\Program Files (x86)\\Steam\\logs\\appinfo_log.txt"
+                         },
+                         {
+                             "File":  "appinfo_log.txt",
+                             "LineNumber":  19308,
+                             "Text":  "[2026-05-18 23:33:03] Apps changed: 2483190=35953048,",
+                             "Path":  "C:\\Program Files (x86)\\Steam\\logs\\appinfo_log.txt"
+                         },
+                         {
+                             "File":  "appinfo_log.txt",
+                             "LineNumber":  19353,
+                             "Text":  "[2026-05-19 02:20:49] Apps changed: 4439250=35955253,4439290=35955253,2483190=35955232,4439240=35955232,",
+                             "Path":  "C:\\Program Files (x86)\\Steam\\logs\\appinfo_log.txt"
+                         },
+                         {
+                             "File":  "appinfo_log.txt",
+                             "LineNumber":  19402,
+                             "Text":  "[2026-05-19 18:42:50] Apps changed: 2483190=35975137,",
+                             "Path":  "C:\\Program Files (x86)\\Steam\\logs\\appinfo_log.txt"
+                         },
+                         {
+                             "File":  "appinfo_log.txt",
+                             "LineNumber":  19533,
+                             "Text":  "[2026-05-20 05:17:09] Apps changed: 4440380=35985512,2483190=35985499,",
+                             "Path":  "C:\\Program Files (x86)\\Steam\\logs\\appinfo_log.txt"
+                         },
+                         {
+                             "File":  "appinfo_log.txt",
+                             "LineNumber":  19703,
+                             "Text":  "[2026-05-20 22:15:39] Apps changed: 2483190=36004685,",
+                             "Path":  "C:\\Program Files (x86)\\Steam\\logs\\appinfo_log.txt"
+                         },
+                         {
+                             "File":  "appinfo_log.txt",
+                             "LineNumber":  19709,
+                             "Text":  "[2026-05-20 22:46:14] Apps changed: 2483190=36004895,",
+                             "Path":  "C:\\Program Files (x86)\\Steam\\logs\\appinfo_log.txt"
+                         },
+                         {
+                             "File":  "appinfo_log.txt",
+                             "LineNumber":  19714,
+                             "Text":  "[2026-05-20 23:00:25] Apps changed: 2483190=36005090,",
+                             "Path":  "C:\\Program Files (x86)\\Steam\\logs\\appinfo_log.txt"
+                         },
+                         {
+                             "File":  "appinfo_log.txt",
+                             "LineNumber":  19727,
+                             "Text":  "[2026-05-20 23:29:17] Apps changed: 2483190=36005645,2738040=36005529,",
+                             "Path":  "C:\\Program Files (x86)\\Steam\\logs\\appinfo_log.txt"
+                         },
+                         {
+                             "File":  "appinfo_log.txt",
+                             "LineNumber":  19851,
+                             "Text":  "[2026-05-21 20:23:52] Apps changed: 2483190=36030381,",
+                             "Path":  "C:\\Program Files (x86)\\Steam\\logs\\appinfo_log.txt"
+                         },
+                         {
+                             "File":  "appinfo_log.txt",
+                             "LineNumber":  19952,
+                             "Text":  "[2026-05-23 00:04:07] Apps changed: 2483190=36057713,",
+                             "Path":  "C:\\Program Files (x86)\\Steam\\logs\\appinfo_log.txt"
+                         },
+                         {
+                             "File":  "appinfo_log.txt",
+                             "LineNumber":  19956,
+                             "Text":  "[2026-05-23 00:18:54] Apps changed: 2483190=36057841,",
+                             "Path":  "C:\\Program Files (x86)\\Steam\\logs\\appinfo_log.txt"
+                         },
+                         {
+                             "File":  "appinfo_log.txt",
+                             "LineNumber":  19960,
+                             "Text":  "[2026-05-23 00:33:21] Apps changed: 2483190=36057949,",
+                             "Path":  "C:\\Program Files (x86)\\Steam\\logs\\appinfo_log.txt"
+                         },
+                         {
+                             "File":  "appinfo_log.txt",
+                             "LineNumber":  19993,
+                             "Text":  "[2026-05-23 08:19:41] Apps changed: 2483190=36062067,",
+                             "Path":  "C:\\Program Files (x86)\\Steam\\logs\\appinfo_log.txt"
+                         },
+                         {
+                             "File":  "appinfo_log.txt",
+                             "LineNumber":  20190,
+                             "Text":  "[2026-05-24 00:05:06] Apps changed: 2483190=36070361,",
+                             "Path":  "C:\\Program Files (x86)\\Steam\\logs\\appinfo_log.txt"
+                         },
+                         {
+                             "File":  "appinfo_log.txt",
+                             "LineNumber":  20194,
+                             "Text":  "[2026-05-24 00:19:34] Apps changed: 2483190=36070412,",
+                             "Path":  "C:\\Program Files (x86)\\Steam\\logs\\appinfo_log.txt"
+                         },
+                         {
+                             "File":  "appinfo_log.txt",
+                             "LineNumber":  20202,
+                             "Text":  "[2026-05-24 00:51:11] Apps changed: 2483190=36070674,",
+                             "Path":  "C:\\Program Files (x86)\\Steam\\logs\\appinfo_log.txt"
+                         },
+                         {
+                             "File":  "appinfo_log.txt",
+                             "LineNumber":  20409,
+                             "Text":  "[2026-05-24 21:22:20] Apps changed: 2483190=36081500,",
+                             "Path":  "C:\\Program Files (x86)\\Steam\\logs\\appinfo_log.txt"
+                         },
+                         {
+                             "File":  "appinfo_log.txt",
+                             "LineNumber":  20627,
+                             "Text":  "[2026-05-25 22:23:04] Apps changed: 2483190=36103519,",
+                             "Path":  "C:\\Program Files (x86)\\Steam\\logs\\appinfo_log.txt"
+                         },
+                         {
+                             "File":  "appinfo_log.txt",
+                             "LineNumber":  20859,
+                             "Text":  "[2026-05-27 03:38:57] Apps changed: 2483190=36133898,",
+                             "Path":  "C:\\Program Files (x86)\\Steam\\logs\\appinfo_log.txt"
+                         },
+                         {
+                             "File":  "appinfo_log.txt",
+                             "LineNumber":  21039,
+                             "Text":  "[2026-05-27 22:49:23] Apps changed: 443030=36155461,2483190=36155410,",
+                             "Path":  "C:\\Program Files (x86)\\Steam\\logs\\appinfo_log.txt"
+                         },
+                         {
+                             "File":  "appinfo_log.txt",
+                             "LineNumber":  21044,
+                             "Text":  "[2026-05-27 23:05:43] Apps changed: 2483190=36155612,",
+                             "Path":  "C:\\Program Files (x86)\\Steam\\logs\\appinfo_log.txt"
+                         },
+                         {
+                             "File":  "appinfo_log.txt",
+                             "LineNumber":  21049,
+                             "Text":  "[2026-05-27 23:19:30] Apps changed: 2483190=36155718,",
+                             "Path":  "C:\\Program Files (x86)\\Steam\\logs\\appinfo_log.txt"
+                         },
+                         {
+                             "File":  "appinfo_log.txt",
+                             "LineNumber":  21169,
+                             "Text":  "[2026-05-28 22:46:57] Apps changed: 1493710=36183741,2483190=36183696,",
+                             "Path":  "C:\\Program Files (x86)\\Steam\\logs\\appinfo_log.txt"
+                         },
+                         {
+                             "File":  "appinfo_log.txt",
+                             "LineNumber":  21177,
+                             "Text":  "[2026-05-28 23:03:07] Apps changed: 2483190=36183985,",
+                             "Path":  "C:\\Program Files (x86)\\Steam\\logs\\appinfo_log.txt"
+                         },
+                         {
+                             "File":  "appinfo_log.txt",
+                             "LineNumber":  21212,
+                             "Text":  "[2026-05-29 22:28:05] Apps changed: 2483190=36209551,",
+                             "Path":  "C:\\Program Files (x86)\\Steam\\logs\\appinfo_log.txt"
+                         },
+                         {
+                             "File":  "appinfo_log.txt",
+                             "LineNumber":  21226,
+                             "Text":  "[2026-05-29 23:27:18] Apps changed: 2483190=36210063,",
+                             "Path":  "C:\\Program Files (x86)\\Steam\\logs\\appinfo_log.txt"
+                         },
+                         {
+                             "File":  "appinfo_log.txt",
+                             "LineNumber":  21231,
+                             "Text":  "[2026-05-29 23:58:55] Apps changed: 2483190=36210324,",
+                             "Path":  "C:\\Program Files (x86)\\Steam\\logs\\appinfo_log.txt"
+                         },
+                         {
+                             "File":  "appinfo_log.txt",
+                             "LineNumber":  21443,
+                             "Text":  "[2026-05-31 12:52:06] Apps changed: 2483190=36230884,",
+                             "Path":  "C:\\Program Files (x86)\\Steam\\logs\\appinfo_log.txt"
+                         },
+                         {
+                             "File":  "appinfo_log.txt",
+                             "LineNumber":  21557,
+                             "Text":  "[2026-05-31 22:39:48] Apps changed: 2483190=36237800,",
+                             "Path":  "C:\\Program Files (x86)\\Steam\\logs\\appinfo_log.txt"
+                         },
+                         {
+                             "File":  "appinfo_log.txt",
+                             "LineNumber":  21561,
+                             "Text":  "[2026-05-31 22:54:16] Apps changed: 2483190=36238045,",
+                             "Path":  "C:\\Program Files (x86)\\Steam\\logs\\appinfo_log.txt"
+                         },
+                         {
+                             "File":  "appinfo_log.txt",
+                             "LineNumber":  21639,
+                             "Text":  "[2026-06-01 04:22:30] Apps changed: 1899670=36242955,2483190=36242951,271590=36242913,",
+                             "Path":  "C:\\Program Files (x86)\\Steam\\logs\\appinfo_log.txt"
+                         },
+                         {
+                             "File":  "appinfo_log.txt",
+                             "LineNumber":  21680,
+                             "Text":  "[2026-06-01 07:49:31] Apps changed: 2483190=36247470,",
+                             "Path":  "C:\\Program Files (x86)\\Steam\\logs\\appinfo_log.txt"
+                         },
+                         {
+                             "File":  "appinfo_log.txt",
+                             "LineNumber":  21811,
+                             "Text":  "[2026-06-01 18:59:40] Apps changed: 2483190=36261986,",
+                             "Path":  "C:\\Program Files (x86)\\Steam\\logs\\appinfo_log.txt"
+                         },
+                         {
+                             "File":  "appinfo_log.txt",
+                             "LineNumber":  21879,
+                             "Text":  "[2026-06-01 22:27:30] Apps changed: 2483190=36264888,",
+                             "Path":  "C:\\Program Files (x86)\\Steam\\logs\\appinfo_log.txt"
+                         },
+                         {
+                             "File":  "appinfo_log.txt",
+                             "LineNumber":  21885,
+                             "Text":  "[2026-06-01 22:58:43] Apps changed: 2483190=36265456,",
+                             "Path":  "C:\\Program Files (x86)\\Steam\\logs\\appinfo_log.txt"
+                         },
+                         {
+                             "File":  "appinfo_log.txt",
+                             "LineNumber":  21890,
+                             "Text":  "[2026-06-01 23:13:26] Apps changed: 2483190=36265733,",
+                             "Path":  "C:\\Program Files (x86)\\Steam\\logs\\appinfo_log.txt"
+                         },
+                         {
+                             "File":  "appinfo_log.txt",
+                             "LineNumber":  21898,
+                             "Text":  "[2026-06-01 23:41:20] Apps changed: 2483190=36266103,",
+                             "Path":  "C:\\Program Files (x86)\\Steam\\logs\\appinfo_log.txt"
+                         },
+                         {
+                             "File":  "appinfo_log.txt",
+                             "LineNumber":  21913,
+                             "Text":  "[2026-06-02 02:05:15] Apps changed: 2483190=36268066,",
+                             "Path":  "C:\\Program Files (x86)\\Steam\\logs\\appinfo_log.txt"
+                         },
+                         {
+                             "File":  "appinfo_log.txt",
+                             "LineNumber":  21926,
+                             "Text":  "[2026-06-02 02:49:23] Apps changed: 2483190=36269022,",
+                             "Path":  "C:\\Program Files (x86)\\Steam\\logs\\appinfo_log.txt"
+                         },
+                         {
+                             "File":  "appinfo_log.txt",
+                             "LineNumber":  21979,
+                             "Text":  "[2026-06-02 21:45:01] Apps changed: 443030=36292483,2483190=36292468,",
+                             "Path":  "C:\\Program Files (x86)\\Steam\\logs\\appinfo_log.txt"
+                         },
+                         {
+                             "File":  "appinfo_log.txt",
+                             "LineNumber":  21994,
+                             "Text":  "[2026-06-02 23:20:42] Apps changed: 2483190=36293763,3127680=36293513,1493710=36293476,",
+                             "Path":  "C:\\Program Files (x86)\\Steam\\logs\\appinfo_log.txt"
+                         },
+                         {
+                             "File":  "appinfo_log.txt",
+                             "LineNumber":  22003,
+                             "Text":  "[2026-06-02 23:35:28] Apps changed: 2483190=36294132,",
+                             "Path":  "C:\\Program Files (x86)\\Steam\\logs\\appinfo_log.txt"
+                         },
+                         {
+                             "File":  "appinfo_log.txt",
+                             "LineNumber":  22016,
+                             "Text":  "[2026-06-03 00:03:13] Apps changed: 2483190=36294455,",
+                             "Path":  "C:\\Program Files (x86)\\Steam\\logs\\appinfo_log.txt"
+                         },
+                         {
+                             "File":  "appinfo_log.txt",
+                             "LineNumber":  22146,
+                             "Text":  "[2026-06-03 21:33:51] Apps changed: 2483190=36321216,",
+                             "Path":  "C:\\Program Files (x86)\\Steam\\logs\\appinfo_log.txt"
+                         },
+                         {
+                             "File":  "appinfo_log.txt",
+                             "LineNumber":  22151,
+                             "Text":  "[2026-06-03 21:50:08] Apps changed: 2483190=36321372,",
+                             "Path":  "C:\\Program Files (x86)\\Steam\\logs\\appinfo_log.txt"
+                         },
+                         {
+                             "File":  "appinfo_log.txt",
+                             "LineNumber":  22164,
+                             "Text":  "[2026-06-03 22:36:48] Apps changed: 2483190=36322249,443030=36322101,",
+                             "Path":  "C:\\Program Files (x86)\\Steam\\logs\\appinfo_log.txt"
+                         },
+                         {
+                             "File":  "appinfo_log.txt",
+                             "LineNumber":  22169,
+                             "Text":  "[2026-06-03 22:50:28] Apps changed: 2483190=36322365,",
+                             "Path":  "C:\\Program Files (x86)\\Steam\\logs\\appinfo_log.txt"
+                         },
+                         {
+                             "File":  "appinfo_log.txt",
+                             "LineNumber":  22390,
+                             "Text":  "[2026-06-05 22:12:42] Apps changed: 2483190=36376443,",
+                             "Path":  "C:\\Program Files (x86)\\Steam\\logs\\appinfo_log.txt"
+                         },
+                         {
+                             "File":  "appinfo_log.txt",
+                             "LineNumber":  22394,
+                             "Text":  "[2026-06-05 22:26:16] Apps changed: 2483190=36376514,",
+                             "Path":  "C:\\Program Files (x86)\\Steam\\logs\\appinfo_log.txt"
+                         },
+                         {
+                             "File":  "appinfo_log.txt",
+                             "LineNumber":  22398,
+                             "Text":  "[2026-06-05 22:40:27] Apps changed: 2483190=36376585,",
+                             "Path":  "C:\\Program Files (x86)\\Steam\\logs\\appinfo_log.txt"
+                         },
+                         {
+                             "File":  "appinfo_log.txt",
+                             "LineNumber":  22408,
+                             "Text":  "[2026-06-05 23:25:41] Apps changed: 2483190=36377057,",
+                             "Path":  "C:\\Program Files (x86)\\Steam\\logs\\appinfo_log.txt"
+                         },
+                         {
+                             "File":  "appinfo_log.txt",
+                             "LineNumber":  22420,
+                             "Text":  "[2026-06-06 00:08:45] Apps changed: 2483190=36377384,",
+                             "Path":  "C:\\Program Files (x86)\\Steam\\logs\\appinfo_log.txt"
+                         },
+                         {
+                             "File":  "appinfo_log.txt",
+                             "LineNumber":  22463,
+                             "Text":  "[2026-06-06 05:40:47] Apps changed: 2483190=36380336,",
+                             "Path":  "C:\\Program Files (x86)\\Steam\\logs\\appinfo_log.txt"
+                         },
+                         {
+                             "File":  "appinfo_log.txt",
+                             "LineNumber":  22600,
+                             "Text":  "[2026-06-06 22:00:29] Apps changed: 443030=36390867,2483190=36390762,",
+                             "Path":  "C:\\Program Files (x86)\\Steam\\logs\\appinfo_log.txt"
+                         },
+                         {
+                             "File":  "appinfo_log.txt",
+                             "LineNumber":  22608,
+                             "Text":  "[2026-06-06 22:30:54] Apps changed: 2483190=36391111,",
+                             "Path":  "C:\\Program Files (x86)\\Steam\\logs\\appinfo_log.txt"
+                         },
+                         {
+                             "File":  "appinfo_log.txt",
+                             "LineNumber":  22613,
+                             "Text":  "[2026-06-06 22:47:08] Apps changed: 2483190=36391170,",
+                             "Path":  "C:\\Program Files (x86)\\Steam\\logs\\appinfo_log.txt"
+                         },
+                         {
+                             "File":  "appinfo_log.txt",
+                             "LineNumber":  22653,
+                             "Text":  "[2026-06-07 05:40:39] Apps changed: 2483190=36394446,",
+                             "Path":  "C:\\Program Files (x86)\\Steam\\logs\\appinfo_log.txt"
+                         },
+                         {
+                             "File":  "appinfo_log.txt",
+                             "LineNumber":  22677,
+                             "Text":  "[2026-06-07 07:06:06] RequestAppInfoUpdate: AppIDs 2483190,228980",
+                             "Path":  "C:\\Program Files (x86)\\Steam\\logs\\appinfo_log.txt"
+                         },
+                         {
+                             "File":  "appinfo_log.txt",
+                             "LineNumber":  22756,
+                             "Text":  "[2026-06-07 13:49:31] Apps changed: 2483190=36399763,",
+                             "Path":  "C:\\Program Files (x86)\\Steam\\logs\\appinfo_log.txt"
+                         },
+                         {
+                             "File":  "appinfo_log.txt",
+                             "LineNumber":  22797,
+                             "Text":  "[2026-06-07 17:47:45] Apps changed: 2483190=36402634,17575=36402615,",
+                             "Path":  "C:\\Program Files (x86)\\Steam\\logs\\appinfo_log.txt"
+                         },
+                         {
+                             "File":  "bootstrap_log.txt",
+                             "LineNumber":  8144,
+                             "Text":  "[2026-05-17 10:59:54] Startup - Steam Client launched with: \"C:\\Program Files (x86)\\Steam\\steam.exe\" -- \"steam://rungameid/2483190\"",
+                             "Path":  "C:\\Program Files (x86)\\Steam\\logs\\bootstrap_log.txt"
+                         },
+                         {
+                             "File":  "cloud_log.txt",
+                             "LineNumber":  10170,
+                             "Text":  "[2026-06-07 07:10:05] [AppID 2371090] Successfully synced to ChangeNumber 0",
+                             "Path":  "C:\\Program Files (x86)\\Steam\\logs\\cloud_log.txt"
+                         },
+                         {
+                             "File":  "cloud_log.txt",
+                             "LineNumber":  10172,
+                             "Text":  "[2026-06-07 07:47:29] [AppID 2371090] Starting sync (down,)",
+                             "Path":  "C:\\Program Files (x86)\\Steam\\logs\\cloud_log.txt"
+                         },
+                         {
+                             "File":  "cloud_log.txt",
+                             "LineNumber":  10173,
+                             "Text":  "[2026-06-07 07:47:29] [AppID 2371090] Attempting to sync from local change number \u00270\u0027 to global change number \u00270\u0027 (full)",
+                             "Path":  "C:\\Program Files (x86)\\Steam\\logs\\cloud_log.txt"
+                         },
+                         {
+                             "File":  "cloud_log.txt",
+                             "LineNumber":  10175,
+                             "Text":  "[2026-06-07 07:47:29] [AppID 2371090] Successfully synced to ChangeNumber 0",
+                             "Path":  "C:\\Program Files (x86)\\Steam\\logs\\cloud_log.txt"
+                         },
+                         {
+                             "File":  "cloud_log.txt",
+                             "LineNumber":  10177,
+                             "Text":  "[2026-06-07 07:50:43] [AppID 2371090] Starting sync (down,)",
+                             "Path":  "C:\\Program Files (x86)\\Steam\\logs\\cloud_log.txt"
+                         },
+                         {
+                             "File":  "cloud_log.txt",
+                             "LineNumber":  10178,
+                             "Text":  "[2026-06-07 07:50:43] [AppID 2371090] Attempting to sync from local change number \u00270\u0027 to global change number \u00270\u0027 (full)",
+                             "Path":  "C:\\Program Files (x86)\\Steam\\logs\\cloud_log.txt"
+                         },
+                         {
+                             "File":  "cloud_log.txt",
+                             "LineNumber":  10180,
+                             "Text":  "[2026-06-07 07:50:43] [AppID 2371090] Successfully synced to ChangeNumber 0",
+                             "Path":  "C:\\Program Files (x86)\\Steam\\logs\\cloud_log.txt"
+                         },
+                         {
+                             "File":  "cloud_log.txt",
+                             "LineNumber":  10182,
+                             "Text":  "[2026-06-07 07:58:04] [AppID 2371090] Starting sync (down,)",
+                             "Path":  "C:\\Program Files (x86)\\Steam\\logs\\cloud_log.txt"
+                         },
+                         {
+                             "File":  "cloud_log.txt",
+                             "LineNumber":  10183,
+                             "Text":  "[2026-06-07 07:58:04] [AppID 2371090] Attempting to sync from local change number \u00270\u0027 to global change number \u00270\u0027 (full)",
+                             "Path":  "C:\\Program Files (x86)\\Steam\\logs\\cloud_log.txt"
+                         },
+                         {
+                             "File":  "cloud_log.txt",
+                             "LineNumber":  10185,
+                             "Text":  "[2026-06-07 07:58:04] [AppID 2371090] Successfully synced to ChangeNumber 0",
+                             "Path":  "C:\\Program Files (x86)\\Steam\\logs\\cloud_log.txt"
+                         },
+                         {
+                             "File":  "cloud_log.txt",
+                             "LineNumber":  10187,
+                             "Text":  "[2026-06-07 08:37:35] [AppID 2371090] Starting sync (down,)",
+                             "Path":  "C:\\Program Files (x86)\\Steam\\logs\\cloud_log.txt"
+                         },
+                         {
+                             "File":  "cloud_log.txt",
+                             "LineNumber":  10188,
+                             "Text":  "[2026-06-07 08:37:35] [AppID 2371090] Attempting to sync from local change number \u00270\u0027 to global change number \u00270\u0027 (full)",
+                             "Path":  "C:\\Program Files (x86)\\Steam\\logs\\cloud_log.txt"
+                         },
+                         {
+                             "File":  "cloud_log.txt",
+                             "LineNumber":  10190,
+                             "Text":  "[2026-06-07 08:37:35] [AppID 2371090] Successfully synced to ChangeNumber 0",
+                             "Path":  "C:\\Program Files (x86)\\Steam\\logs\\cloud_log.txt"
+                         },
+                         {
+                             "File":  "cloud_log.txt",
+                             "LineNumber":  10192,
+                             "Text":  "[2026-06-07 10:52:54] [AppID 2371090] Starting sync (down,)",
+                             "Path":  "C:\\Program Files (x86)\\Steam\\logs\\cloud_log.txt"
+                         },
+                         {
+                             "File":  "cloud_log.txt",
+                             "LineNumber":  10193,
+                             "Text":  "[2026-06-07 10:52:54] [AppID 2371090] Attempting to sync from local change number \u00270\u0027 to global change number \u00270\u0027 (full)",
+                             "Path":  "C:\\Program Files (x86)\\Steam\\logs\\cloud_log.txt"
+                         },
+                         {
+                             "File":  "cloud_log.txt",
+                             "LineNumber":  10195,
+                             "Text":  "[2026-06-07 10:52:54] [AppID 2371090] Successfully synced to ChangeNumber 0",
+                             "Path":  "C:\\Program Files (x86)\\Steam\\logs\\cloud_log.txt"
+                         },
+                         {
+                             "File":  "cloud_log.txt",
+                             "LineNumber":  10197,
+                             "Text":  "[2026-06-07 10:57:34] [AppID 2371090] Starting sync (down,)",
+                             "Path":  "C:\\Program Files (x86)\\Steam\\logs\\cloud_log.txt"
+                         },
+                         {
+                             "File":  "cloud_log.txt",
+                             "LineNumber":  10198,
+                             "Text":  "[2026-06-07 10:57:35] [AppID 2371090] Attempting to sync from local change number \u00270\u0027 to global change number \u00270\u0027 (full)",
+                             "Path":  "C:\\Program Files (x86)\\Steam\\logs\\cloud_log.txt"
+                         },
+                         {
+                             "File":  "cloud_log.txt",
+                             "LineNumber":  10200,
+                             "Text":  "[2026-06-07 10:57:35] [AppID 2371090] Successfully synced to ChangeNumber 0",
+                             "Path":  "C:\\Program Files (x86)\\Steam\\logs\\cloud_log.txt"
+                         },
+                         {
+                             "File":  "cloud_log.txt",
+                             "LineNumber":  10202,
+                             "Text":  "[2026-06-07 18:10:49] [AppID 2371090] Starting sync (down,)",
+                             "Path":  "C:\\Program Files (x86)\\Steam\\logs\\cloud_log.txt"
+                         },
+                         {
+                             "File":  "cloud_log.txt",
+                             "LineNumber":  10203,
+                             "Text":  "[2026-06-07 18:10:49] [AppID 2371090] Attempting to sync from local change number \u00270\u0027 to global change number \u00270\u0027 (full)",
+                             "Path":  "C:\\Program Files (x86)\\Steam\\logs\\cloud_log.txt"
+                         },
+                         {
+                             "File":  "cloud_log.txt",
+                             "LineNumber":  10205,
+                             "Text":  "[2026-06-07 18:10:49] [AppID 2371090] Successfully synced to ChangeNumber 0",
+                             "Path":  "C:\\Program Files (x86)\\Steam\\logs\\cloud_log.txt"
+                         },
+                         {
+                             "File":  "cloud_log.txt",
+                             "LineNumber":  10207,
+                             "Text":  "[2026-06-07 20:44:25] [AppID 2371090] Starting sync (down,)",
+                             "Path":  "C:\\Program Files (x86)\\Steam\\logs\\cloud_log.txt"
+                         },
+                         {
+                             "File":  "cloud_log.txt",
+                             "LineNumber":  10208,
+                             "Text":  "[2026-06-07 20:44:25] [AppID 2371090] Attempting to sync from local change number \u00270\u0027 to global change number \u00270\u0027 (full)",
+                             "Path":  "C:\\Program Files (x86)\\Steam\\logs\\cloud_log.txt"
+                         },
+                         {
+                             "File":  "cloud_log.txt",
+                             "LineNumber":  10210,
+                             "Text":  "[2026-06-07 20:44:25] [AppID 2371090] Successfully synced to ChangeNumber 0",
+                             "Path":  "C:\\Program Files (x86)\\Steam\\logs\\cloud_log.txt"
+                         },
+                         {
+                             "File":  "cloud_log.txt",
+                             "LineNumber":  10215,
+                             "Text":  "[2026-06-07 23:23:36] [AppID 7] Starting sync (init,)",
+                             "Path":  "C:\\Program Files (x86)\\Steam\\logs\\cloud_log.txt"
+                         },
+                         {
+                             "File":  "cloud_log.txt",
+                             "LineNumber":  10216,
+                             "Text":  "[2026-06-07 23:23:36] [AppID 7] AutoCloud checking local state for user 804974662",
+                             "Path":  "C:\\Program Files (x86)\\Steam\\logs\\cloud_log.txt"
+                         },
+                         {
+                             "File":  "cloud_log.txt",
+                             "LineNumber":  10219,
+                             "Text":  "[2026-06-07 23:23:37] [Roaming Config] PerformSyncCloud - evaluating sync state",
+                             "Path":  "C:\\Program Files (x86)\\Steam\\logs\\cloud_log.txt"
+                         },
+                         {
+                             "File":  "cloud_log.txt",
+                             "LineNumber":  10220,
+                             "Text":  "[2026-06-07 23:23:37] [AppID 7] Starting sync (eval,)",
+                             "Path":  "C:\\Program Files (x86)\\Steam\\logs\\cloud_log.txt"
+                         },
+                         {
+                             "File":  "cloud_log.txt",
+                             "LineNumber":  10221,
+                             "Text":  "[2026-06-07 23:23:37] [AppID 7] AutoCloud checking local state for user 804974662",
+                             "Path":  "C:\\Program Files (x86)\\Steam\\logs\\cloud_log.txt"
+                         },
+                         {
+                             "File":  "cloud_log.txt",
+                             "LineNumber":  10222,
+                             "Text":  "[2026-06-07 23:23:37] [AppID 7] Currently already synced to global change number \u00272\u0027, should be nothing to download",
+                             "Path":  "C:\\Program Files (x86)\\Steam\\logs\\cloud_log.txt"
+                         },
+                         {
+                             "File":  "cloud_log.txt",
+                             "LineNumber":  10223,
+                             "Text":  "[2026-06-07 23:23:37] [AppID 7] File is in sync sharedconfig.vdf",
+                             "Path":  "C:\\Program Files (x86)\\Steam\\logs\\cloud_log.txt"
+                         },
+                         {
+                             "File":  "cloud_log.txt",
+                             "LineNumber":  10226,
+                             "Text":  "[2026-06-07 23:23:37] [AppID 7] Starting sync (down,)",
+                             "Path":  "C:\\Program Files (x86)\\Steam\\logs\\cloud_log.txt"
+                         },
+                         {
+                             "File":  "cloud_log.txt",
+                             "LineNumber":  10228,
+                             "Text":  "[2026-06-07 23:23:37] [AppID 7] Currently already synced to global change number \u00272\u0027, should be nothing to download",
+                             "Path":  "C:\\Program Files (x86)\\Steam\\logs\\cloud_log.txt"
+                         },
+                         {
+                             "File":  "cloud_log.txt",
+                             "LineNumber":  10230,
+                             "Text":  "[2026-06-07 23:23:37] [AppID 7] Successfully synced to ChangeNumber 0",
+                             "Path":  "C:\\Program Files (x86)\\Steam\\logs\\cloud_log.txt"
+                         },
+                         {
+                             "File":  "cloud_log.txt",
+                             "LineNumber":  10231,
+                             "Text":  "[2026-06-07 23:23:37] [Roaming Config] OnRemoteStorageSyncedClient() - result OK",
+                             "Path":  "C:\\Program Files (x86)\\Steam\\logs\\cloud_log.txt"
+                         },
+                         {
+                             "File":  "cloud_log.txt",
+                             "LineNumber":  10232,
+                             "Text":  "[2026-06-07 23:23:37] [AppID 2371090] Starting sync (eval,)",
+                             "Path":  "C:\\Program Files (x86)\\Steam\\logs\\cloud_log.txt"
+                         },
+                         {
+                             "File":  "cloud_log.txt",
+                             "LineNumber":  10233,
+                             "Text":  "[2026-06-07 23:23:37] [AppID 2371090] AutoCloud checking local state for user 804974662",
+                             "Path":  "C:\\Program Files (x86)\\Steam\\logs\\cloud_log.txt"
+                         },
+                         {
+                             "File":  "cloud_log.txt",
+                             "LineNumber":  10235,
+                             "Text":  "[2026-06-07 23:23:37] [AppID 2371090] Need to sync from local change number \u00270\u0027 to global change number \u00270\u0027 (full), but not attempting now",
+                             "Path":  "C:\\Program Files (x86)\\Steam\\logs\\cloud_log.txt"
+                         },
+                         {
+                             "File":  "cloud_log.txt",
+                             "LineNumber":  10237,
+                             "Text":  "[2026-06-07 23:23:37] [AppID 760] Starting sync (Get App Quota Usage,)",
+                             "Path":  "C:\\Program Files (x86)\\Steam\\logs\\cloud_log.txt"
+                         },
+                         {
+                             "File":  "cloud_log.txt",
+                             "LineNumber":  10243,
+                             "Text":  "[2026-06-07 23:25:36] [AppID 7] Starting sync (init,)",
+                             "Path":  "C:\\Program Files (x86)\\Steam\\logs\\cloud_log.txt"
+                         },
+                         {
+                             "File":  "cloud_log.txt",
+                             "LineNumber":  10244,
+                             "Text":  "[2026-06-07 23:25:36] [AppID 7] AutoCloud checking local state for user 804974662",
+                             "Path":  "C:\\Program Files (x86)\\Steam\\logs\\cloud_log.txt"
+                         },
+                         {
+                             "File":  "cloud_log.txt",
+                             "LineNumber":  10247,
+                             "Text":  "[2026-06-07 23:25:37] [Roaming Config] PerformSyncCloud - evaluating sync state",
+                             "Path":  "C:\\Program Files (x86)\\Steam\\logs\\cloud_log.txt"
+                         },
+                         {
+                             "File":  "cloud_log.txt",
+                             "LineNumber":  10248,
+                             "Text":  "[2026-06-07 23:25:37] [AppID 7] Starting sync (eval,)",
+                             "Path":  "C:\\Program Files (x86)\\Steam\\logs\\cloud_log.txt"
+                         },
+                         {
+                             "File":  "cloud_log.txt",
+                             "LineNumber":  10249,
+                             "Text":  "[2026-06-07 23:25:37] [AppID 7] AutoCloud checking local state for user 804974662",
+                             "Path":  "C:\\Program Files (x86)\\Steam\\logs\\cloud_log.txt"
+                         },
+                         {
+                             "File":  "cloud_log.txt",
+                             "LineNumber":  10250,
+                             "Text":  "[2026-06-07 23:25:37] [AppID 7] Currently already synced to global change number \u00272\u0027, should be nothing to download",
+                             "Path":  "C:\\Program Files (x86)\\Steam\\logs\\cloud_log.txt"
+                         },
+                         {
+                             "File":  "cloud_log.txt",
+                             "LineNumber":  10251,
+                             "Text":  "[2026-06-07 23:25:37] [AppID 7] File is in sync sharedconfig.vdf",
+                             "Path":  "C:\\Program Files (x86)\\Steam\\logs\\cloud_log.txt"
+                         },
+                         {
+                             "File":  "cloud_log.txt",
+                             "LineNumber":  10254,
+                             "Text":  "[2026-06-07 23:25:37] [AppID 7] Starting sync (down,)",
+                             "Path":  "C:\\Program Files (x86)\\Steam\\logs\\cloud_log.txt"
+                         },
+                         {
+                             "File":  "cloud_log.txt",
+                             "LineNumber":  10255,
+                             "Text":  "[2026-06-07 23:25:37] [AppID 7] Currently already synced to global change number \u00272\u0027, should be nothing to download",
+                             "Path":  "C:\\Program Files (x86)\\Steam\\logs\\cloud_log.txt"
+                         },
+                         {
+                             "File":  "cloud_log.txt",
+                             "LineNumber":  10257,
+                             "Text":  "[2026-06-07 23:25:37] [AppID 7] Successfully synced to ChangeNumber 0",
+                             "Path":  "C:\\Program Files (x86)\\Steam\\logs\\cloud_log.txt"
+                         },
+                         {
+                             "File":  "cloud_log.txt",
+                             "LineNumber":  10258,
+                             "Text":  "[2026-06-07 23:25:37] [Roaming Config] OnRemoteStorageSyncedClient() - result OK",
+                             "Path":  "C:\\Program Files (x86)\\Steam\\logs\\cloud_log.txt"
+                         },
+                         {
+                             "File":  "cloud_log.txt",
+                             "LineNumber":  10259,
+                             "Text":  "[2026-06-07 23:25:37] [AppID 2371090] Starting sync (eval,)",
+                             "Path":  "C:\\Program Files (x86)\\Steam\\logs\\cloud_log.txt"
+                         },
+                         {
+                             "File":  "cloud_log.txt",
+                             "LineNumber":  10260,
+                             "Text":  "[2026-06-07 23:25:37] [AppID 2371090] AutoCloud checking local state for user 804974662",
+                             "Path":  "C:\\Program Files (x86)\\Steam\\logs\\cloud_log.txt"
+                         },
+                         {
+                             "File":  "cloud_log.txt",
+                             "LineNumber":  10261,
+                             "Text":  "[2026-06-07 23:25:37] [AppID 2371090] Need to sync from local change number \u00270\u0027 to global change number \u00270\u0027 (full), but not attempting now",
+                             "Path":  "C:\\Program Files (x86)\\Steam\\logs\\cloud_log.txt"
+                         },
+                         {
+                             "File":  "cloud_log.txt",
+                             "LineNumber":  10263,
+                             "Text":  "[2026-06-07 23:25:37] [AppID 760] Starting sync (Get App Quota Usage,)",
+                             "Path":  "C:\\Program Files (x86)\\Steam\\logs\\cloud_log.txt"
+                         },
+                         {
+                             "File":  "cloud_log.txt",
+                             "LineNumber":  10268,
+                             "Text":  "[2026-06-07 23:26:37] [Roaming Config] PerformSyncCloud - all sync\u0027d up",
+                             "Path":  "C:\\Program Files (x86)\\Steam\\logs\\cloud_log.txt"
+                         },
+                         {
+                             "File":  "cloud_log.txt",
+                             "LineNumber":  10269,
+                             "Text":  "[2026-06-07 23:50:39] [AppID 2483190] Starting sync (init,)",
+                             "Path":  "C:\\Program Files (x86)\\Steam\\logs\\cloud_log.txt"
+                         },
+                         {
+                             "File":  "cloud_log.txt",
+                             "LineNumber":  10270,
+                             "Text":  "[2026-06-07 23:50:39] [AppID 2483190] AutoCloud checking local state for user 804974662",
+                             "Path":  "C:\\Program Files (x86)\\Steam\\logs\\cloud_log.txt"
+                         },
+                         {
+                             "File":  "cloud_log.txt",
+                             "LineNumber":  10271,
+                             "Text":  "[2026-06-07 23:50:39] [U:1:804974662] [AppID 2483190] Init cache request complete",
+                             "Path":  "C:\\Program Files (x86)\\Steam\\logs\\cloud_log.txt"
+                         },
+                         {
+                             "File":  "cloud_log.txt",
+                             "LineNumber":  10272,
+                             "Text":  "[2026-06-07 23:50:39] [AppID 2483190] YldWriteCacheDirectoryToFile - empty vector, deleting \u0027C:\\Program Files (x86)\\Steam/userdata/804974662/2483190/remotecache.vdf\u0027",
+                             "Path":  "C:\\Program Files (x86)\\Steam\\logs\\cloud_log.txt"
+                         },
+                         {
+                             "File":  "cloud_log.txt",
+                             "LineNumber":  10276,
+                             "Text":  "[2026-06-08 17:40:05] [AppID 7] Starting sync (init,)",
+                             "Path":  "C:\\Program Files (x86)\\Steam\\logs\\cloud_log.txt"
+                         },
+                         {
+                             "File":  "cloud_log.txt",
+                             "LineNumber":  10277,
+                             "Text":  "[2026-06-08 17:40:05] [AppID 7] AutoCloud checking local state for user 804974662",
+                             "Path":  "C:\\Program Files (x86)\\Steam\\logs\\cloud_log.txt"
+                         },
+                         {
+                             "File":  "cloud_log.txt",
+                             "LineNumber":  10280,
+                             "Text":  "[2026-06-08 17:40:06] [Roaming Config] PerformSyncCloud - evaluating sync state",
+                             "Path":  "C:\\Program Files (x86)\\Steam\\logs\\cloud_log.txt"
+                         },
+                         {
+                             "File":  "cloud_log.txt",
+                             "LineNumber":  10281,
+                             "Text":  "[2026-06-08 17:40:06] [AppID 7] Starting sync (eval,)",
+                             "Path":  "C:\\Program Files (x86)\\Steam\\logs\\cloud_log.txt"
+                         },
+                         {
+                             "File":  "cloud_log.txt",
+                             "LineNumber":  10282,
+                             "Text":  "[2026-06-08 17:40:06] [AppID 7] AutoCloud checking local state for user 804974662",
+                             "Path":  "C:\\Program Files (x86)\\Steam\\logs\\cloud_log.txt"
+                         },
+                         {
+                             "File":  "cloud_log.txt",
+                             "LineNumber":  10283,
+                             "Text":  "[2026-06-08 17:40:06] [AppID 7] Currently already synced to global change number \u00272\u0027, should be nothing to download",
+                             "Path":  "C:\\Program Files (x86)\\Steam\\logs\\cloud_log.txt"
+                         },
+                         {
+                             "File":  "cloud_log.txt",
+                             "LineNumber":  10284,
+                             "Text":  "[2026-06-08 17:40:06] [AppID 7] File is in sync sharedconfig.vdf",
+                             "Path":  "C:\\Program Files (x86)\\Steam\\logs\\cloud_log.txt"
+                         },
+                         {
+                             "File":  "cloud_log.txt",
+                             "LineNumber":  10287,
+                             "Text":  "[2026-06-08 17:40:06] [AppID 7] Starting sync (down,)",
+                             "Path":  "C:\\Program Files (x86)\\Steam\\logs\\cloud_log.txt"
+                         },
+                         {
+                             "File":  "cloud_log.txt",
+                             "LineNumber":  10289,
+                             "Text":  "[2026-06-08 17:40:06] [AppID 7] Currently already synced to global change number \u00272\u0027, should be nothing to download",
+                             "Path":  "C:\\Program Files (x86)\\Steam\\logs\\cloud_log.txt"
+                         },
+                         {
+                             "File":  "cloud_log.txt",
+                             "LineNumber":  10291,
+                             "Text":  "[2026-06-08 17:40:06] [AppID 7] Successfully synced to ChangeNumber 0",
+                             "Path":  "C:\\Program Files (x86)\\Steam\\logs\\cloud_log.txt"
+                         },
+                         {
+                             "File":  "cloud_log.txt",
+                             "LineNumber":  10292,
+                             "Text":  "[2026-06-08 17:40:06] [Roaming Config] OnRemoteStorageSyncedClient() - result OK",
+                             "Path":  "C:\\Program Files (x86)\\Steam\\logs\\cloud_log.txt"
+                         },
+                         {
+                             "File":  "cloud_log.txt",
+                             "LineNumber":  10293,
+                             "Text":  "[2026-06-08 17:40:06] [AppID 2371090] Starting sync (eval,)",
+                             "Path":  "C:\\Program Files (x86)\\Steam\\logs\\cloud_log.txt"
+                         },
+                         {
+                             "File":  "cloud_log.txt",
+                             "LineNumber":  10294,
+                             "Text":  "[2026-06-08 17:40:06] [AppID 2371090] AutoCloud checking local state for user 804974662",
+                             "Path":  "C:\\Program Files (x86)\\Steam\\logs\\cloud_log.txt"
+                         },
+                         {
+                             "File":  "cloud_log.txt",
+                             "LineNumber":  10296,
+                             "Text":  "[2026-06-08 17:40:07] [AppID 2371090] Need to sync from local change number \u00270\u0027 to global change number \u00270\u0027 (full), but not attempting now",
+                             "Path":  "C:\\Program Files (x86)\\Steam\\logs\\cloud_log.txt"
+                         },
+                         {
+                             "File":  "cloud_log.txt",
+                             "LineNumber":  10298,
+                             "Text":  "[2026-06-08 17:40:07] [AppID 760] Starting sync (Get App Quota Usage,)",
+                             "Path":  "C:\\Program Files (x86)\\Steam\\logs\\cloud_log.txt"
+                         },
+                         {
+                             "File":  "cloud_log.txt",
+                             "LineNumber":  10301,
+                             "Text":  "[2026-06-08 17:41:06] [Roaming Config] PerformSyncCloud - all sync\u0027d up",
+                             "Path":  "C:\\Program Files (x86)\\Steam\\logs\\cloud_log.txt"
+                         },
+                         {
+                             "File":  "cloud_log.txt",
+                             "LineNumber":  10302,
+                             "Text":  "[2026-06-08 18:48:10] [AppID 2483190] Starting sync (init,)",
+                             "Path":  "C:\\Program Files (x86)\\Steam\\logs\\cloud_log.txt"
+                         },
+                         {
+                             "File":  "cloud_log.txt",
+                             "LineNumber":  10303,
+                             "Text":  "[2026-06-08 18:48:10] [AppID 2483190] AutoCloud checking local state for user 804974662",
+                             "Path":  "C:\\Program Files (x86)\\Steam\\logs\\cloud_log.txt"
+                         },
+                         {
+                             "File":  "cloud_log.txt",
+                             "LineNumber":  10304,
+                             "Text":  "[2026-06-08 18:48:10] [U:1:804974662] [AppID 2483190] Init cache request complete",
+                             "Path":  "C:\\Program Files (x86)\\Steam\\logs\\cloud_log.txt"
+                         },
+                         {
+                             "File":  "cloud_log.txt",
+                             "LineNumber":  10305,
+                             "Text":  "[2026-06-08 18:48:10] [AppID 2483190] YldWriteCacheDirectoryToFile - empty vector, deleting \u0027C:\\Program Files (x86)\\Steam/userdata/804974662/2483190/remotecache.vdf\u0027",
+                             "Path":  "C:\\Program Files (x86)\\Steam\\logs\\cloud_log.txt"
+                         },
+                         {
+                             "File":  "content_log.txt",
+                             "LineNumber":  3479,
+                             "Text":  "[2026-05-31 11:16:35] Triggered async write of Steam library folders configuration (1 libraries).",
+                             "Path":  "C:\\Program Files (x86)\\Steam\\logs\\content_log.txt"
+                         },
+                         {
+                             "File":  "content_log.txt",
+                             "LineNumber":  3480,
+                             "Text":  "[2026-05-31 12:21:43] AppID 2483190 state changed : Fully Installed,App Running,",
+                             "Path":  "C:\\Program Files (x86)\\Steam\\logs\\content_log.txt"
+                         },
+                         {
+                             "File":  "content_log.txt",
+                             "LineNumber":  3481,
+                             "Text":  "[2026-05-31 12:52:06] AppID 2483190 state changed : Fully Installed,",
+                             "Path":  "C:\\Program Files (x86)\\Steam\\logs\\content_log.txt"
+                         },
+                         {
+                             "File":  "content_log.txt",
+                             "LineNumber":  3487,
+                             "Text":  "[2026-05-31 14:50:13] Triggered async write of Steam library folders configuration (1 libraries).",
+                             "Path":  "C:\\Program Files (x86)\\Steam\\logs\\content_log.txt"
+                         },
+                         {
+                             "File":  "content_log.txt",
+                             "LineNumber":  3493,
+                             "Text":  "[2026-05-31 14:55:36] Triggered async write of Steam library folders configuration (1 libraries).",
+                             "Path":  "C:\\Program Files (x86)\\Steam\\logs\\content_log.txt"
+                         },
+                         {
+                             "File":  "content_log.txt",
+                             "LineNumber":  3499,
+                             "Text":  "[2026-05-31 14:57:44] Triggered async write of Steam library folders configuration (1 libraries).",
+                             "Path":  "C:\\Program Files (x86)\\Steam\\logs\\content_log.txt"
+                         },
+                         {
+                             "File":  "content_log.txt",
+                             "LineNumber":  3500,
+                             "Text":  "[2026-05-31 15:00:45] AppID 2483190 state changed : Fully Installed,App Running,",
+                             "Path":  "C:\\Program Files (x86)\\Steam\\logs\\content_log.txt"
+                         },
+                         {
+                             "File":  "content_log.txt",
+                             "LineNumber":  3501,
+                             "Text":  "[2026-05-31 16:24:20] AppID 2483190 state changed : Fully Installed,",
+                             "Path":  "C:\\Program Files (x86)\\Steam\\logs\\content_log.txt"
+                         },
+                         {
+                             "File":  "content_log.txt",
+                             "LineNumber":  3502,
+                             "Text":  "[2026-05-31 18:25:11] AppID 2483190 state changed : Fully Installed,App Running,",
+                             "Path":  "C:\\Program Files (x86)\\Steam\\logs\\content_log.txt"
+                         },
+                         {
+                             "File":  "content_log.txt",
+                             "LineNumber":  3503,
+                             "Text":  "[2026-05-31 21:07:53] AppID 2483190 state changed : Fully Installed,",
+                             "Path":  "C:\\Program Files (x86)\\Steam\\logs\\content_log.txt"
+                         },
+                         {
+                             "File":  "content_log.txt",
+                             "LineNumber":  3509,
+                             "Text":  "[2026-06-01 07:05:58] Triggered async write of Steam library folders configuration (1 libraries).",
+                             "Path":  "C:\\Program Files (x86)\\Steam\\logs\\content_log.txt"
+                         },
+                         {
+                             "File":  "content_log.txt",
+                             "LineNumber":  3515,
+                             "Text":  "[2026-06-01 15:09:30] Triggered async write of Steam library folders configuration (1 libraries).",
+                             "Path":  "C:\\Program Files (x86)\\Steam\\logs\\content_log.txt"
+                         },
+                         {
+                             "File":  "content_log.txt",
+                             "LineNumber":  3521,
+                             "Text":  "[2026-06-01 15:12:02] Triggered async write of Steam library folders configuration (1 libraries).",
+                             "Path":  "C:\\Program Files (x86)\\Steam\\logs\\content_log.txt"
+                         },
+                         {
+                             "File":  "content_log.txt",
+                             "LineNumber":  3527,
+                             "Text":  "[2026-06-01 15:14:19] Triggered async write of Steam library folders configuration (1 libraries).",
+                             "Path":  "C:\\Program Files (x86)\\Steam\\logs\\content_log.txt"
+                         },
+                         {
+                             "File":  "content_log.txt",
+                             "LineNumber":  3533,
+                             "Text":  "[2026-06-01 15:15:58] Triggered async write of Steam library folders configuration (1 libraries).",
+                             "Path":  "C:\\Program Files (x86)\\Steam\\logs\\content_log.txt"
+                         },
+                         {
+                             "File":  "content_log.txt",
+                             "LineNumber":  3539,
+                             "Text":  "[2026-06-01 15:18:09] Triggered async write of Steam library folders configuration (1 libraries).",
+                             "Path":  "C:\\Program Files (x86)\\Steam\\logs\\content_log.txt"
+                         },
+                         {
+                             "File":  "content_log.txt",
+                             "LineNumber":  3540,
+                             "Text":  "[2026-06-01 16:59:27] AppID 2483190 state changed : Fully Installed,App Running,",
+                             "Path":  "C:\\Program Files (x86)\\Steam\\logs\\content_log.txt"
+                         },
+                         {
+                             "File":  "content_log.txt",
+                             "LineNumber":  3541,
+                             "Text":  "[2026-06-01 17:18:22] AppID 2483190 state changed : Fully Installed,",
+                             "Path":  "C:\\Program Files (x86)\\Steam\\logs\\content_log.txt"
+                         },
+                         {
+                             "File":  "content_log.txt",
+                             "LineNumber":  3542,
+                             "Text":  "[2026-06-01 23:43:50] AppID 2483190 state changed : Fully Installed,App Running,",
+                             "Path":  "C:\\Program Files (x86)\\Steam\\logs\\content_log.txt"
+                         },
+                         {
+                             "File":  "content_log.txt",
+                             "LineNumber":  3543,
+                             "Text":  "[2026-06-02 01:33:30] AppID 2483190 state changed : Fully Installed,",
+                             "Path":  "C:\\Program Files (x86)\\Steam\\logs\\content_log.txt"
+                         },
+                         {
+                             "File":  "content_log.txt",
+                             "LineNumber":  3549,
+                             "Text":  "[2026-06-02 19:16:51] Triggered async write of Steam library folders configuration (1 libraries).",
+                             "Path":  "C:\\Program Files (x86)\\Steam\\logs\\content_log.txt"
+                         },
+                         {
+                             "File":  "content_log.txt",
+                             "LineNumber":  3550,
+                             "Text":  "[2026-06-02 19:54:12] AppID 2483190 state changed : Fully Installed,App Running,",
+                             "Path":  "C:\\Program Files (x86)\\Steam\\logs\\content_log.txt"
+                         },
+                         {
+                             "File":  "content_log.txt",
+                             "LineNumber":  3551,
+                             "Text":  "[2026-06-02 21:29:56] AppID 2483190 state changed : Fully Installed,",
+                             "Path":  "C:\\Program Files (x86)\\Steam\\logs\\content_log.txt"
+                         },
+                         {
+                             "File":  "content_log.txt",
+                             "LineNumber":  3552,
+                             "Text":  "[2026-06-02 22:25:17] AppID 2483190 state changed : Fully Installed,App Running,",
+                             "Path":  "C:\\Program Files (x86)\\Steam\\logs\\content_log.txt"
+                         },
+                         {
+                             "File":  "content_log.txt",
+                             "LineNumber":  3553,
+                             "Text":  "[2026-06-02 23:20:42] AppID 2483190 state changed : Fully Installed,",
+                             "Path":  "C:\\Program Files (x86)\\Steam\\logs\\content_log.txt"
+                         },
+                         {
+                             "File":  "content_log.txt",
+                             "LineNumber":  3559,
+                             "Text":  "[2026-06-03 06:20:51] Triggered async write of Steam library folders configuration (1 libraries).",
+                             "Path":  "C:\\Program Files (x86)\\Steam\\logs\\content_log.txt"
+                         },
+                         {
+                             "File":  "content_log.txt",
+                             "LineNumber":  3565,
+                             "Text":  "[2026-06-03 18:32:25] Triggered async write of Steam library folders configuration (1 libraries).",
+                             "Path":  "C:\\Program Files (x86)\\Steam\\logs\\content_log.txt"
+                         },
+                         {
+                             "File":  "content_log.txt",
+                             "LineNumber":  3571,
+                             "Text":  "[2026-06-03 18:34:52] Triggered async write of Steam library folders configuration (1 libraries).",
+                             "Path":  "C:\\Program Files (x86)\\Steam\\logs\\content_log.txt"
+                         },
+                         {
+                             "File":  "content_log.txt",
+                             "LineNumber":  3572,
+                             "Text":  "[2026-06-03 22:53:23] AppID 2483190 state changed : Fully Installed,App Running,",
+                             "Path":  "C:\\Program Files (x86)\\Steam\\logs\\content_log.txt"
+                         },
+                         {
+                             "File":  "content_log.txt",
+                             "LineNumber":  3573,
+                             "Text":  "[2026-06-04 00:29:35] AppID 2483190 state changed : Fully Installed,",
+                             "Path":  "C:\\Program Files (x86)\\Steam\\logs\\content_log.txt"
+                         },
+                         {
+                             "File":  "content_log.txt",
+                             "LineNumber":  3579,
+                             "Text":  "[2026-06-05 00:58:34] Triggered async write of Steam library folders configuration (1 libraries).",
+                             "Path":  "C:\\Program Files (x86)\\Steam\\logs\\content_log.txt"
+                         },
+                         {
+                             "File":  "content_log.txt",
+                             "LineNumber":  3585,
+                             "Text":  "[2026-06-05 18:08:20] Triggered async write of Steam library folders configuration (1 libraries).",
+                             "Path":  "C:\\Program Files (x86)\\Steam\\logs\\content_log.txt"
+                         },
+                         {
+                             "File":  "content_log.txt",
+                             "LineNumber":  3591,
+                             "Text":  "[2026-06-06 05:10:10] Triggered async write of Steam library folders configuration (1 libraries).",
+                             "Path":  "C:\\Program Files (x86)\\Steam\\logs\\content_log.txt"
+                         },
+                         {
+                             "File":  "content_log.txt",
+                             "LineNumber":  3597,
+                             "Text":  "[2026-06-06 16:36:36] Triggered async write of Steam library folders configuration (1 libraries).",
+                             "Path":  "C:\\Program Files (x86)\\Steam\\logs\\content_log.txt"
+                         },
+                         {
+                             "File":  "content_log.txt",
+                             "LineNumber":  3603,
+                             "Text":  "[2026-06-06 16:40:00] Triggered async write of Steam library folders configuration (1 libraries).",
+                             "Path":  "C:\\Program Files (x86)\\Steam\\logs\\content_log.txt"
+                         },
+                         {
+                             "File":  "content_log.txt",
+                             "LineNumber":  3604,
+                             "Text":  "[2026-06-06 20:07:38] AppID 2483190 state changed : Fully Installed,App Running,",
+                             "Path":  "C:\\Program Files (x86)\\Steam\\logs\\content_log.txt"
+                         },
+                         {
+                             "File":  "content_log.txt",
+                             "LineNumber":  3605,
+                             "Text":  "[2026-06-06 22:00:28] AppID 2483190 state changed : Fully Installed,",
+                             "Path":  "C:\\Program Files (x86)\\Steam\\logs\\content_log.txt"
+                         },
+                         {
+                             "File":  "content_log.txt",
+                             "LineNumber":  3611,
+                             "Text":  "[2026-06-07 05:10:35] Triggered async write of Steam library folders configuration (1 libraries).",
+                             "Path":  "C:\\Program Files (x86)\\Steam\\logs\\content_log.txt"
+                         },
+                         {
+                             "File":  "content_log.txt",
+                             "LineNumber":  3612,
+                             "Text":  "[2026-06-07 06:23:20] AppID 2483190 state changed : Fully Installed,App Running,",
+                             "Path":  "C:\\Program Files (x86)\\Steam\\logs\\content_log.txt"
+                         },
+                         {
+                             "File":  "content_log.txt",
+                             "LineNumber":  3613,
+                             "Text":  "[2026-06-07 06:24:11] AppID 2483190 state changed : Fully Installed,",
+                             "Path":  "C:\\Program Files (x86)\\Steam\\logs\\content_log.txt"
+                         },
+                         {
+                             "File":  "content_log.txt",
+                             "LineNumber":  3614,
+                             "Text":  "[2026-06-07 06:49:10] AppID 2483190 state changed : Fully Installed,App Running,",
+                             "Path":  "C:\\Program Files (x86)\\Steam\\logs\\content_log.txt"
+                         },
+                         {
+                             "File":  "content_log.txt",
+                             "LineNumber":  3615,
+                             "Text":  "[2026-06-07 06:49:59] AppID 2483190 state changed : Fully Installed,",
+                             "Path":  "C:\\Program Files (x86)\\Steam\\logs\\content_log.txt"
+                         },
+                         {
+                             "File":  "content_log.txt",
+                             "LineNumber":  3616,
+                             "Text":  "[2026-06-07 06:53:52] AppID 2483190 state changed : Fully Installed,App Running,",
+                             "Path":  "C:\\Program Files (x86)\\Steam\\logs\\content_log.txt"
+                         },
+                         {
+                             "File":  "content_log.txt",
+                             "LineNumber":  3617,
+                             "Text":  "[2026-06-07 06:54:41] AppID 2483190 state changed : Fully Installed,",
+                             "Path":  "C:\\Program Files (x86)\\Steam\\logs\\content_log.txt"
+                         },
+                         {
+                             "File":  "content_log.txt",
+                             "LineNumber":  3618,
+                             "Text":  "[2026-06-07 07:06:06] Start validating appID 2483190 on BuildID 23370889",
+                             "Path":  "C:\\Program Files (x86)\\Steam\\logs\\content_log.txt"
+                         },
+                         {
+                             "File":  "content_log.txt",
+                             "LineNumber":  3619,
+                             "Text":  "[2026-06-07 07:06:06] AppID 2483190 scheduler update : Priority First, not played for 683 seconds, update disabled for 0 seconds",
+                             "Path":  "C:\\Program Files (x86)\\Steam\\logs\\content_log.txt"
+                         },
+                         {
+                             "File":  "content_log.txt",
+                             "LineNumber":  3620,
+                             "Text":  "[2026-06-07 07:06:06] AppID 2483190 state changed : Fully Installed,Update Queued,",
+                             "Path":  "C:\\Program Files (x86)\\Steam\\logs\\content_log.txt"
+                         },
+                         {
+                             "File":  "content_log.txt",
+                             "LineNumber":  3621,
+                             "Text":  "[2026-06-07 07:06:06] AppID 2483190 state changed : Fully Installed,Update Queued,Update Running,",
+                             "Path":  "C:\\Program Files (x86)\\Steam\\logs\\content_log.txt"
+                         },
+                         {
+                             "File":  "content_log.txt",
+                             "LineNumber":  3623,
+                             "Text":  "[2026-06-07 07:06:06] AppID 2483190 App update changed : Running Update,",
+                             "Path":  "C:\\Program Files (x86)\\Steam\\logs\\content_log.txt"
+                         },
+                         {
+                             "File":  "content_log.txt",
+                             "LineNumber":  3624,
+                             "Text":  "[2026-06-07 07:06:06] AppID 2483190 App update changed : Running Update,Reconfiguring,",
+                             "Path":  "C:\\Program Files (x86)\\Steam\\logs\\content_log.txt"
+                         },
+                         {
+                             "File":  "content_log.txt",
+                             "LineNumber":  3625,
+                             "Text":  "[2026-06-07 07:06:06] AppID 2483190 App update changed : Running Update,",
+                             "Path":  "C:\\Program Files (x86)\\Steam\\logs\\content_log.txt"
+                         },
+                         {
+                             "File":  "content_log.txt",
+                             "LineNumber":  3626,
+                             "Text":  "[2026-06-07 07:06:06] AppID 2483190 App update changed : Running Update,Verifying Installed,",
+                             "Path":  "C:\\Program Files (x86)\\Steam\\logs\\content_log.txt"
+                         },
+                         {
+                             "File":  "content_log.txt",
+                             "LineNumber":  3627,
+                             "Text":  "[2026-06-07 07:09:32] AppID 2483190 App update changed : Running Update,",
+                             "Path":  "C:\\Program Files (x86)\\Steam\\logs\\content_log.txt"
+                         },
+                         {
+                             "File":  "content_log.txt",
+                             "LineNumber":  3628,
+                             "Text":  "[2026-06-07 07:09:32] AppID 2483190 App update changed : None",
+                             "Path":  "C:\\Program Files (x86)\\Steam\\logs\\content_log.txt"
+                         },
+                         {
+                             "File":  "content_log.txt",
+                             "LineNumber":  3630,
+                             "Text":  "[2026-06-07 07:09:32] AppID 2483190 state changed : Fully Installed,Update Queued,",
+                             "Path":  "C:\\Program Files (x86)\\Steam\\logs\\content_log.txt"
+                         },
+                         {
+                             "File":  "content_log.txt",
+                             "LineNumber":  3631,
+                             "Text":  "[2026-06-07 07:09:32] AppID 2483190 state changed : Fully Installed,",
+                             "Path":  "C:\\Program Files (x86)\\Steam\\logs\\content_log.txt"
+                         },
+                         {
+                             "File":  "content_log.txt",
+                             "LineNumber":  3632,
+                             "Text":  "[2026-06-07 07:09:32] AppID 2483190 scheduler finished : removed from schedule (result No Error, state 0xc)",
+                             "Path":  "C:\\Program Files (x86)\\Steam\\logs\\content_log.txt"
+                         },
+                         {
+                             "File":  "content_log.txt",
+                             "LineNumber":  3646,
+                             "Text":  "[2026-06-07 07:10:10] AppID 2483190 state changed : Fully Installed,App Running,",
+                             "Path":  "C:\\Program Files (x86)\\Steam\\logs\\content_log.txt"
+                         },
+                         {
+                             "File":  "content_log.txt",
+                             "LineNumber":  3647,
+                             "Text":  "[2026-06-07 07:11:02] AppID 2483190 state changed : Fully Installed,",
+                             "Path":  "C:\\Program Files (x86)\\Steam\\logs\\content_log.txt"
+                         },
+                         {
+                             "File":  "content_log.txt",
+                             "LineNumber":  3648,
+                             "Text":  "[2026-06-07 07:49:29] AppID 2483190 state changed : Fully Installed,App Running,",
+                             "Path":  "C:\\Program Files (x86)\\Steam\\logs\\content_log.txt"
+                         },
+                         {
+                             "File":  "content_log.txt",
+                             "LineNumber":  3649,
+                             "Text":  "[2026-06-07 07:50:19] AppID 2483190 state changed : Fully Installed,",
+                             "Path":  "C:\\Program Files (x86)\\Steam\\logs\\content_log.txt"
+                         },
+                         {
+                             "File":  "content_log.txt",
+                             "LineNumber":  3650,
+                             "Text":  "[2026-06-07 07:58:05] AppID 2483190 state changed : Fully Installed,App Running,",
+                             "Path":  "C:\\Program Files (x86)\\Steam\\logs\\content_log.txt"
+                         },
+                         {
+                             "File":  "content_log.txt",
+                             "LineNumber":  3651,
+                             "Text":  "[2026-06-07 08:36:20] AppID 2483190 state changed : Fully Installed,",
+                             "Path":  "C:\\Program Files (x86)\\Steam\\logs\\content_log.txt"
+                         },
+                         {
+                             "File":  "content_log.txt",
+                             "LineNumber":  3652,
+                             "Text":  "[2026-06-07 10:52:55] AppID 2483190 state changed : Fully Installed,App Running,",
+                             "Path":  "C:\\Program Files (x86)\\Steam\\logs\\content_log.txt"
+                         },
+                         {
+                             "File":  "content_log.txt",
+                             "LineNumber":  3653,
+                             "Text":  "[2026-06-07 10:53:47] AppID 2483190 state changed : Fully Installed,",
+                             "Path":  "C:\\Program Files (x86)\\Steam\\logs\\content_log.txt"
+                         },
+                         {
+                             "File":  "content_log.txt",
+                             "LineNumber":  3654,
+                             "Text":  "[2026-06-07 10:54:40] AppID 2483190 state changed : Fully Installed,App Running,",
+                             "Path":  "C:\\Program Files (x86)\\Steam\\logs\\content_log.txt"
+                         },
+                         {
+                             "File":  "content_log.txt",
+                             "LineNumber":  3655,
+                             "Text":  "[2026-06-07 10:55:30] AppID 2483190 state changed : Fully Installed,",
+                             "Path":  "C:\\Program Files (x86)\\Steam\\logs\\content_log.txt"
+                         },
+                         {
+                             "File":  "content_log.txt",
+                             "LineNumber":  3656,
+                             "Text":  "[2026-06-07 10:57:35] AppID 2483190 state changed : Fully Installed,App Running,",
+                             "Path":  "C:\\Program Files (x86)\\Steam\\logs\\content_log.txt"
+                         },
+                         {
+                             "File":  "content_log.txt",
+                             "LineNumber":  3657,
+                             "Text":  "[2026-06-07 12:35:42] AppID 2483190 state changed : Fully Installed,",
+                             "Path":  "C:\\Program Files (x86)\\Steam\\logs\\content_log.txt"
+                         },
+                         {
+                             "File":  "content_log.txt",
+                             "LineNumber":  3658,
+                             "Text":  "[2026-06-07 18:10:50] AppID 2483190 state changed : Fully Installed,App Running,",
+                             "Path":  "C:\\Program Files (x86)\\Steam\\logs\\content_log.txt"
+                         },
+                         {
+                             "File":  "content_log.txt",
+                             "LineNumber":  3659,
+                             "Text":  "[2026-06-07 19:13:24] AppID 2483190 state changed : Fully Installed,",
+                             "Path":  "C:\\Program Files (x86)\\Steam\\logs\\content_log.txt"
+                         },
+                         {
+                             "File":  "content_log.txt",
+                             "LineNumber":  3660,
+                             "Text":  "[2026-06-07 20:44:26] AppID 2483190 state changed : Fully Installed,App Running,",
+                             "Path":  "C:\\Program Files (x86)\\Steam\\logs\\content_log.txt"
+                         },
+                         {
+                             "File":  "content_log.txt",
+                             "LineNumber":  3661,
+                             "Text":  "[2026-06-07 21:14:40] AppID 2483190 state changed : Fully Installed,",
+                             "Path":  "C:\\Program Files (x86)\\Steam\\logs\\content_log.txt"
+                         },
+                         {
+                             "File":  "content_log.txt",
+                             "LineNumber":  3667,
+                             "Text":  "[2026-06-07 23:23:36] Triggered async write of Steam library folders configuration (1 libraries).",
+                             "Path":  "C:\\Program Files (x86)\\Steam\\logs\\content_log.txt"
+                         },
+                         {
+                             "File":  "content_log.txt",
+                             "LineNumber":  3673,
+                             "Text":  "[2026-06-07 23:25:36] Triggered async write of Steam library folders configuration (1 libraries).",
+                             "Path":  "C:\\Program Files (x86)\\Steam\\logs\\content_log.txt"
+                         },
+                         {
+                             "File":  "content_log.txt",
+                             "LineNumber":  3674,
+                             "Text":  "[2026-06-07 23:50:40] AppID 2483190 state changed : Fully Installed,App Running,",
+                             "Path":  "C:\\Program Files (x86)\\Steam\\logs\\content_log.txt"
+                         },
+                         {
+                             "File":  "content_log.txt",
+                             "LineNumber":  3675,
+                             "Text":  "[2026-06-08 00:03:21] AppID 2483190 state changed : Fully Installed,",
+                             "Path":  "C:\\Program Files (x86)\\Steam\\logs\\content_log.txt"
+                         },
+                         {
+                             "File":  "content_log.txt",
+                             "LineNumber":  3681,
+                             "Text":  "[2026-06-08 17:40:05] Triggered async write of Steam library folders configuration (1 libraries).",
+                             "Path":  "C:\\Program Files (x86)\\Steam\\logs\\content_log.txt"
+                         },
+                         {
+                             "File":  "content_log.txt",
+                             "LineNumber":  3682,
+                             "Text":  "[2026-06-08 18:48:12] AppID 2483190 state changed : Fully Installed,App Running,",
+                             "Path":  "C:\\Program Files (x86)\\Steam\\logs\\content_log.txt"
+                         },
+                         {
+                             "File":  "content_log.txt",
+                             "LineNumber":  3683,
+                             "Text":  "[2026-06-08 18:49:03] AppID 2483190 state changed : Fully Installed,",
+                             "Path":  "C:\\Program Files (x86)\\Steam\\logs\\content_log.txt"
+                         },
+                         {
+                             "File":  "shader_log.txt",
+                             "LineNumber":  9129,
+                             "Text":  "[2026-05-22 18:00:39] Setting MESA_GLSL_CACHE_DIR=C:\\Program Files (x86)\\Steam\\steamapps\\shadercache\\2483190 MESA_DISK_CACHE_READ_ONLY_FOZ_DBS=steam_cache,steam_precompiled",
+                             "Path":  "C:\\Program Files (x86)\\Steam\\logs\\shader_log.txt"
+                         },
+                         {
+                             "File":  "shader_log.txt",
+                             "LineNumber":  9130,
+                             "Text":  "[2026-05-22 22:05:10] AppID 2483190 exited.",
+                             "Path":  "C:\\Program Files (x86)\\Steam\\logs\\shader_log.txt"
+                         },
+                         {
+                             "File":  "shader_log.txt",
+                             "LineNumber":  9228,
+                             "Text":  "[2026-05-23 12:54:34] Setting MESA_GLSL_CACHE_DIR=C:\\Program Files (x86)\\Steam\\steamapps\\shadercache\\2483190 MESA_DISK_CACHE_READ_ONLY_FOZ_DBS=steam_cache,steam_precompiled",
+                             "Path":  "C:\\Program Files (x86)\\Steam\\logs\\shader_log.txt"
+                         },
+                         {
+                             "File":  "shader_log.txt",
+                             "LineNumber":  9229,
+                             "Text":  "[2026-05-23 12:55:30] AppID 2483190 exited.",
+                             "Path":  "C:\\Program Files (x86)\\Steam\\logs\\shader_log.txt"
+                         },
+                         {
+                             "File":  "shader_log.txt",
+                             "LineNumber":  9231,
+                             "Text":  "[2026-05-23 12:55:39] Setting MESA_GLSL_CACHE_DIR=C:\\Program Files (x86)\\Steam\\steamapps\\shadercache\\2483190 MESA_DISK_CACHE_READ_ONLY_FOZ_DBS=steam_cache,steam_precompiled",
+                             "Path":  "C:\\Program Files (x86)\\Steam\\logs\\shader_log.txt"
+                         },
+                         {
+                             "File":  "shader_log.txt",
+                             "LineNumber":  9232,
+                             "Text":  "[2026-05-23 13:24:57] AppID 2483190 exited.",
+                             "Path":  "C:\\Program Files (x86)\\Steam\\logs\\shader_log.txt"
+                         },
+                         {
+                             "File":  "shader_log.txt",
+                             "LineNumber":  9394,
+                             "Text":  "[2026-05-23 19:52:24] Setting MESA_GLSL_CACHE_DIR=C:\\Program Files (x86)\\Steam\\steamapps\\shadercache\\2483190 MESA_DISK_CACHE_READ_ONLY_FOZ_DBS=steam_cache,steam_precompiled",
+                             "Path":  "C:\\Program Files (x86)\\Steam\\logs\\shader_log.txt"
+                         },
+                         {
+                             "File":  "shader_log.txt",
+                             "LineNumber":  9395,
+                             "Text":  "[2026-05-23 21:33:06] AppID 2483190 exited.",
+                             "Path":  "C:\\Program Files (x86)\\Steam\\logs\\shader_log.txt"
+                         },
+                         {
+                             "File":  "shader_log.txt",
+                             "LineNumber":  9429,
+                             "Text":  "[2026-05-24 14:26:32] Setting MESA_GLSL_CACHE_DIR=C:\\Program Files (x86)\\Steam\\steamapps\\shadercache\\2483190 MESA_DISK_CACHE_READ_ONLY_FOZ_DBS=steam_cache,steam_precompiled",
+                             "Path":  "C:\\Program Files (x86)\\Steam\\logs\\shader_log.txt"
+                         },
+                         {
+                             "File":  "shader_log.txt",
+                             "LineNumber":  9430,
+                             "Text":  "[2026-05-24 16:00:26] AppID 2483190 exited.",
+                             "Path":  "C:\\Program Files (x86)\\Steam\\logs\\shader_log.txt"
+                         },
+                         {
+                             "File":  "shader_log.txt",
+                             "LineNumber":  9432,
+                             "Text":  "[2026-05-24 16:15:09] Setting MESA_GLSL_CACHE_DIR=C:\\Program Files (x86)\\Steam\\steamapps\\shadercache\\2483190 MESA_DISK_CACHE_READ_ONLY_FOZ_DBS=steam_cache,steam_precompiled",
+                             "Path":  "C:\\Program Files (x86)\\Steam\\logs\\shader_log.txt"
+                         },
+                         {
+                             "File":  "shader_log.txt",
+                             "LineNumber":  9433,
+                             "Text":  "[2026-05-24 20:51:23] AppID 2483190 exited.",
+                             "Path":  "C:\\Program Files (x86)\\Steam\\logs\\shader_log.txt"
+                         },
+                         {
+                             "File":  "shader_log.txt",
+                             "LineNumber":  9472,
+                             "Text":  "[2026-05-25 04:47:14] Requeuing processing for app 2483190.",
+                             "Path":  "C:\\Program Files (x86)\\Steam\\logs\\shader_log.txt"
+                         },
+                         {
+                             "File":  "shader_log.txt",
+                             "LineNumber":  9476,
+                             "Text":  "[2026-05-25 04:47:14] Pruning app 2483190.",
+                             "Path":  "C:\\Program Files (x86)\\Steam\\logs\\shader_log.txt"
+                         },
+                         {
+                             "File":  "shader_log.txt",
+                             "LineNumber":  9639,
+                             "Text":  "[2026-05-26 15:33:57] Setting MESA_GLSL_CACHE_DIR=C:\\Program Files (x86)\\Steam\\steamapps\\shadercache\\2483190 MESA_DISK_CACHE_READ_ONLY_FOZ_DBS=steam_cache,steam_precompiled",
+                             "Path":  "C:\\Program Files (x86)\\Steam\\logs\\shader_log.txt"
+                         },
+                         {
+                             "File":  "shader_log.txt",
+                             "LineNumber":  9640,
+                             "Text":  "[2026-05-26 17:07:05] AppID 2483190 exited.",
+                             "Path":  "C:\\Program Files (x86)\\Steam\\logs\\shader_log.txt"
+                         },
+                         {
+                             "File":  "shader_log.txt",
+                             "LineNumber":  9642,
+                             "Text":  "[2026-05-26 17:10:38] Setting MESA_GLSL_CACHE_DIR=C:\\Program Files (x86)\\Steam\\steamapps\\shadercache\\2483190 MESA_DISK_CACHE_READ_ONLY_FOZ_DBS=steam_cache,steam_precompiled",
+                             "Path":  "C:\\Program Files (x86)\\Steam\\logs\\shader_log.txt"
+                         },
+                         {
+                             "File":  "shader_log.txt",
+                             "LineNumber":  9643,
+                             "Text":  "[2026-05-26 17:30:48] AppID 2483190 exited.",
+                             "Path":  "C:\\Program Files (x86)\\Steam\\logs\\shader_log.txt"
+                         },
+                         {
+                             "File":  "shader_log.txt",
+                             "LineNumber":  9709,
+                             "Text":  "[2026-05-26 20:04:45] Setting MESA_GLSL_CACHE_DIR=C:\\Program Files (x86)\\Steam\\steamapps\\shadercache\\2483190 MESA_DISK_CACHE_READ_ONLY_FOZ_DBS=steam_cache,steam_precompiled",
+                             "Path":  "C:\\Program Files (x86)\\Steam\\logs\\shader_log.txt"
+                         },
+                         {
+                             "File":  "shader_log.txt",
+                             "LineNumber":  9710,
+                             "Text":  "[2026-05-26 20:14:24] AppID 2483190 exited.",
+                             "Path":  "C:\\Program Files (x86)\\Steam\\logs\\shader_log.txt"
+                         },
+                         {
+                             "File":  "shader_log.txt",
+                             "LineNumber":  9776,
+                             "Text":  "[2026-05-27 19:53:46] Setting MESA_GLSL_CACHE_DIR=C:\\Program Files (x86)\\Steam\\steamapps\\shadercache\\2483190 MESA_DISK_CACHE_READ_ONLY_FOZ_DBS=steam_cache,steam_precompiled",
+                             "Path":  "C:\\Program Files (x86)\\Steam\\logs\\shader_log.txt"
+                         },
+                         {
+                             "File":  "shader_log.txt",
+                             "LineNumber":  9777,
+                             "Text":  "[2026-05-27 21:23:51] AppID 2483190 exited.",
+                             "Path":  "C:\\Program Files (x86)\\Steam\\logs\\shader_log.txt"
+                         },
+                         {
+                             "File":  "shader_log.txt",
+                             "LineNumber":  9875,
+                             "Text":  "[2026-05-28 22:19:45] Setting MESA_GLSL_CACHE_DIR=C:\\Program Files (x86)\\Steam\\steamapps\\shadercache\\2483190 MESA_DISK_CACHE_READ_ONLY_FOZ_DBS=steam_cache,steam_precompiled",
+                             "Path":  "C:\\Program Files (x86)\\Steam\\logs\\shader_log.txt"
+                         },
+                         {
+                             "File":  "shader_log.txt",
+                             "LineNumber":  9876,
+                             "Text":  "[2026-05-28 22:32:35] AppID 2483190 exited.",
+                             "Path":  "C:\\Program Files (x86)\\Steam\\logs\\shader_log.txt"
+                         },
+                         {
+                             "File":  "shader_log.txt",
+                             "LineNumber":  9910,
+                             "Text":  "[2026-05-29 20:48:03] Setting MESA_GLSL_CACHE_DIR=C:\\Program Files (x86)\\Steam\\steamapps\\shadercache\\2483190 MESA_DISK_CACHE_READ_ONLY_FOZ_DBS=steam_cache,steam_precompiled",
+                             "Path":  "C:\\Program Files (x86)\\Steam\\logs\\shader_log.txt"
+                         },
+                         {
+                             "File":  "shader_log.txt",
+                             "LineNumber":  9911,
+                             "Text":  "[2026-05-29 22:14:00] AppID 2483190 exited.",
+                             "Path":  "C:\\Program Files (x86)\\Steam\\logs\\shader_log.txt"
+                         },
+                         {
+                             "File":  "shader_log.txt",
+                             "LineNumber":  9945,
+                             "Text":  "[2026-05-30 06:58:34] Setting MESA_GLSL_CACHE_DIR=C:\\Program Files (x86)\\Steam\\steamapps\\shadercache\\2483190 MESA_DISK_CACHE_READ_ONLY_FOZ_DBS=steam_cache,steam_precompiled",
+                             "Path":  "C:\\Program Files (x86)\\Steam\\logs\\shader_log.txt"
+                         },
+                         {
+                             "File":  "shader_log.txt",
+                             "LineNumber":  9946,
+                             "Text":  "[2026-05-30 07:48:33] AppID 2483190 exited.",
+                             "Path":  "C:\\Program Files (x86)\\Steam\\logs\\shader_log.txt"
+                         },
+                         {
+                             "File":  "shader_log.txt",
+                             "LineNumber":  9948,
+                             "Text":  "[2026-05-30 09:05:44] Setting MESA_GLSL_CACHE_DIR=C:\\Program Files (x86)\\Steam\\steamapps\\shadercache\\2483190 MESA_DISK_CACHE_READ_ONLY_FOZ_DBS=steam_cache,steam_precompiled",
+                             "Path":  "C:\\Program Files (x86)\\Steam\\logs\\shader_log.txt"
+                         },
+                         {
+                             "File":  "shader_log.txt",
+                             "LineNumber":  9949,
+                             "Text":  "[2026-05-30 09:12:17] AppID 2483190 exited.",
+                             "Path":  "C:\\Program Files (x86)\\Steam\\logs\\shader_log.txt"
+                         },
+                         {
+                             "File":  "shader_log.txt",
+                             "LineNumber":  9983,
+                             "Text":  "[2026-05-30 22:24:59] Setting MESA_GLSL_CACHE_DIR=C:\\Program Files (x86)\\Steam\\steamapps\\shadercache\\2483190 MESA_DISK_CACHE_READ_ONLY_FOZ_DBS=steam_cache,steam_precompiled",
+                             "Path":  "C:\\Program Files (x86)\\Steam\\logs\\shader_log.txt"
+                         },
+                         {
+                             "File":  "shader_log.txt",
+                             "LineNumber":  9984,
+                             "Text":  "[2026-05-31 01:22:45] AppID 2483190 exited.",
+                             "Path":  "C:\\Program Files (x86)\\Steam\\logs\\shader_log.txt"
+                         },
+                         {
+                             "File":  "shader_log.txt",
+                             "LineNumber":  9986,
+                             "Text":  "[2026-05-31 02:06:26] Setting MESA_GLSL_CACHE_DIR=C:\\Program Files (x86)\\Steam\\steamapps\\shadercache\\2483190 MESA_DISK_CACHE_READ_ONLY_FOZ_DBS=steam_cache,steam_precompiled",
+                             "Path":  "C:\\Program Files (x86)\\Steam\\logs\\shader_log.txt"
+                         },
+                         {
+                             "File":  "shader_log.txt",
+                             "LineNumber":  9987,
+                             "Text":  "[2026-05-31 03:20:06] AppID 2483190 exited.",
+                             "Path":  "C:\\Program Files (x86)\\Steam\\logs\\shader_log.txt"
+                         },
+                         {
+                             "File":  "shader_log.txt",
+                             "LineNumber":  10085,
+                             "Text":  "[2026-05-31 12:21:43] Setting MESA_GLSL_CACHE_DIR=C:\\Program Files (x86)\\Steam\\steamapps\\shadercache\\2483190 MESA_DISK_CACHE_READ_ONLY_FOZ_DBS=steam_cache,steam_precompiled",
+                             "Path":  "C:\\Program Files (x86)\\Steam\\logs\\shader_log.txt"
+                         },
+                         {
+                             "File":  "shader_log.txt",
+                             "LineNumber":  10086,
+                             "Text":  "[2026-05-31 12:52:06] AppID 2483190 exited.",
+                             "Path":  "C:\\Program Files (x86)\\Steam\\logs\\shader_log.txt"
+                         },
+                         {
+                             "File":  "shader_log.txt",
+                             "LineNumber":  10178,
+                             "Text":  "[2026-05-31 14:55:38] Requeuing processing for app 2483190.",
+                             "Path":  "C:\\Program Files (x86)\\Steam\\logs\\shader_log.txt"
+                         },
+                         {
+                             "File":  "shader_log.txt",
+                             "LineNumber":  10182,
+                             "Text":  "[2026-05-31 14:55:38] Pruning app 2483190.",
+                             "Path":  "C:\\Program Files (x86)\\Steam\\logs\\shader_log.txt"
+                         },
+                         {
+                             "File":  "shader_log.txt",
+                             "LineNumber":  10217,
+                             "Text":  "[2026-05-31 15:00:45] Setting MESA_GLSL_CACHE_DIR=C:\\Program Files (x86)\\Steam\\steamapps\\shadercache\\2483190 MESA_DISK_CACHE_READ_ONLY_FOZ_DBS=steam_cache,steam_precompiled",
+                             "Path":  "C:\\Program Files (x86)\\Steam\\logs\\shader_log.txt"
+                         },
+                         {
+                             "File":  "shader_log.txt",
+                             "LineNumber":  10218,
+                             "Text":  "[2026-05-31 16:24:20] AppID 2483190 exited.",
+                             "Path":  "C:\\Program Files (x86)\\Steam\\logs\\shader_log.txt"
+                         },
+                         {
+                             "File":  "shader_log.txt",
+                             "LineNumber":  10220,
+                             "Text":  "[2026-05-31 18:25:11] Setting MESA_GLSL_CACHE_DIR=C:\\Program Files (x86)\\Steam\\steamapps\\shadercache\\2483190 MESA_DISK_CACHE_READ_ONLY_FOZ_DBS=steam_cache,steam_precompiled",
+                             "Path":  "C:\\Program Files (x86)\\Steam\\logs\\shader_log.txt"
+                         },
+                         {
+                             "File":  "shader_log.txt",
+                             "LineNumber":  10221,
+                             "Text":  "[2026-05-31 21:07:53] AppID 2483190 exited.",
+                             "Path":  "C:\\Program Files (x86)\\Steam\\logs\\shader_log.txt"
+                         },
+                         {
+                             "File":  "shader_log.txt",
+                             "LineNumber":  10415,
+                             "Text":  "[2026-06-01 16:59:27] Setting MESA_GLSL_CACHE_DIR=C:\\Program Files (x86)\\Steam\\steamapps\\shadercache\\2483190 MESA_DISK_CACHE_READ_ONLY_FOZ_DBS=steam_cache,steam_precompiled",
+                             "Path":  "C:\\Program Files (x86)\\Steam\\logs\\shader_log.txt"
+                         },
+                         {
+                             "File":  "shader_log.txt",
+                             "LineNumber":  10416,
+                             "Text":  "[2026-06-01 17:18:22] AppID 2483190 exited.",
+                             "Path":  "C:\\Program Files (x86)\\Steam\\logs\\shader_log.txt"
+                         },
+                         {
+                             "File":  "shader_log.txt",
+                             "LineNumber":  10418,
+                             "Text":  "[2026-06-01 23:43:50] Setting MESA_GLSL_CACHE_DIR=C:\\Program Files (x86)\\Steam\\steamapps\\shadercache\\2483190 MESA_DISK_CACHE_READ_ONLY_FOZ_DBS=steam_cache,steam_precompiled",
+                             "Path":  "C:\\Program Files (x86)\\Steam\\logs\\shader_log.txt"
+                         },
+                         {
+                             "File":  "shader_log.txt",
+                             "LineNumber":  10419,
+                             "Text":  "[2026-06-02 01:33:30] AppID 2483190 exited.",
+                             "Path":  "C:\\Program Files (x86)\\Steam\\logs\\shader_log.txt"
+                         },
+                         {
+                             "File":  "shader_log.txt",
+                             "LineNumber":  10453,
+                             "Text":  "[2026-06-02 19:54:12] Setting MESA_GLSL_CACHE_DIR=C:\\Program Files (x86)\\Steam\\steamapps\\shadercache\\2483190 MESA_DISK_CACHE_READ_ONLY_FOZ_DBS=steam_cache,steam_precompiled",
+                             "Path":  "C:\\Program Files (x86)\\Steam\\logs\\shader_log.txt"
+                         },
+                         {
+                             "File":  "shader_log.txt",
+                             "LineNumber":  10454,
+                             "Text":  "[2026-06-02 21:29:56] AppID 2483190 exited.",
+                             "Path":  "C:\\Program Files (x86)\\Steam\\logs\\shader_log.txt"
+                         },
+                         {
+                             "File":  "shader_log.txt",
+                             "LineNumber":  10456,
+                             "Text":  "[2026-06-02 22:25:17] Setting MESA_GLSL_CACHE_DIR=C:\\Program Files (x86)\\Steam\\steamapps\\shadercache\\2483190 MESA_DISK_CACHE_READ_ONLY_FOZ_DBS=steam_cache,steam_precompiled",
+                             "Path":  "C:\\Program Files (x86)\\Steam\\logs\\shader_log.txt"
+                         },
+                         {
+                             "File":  "shader_log.txt",
+                             "LineNumber":  10457,
+                             "Text":  "[2026-06-02 23:20:42] AppID 2483190 exited.",
+                             "Path":  "C:\\Program Files (x86)\\Steam\\logs\\shader_log.txt"
+                         },
+                         {
+                             "File":  "shader_log.txt",
+                             "LineNumber":  10555,
+                             "Text":  "[2026-06-03 22:53:23] Setting MESA_GLSL_CACHE_DIR=C:\\Program Files (x86)\\Steam\\steamapps\\shadercache\\2483190 MESA_DISK_CACHE_READ_ONLY_FOZ_DBS=steam_cache,steam_precompiled",
+                             "Path":  "C:\\Program Files (x86)\\Steam\\logs\\shader_log.txt"
+                         },
+                         {
+                             "File":  "shader_log.txt",
+                             "LineNumber":  10556,
+                             "Text":  "[2026-06-04 00:29:35] AppID 2483190 exited.",
+                             "Path":  "C:\\Program Files (x86)\\Steam\\logs\\shader_log.txt"
+                         },
+                         {
+                             "File":  "shader_log.txt",
+                             "LineNumber":  10718,
+                             "Text":  "[2026-06-06 20:07:38] Setting MESA_GLSL_CACHE_DIR=C:\\Program Files (x86)\\Steam\\steamapps\\shadercache\\2483190 MESA_DISK_CACHE_READ_ONLY_FOZ_DBS=steam_cache,steam_precompiled",
+                             "Path":  "C:\\Program Files (x86)\\Steam\\logs\\shader_log.txt"
+                         },
+                         {
+                             "File":  "shader_log.txt",
+                             "LineNumber":  10719,
+                             "Text":  "[2026-06-06 22:00:28] AppID 2483190 exited.",
+                             "Path":  "C:\\Program Files (x86)\\Steam\\logs\\shader_log.txt"
+                         },
+                         {
+                             "File":  "shader_log.txt",
+                             "LineNumber":  10753,
+                             "Text":  "[2026-06-07 06:23:20] Setting MESA_GLSL_CACHE_DIR=C:\\Program Files (x86)\\Steam\\steamapps\\shadercache\\2483190 MESA_DISK_CACHE_READ_ONLY_FOZ_DBS=steam_cache,steam_precompiled",
+                             "Path":  "C:\\Program Files (x86)\\Steam\\logs\\shader_log.txt"
+                         },
+                         {
+                             "File":  "shader_log.txt",
+                             "LineNumber":  10754,
+                             "Text":  "[2026-06-07 06:24:11] AppID 2483190 exited.",
+                             "Path":  "C:\\Program Files (x86)\\Steam\\logs\\shader_log.txt"
+                         },
+                         {
+                             "File":  "shader_log.txt",
+                             "LineNumber":  10756,
+                             "Text":  "[2026-06-07 06:49:10] Setting MESA_GLSL_CACHE_DIR=C:\\Program Files (x86)\\Steam\\steamapps\\shadercache\\2483190 MESA_DISK_CACHE_READ_ONLY_FOZ_DBS=steam_cache,steam_precompiled",
+                             "Path":  "C:\\Program Files (x86)\\Steam\\logs\\shader_log.txt"
+                         },
+                         {
+                             "File":  "shader_log.txt",
+                             "LineNumber":  10757,
+                             "Text":  "[2026-06-07 06:49:59] AppID 2483190 exited.",
+                             "Path":  "C:\\Program Files (x86)\\Steam\\logs\\shader_log.txt"
+                         },
+                         {
+                             "File":  "shader_log.txt",
+                             "LineNumber":  10759,
+                             "Text":  "[2026-06-07 06:53:52] Setting MESA_GLSL_CACHE_DIR=C:\\Program Files (x86)\\Steam\\steamapps\\shadercache\\2483190 MESA_DISK_CACHE_READ_ONLY_FOZ_DBS=steam_cache,steam_precompiled",
+                             "Path":  "C:\\Program Files (x86)\\Steam\\logs\\shader_log.txt"
+                         },
+                         {
+                             "File":  "shader_log.txt",
+                             "LineNumber":  10760,
+                             "Text":  "[2026-06-07 06:54:41] AppID 2483190 exited.",
+                             "Path":  "C:\\Program Files (x86)\\Steam\\logs\\shader_log.txt"
+                         },
+                         {
+                             "File":  "shader_log.txt",
+                             "LineNumber":  10762,
+                             "Text":  "[2026-06-07 07:10:10] Setting MESA_GLSL_CACHE_DIR=C:\\Program Files (x86)\\Steam\\steamapps\\shadercache\\2483190 MESA_DISK_CACHE_READ_ONLY_FOZ_DBS=steam_cache,steam_precompiled",
+                             "Path":  "C:\\Program Files (x86)\\Steam\\logs\\shader_log.txt"
+                         },
+                         {
+                             "File":  "shader_log.txt",
+                             "LineNumber":  10763,
+                             "Text":  "[2026-06-07 07:11:02] AppID 2483190 exited.",
+                             "Path":  "C:\\Program Files (x86)\\Steam\\logs\\shader_log.txt"
+                         },
+                         {
+                             "File":  "shader_log.txt",
+                             "LineNumber":  10765,
+                             "Text":  "[2026-06-07 07:49:29] Setting MESA_GLSL_CACHE_DIR=C:\\Program Files (x86)\\Steam\\steamapps\\shadercache\\2483190 MESA_DISK_CACHE_READ_ONLY_FOZ_DBS=steam_cache,steam_precompiled",
+                             "Path":  "C:\\Program Files (x86)\\Steam\\logs\\shader_log.txt"
+                         },
+                         {
+                             "File":  "shader_log.txt",
+                             "LineNumber":  10766,
+                             "Text":  "[2026-06-07 07:50:19] AppID 2483190 exited.",
+                             "Path":  "C:\\Program Files (x86)\\Steam\\logs\\shader_log.txt"
+                         },
+                         {
+                             "File":  "shader_log.txt",
+                             "LineNumber":  10768,
+                             "Text":  "[2026-06-07 07:58:05] Setting MESA_GLSL_CACHE_DIR=C:\\Program Files (x86)\\Steam\\steamapps\\shadercache\\2483190 MESA_DISK_CACHE_READ_ONLY_FOZ_DBS=steam_cache,steam_precompiled",
+                             "Path":  "C:\\Program Files (x86)\\Steam\\logs\\shader_log.txt"
+                         },
+                         {
+                             "File":  "shader_log.txt",
+                             "LineNumber":  10769,
+                             "Text":  "[2026-06-07 08:36:20] AppID 2483190 exited.",
+                             "Path":  "C:\\Program Files (x86)\\Steam\\logs\\shader_log.txt"
+                         },
+                         {
+                             "File":  "shader_log.txt",
+                             "LineNumber":  10771,
+                             "Text":  "[2026-06-07 10:52:55] Setting MESA_GLSL_CACHE_DIR=C:\\Program Files (x86)\\Steam\\steamapps\\shadercache\\2483190 MESA_DISK_CACHE_READ_ONLY_FOZ_DBS=steam_cache,steam_precompiled",
+                             "Path":  "C:\\Program Files (x86)\\Steam\\logs\\shader_log.txt"
+                         },
+                         {
+                             "File":  "shader_log.txt",
+                             "LineNumber":  10772,
+                             "Text":  "[2026-06-07 10:53:47] AppID 2483190 exited.",
+                             "Path":  "C:\\Program Files (x86)\\Steam\\logs\\shader_log.txt"
+                         },
+                         {
+                             "File":  "shader_log.txt",
+                             "LineNumber":  10774,
+                             "Text":  "[2026-06-07 10:54:40] Setting MESA_GLSL_CACHE_DIR=C:\\Program Files (x86)\\Steam\\steamapps\\shadercache\\2483190 MESA_DISK_CACHE_READ_ONLY_FOZ_DBS=steam_cache,steam_precompiled",
+                             "Path":  "C:\\Program Files (x86)\\Steam\\logs\\shader_log.txt"
+                         },
+                         {
+                             "File":  "shader_log.txt",
+                             "LineNumber":  10775,
+                             "Text":  "[2026-06-07 10:55:30] AppID 2483190 exited.",
+                             "Path":  "C:\\Program Files (x86)\\Steam\\logs\\shader_log.txt"
+                         },
+                         {
+                             "File":  "shader_log.txt",
+                             "LineNumber":  10777,
+                             "Text":  "[2026-06-07 10:57:35] Setting MESA_GLSL_CACHE_DIR=C:\\Program Files (x86)\\Steam\\steamapps\\shadercache\\2483190 MESA_DISK_CACHE_READ_ONLY_FOZ_DBS=steam_cache,steam_precompiled",
+                             "Path":  "C:\\Program Files (x86)\\Steam\\logs\\shader_log.txt"
+                         },
+                         {
+                             "File":  "shader_log.txt",
+                             "LineNumber":  10778,
+                             "Text":  "[2026-06-07 12:35:42] AppID 2483190 exited.",
+                             "Path":  "C:\\Program Files (x86)\\Steam\\logs\\shader_log.txt"
+                         },
+                         {
+                             "File":  "shader_log.txt",
+                             "LineNumber":  10780,
+                             "Text":  "[2026-06-07 18:10:50] Setting MESA_GLSL_CACHE_DIR=C:\\Program Files (x86)\\Steam\\steamapps\\shadercache\\2483190 MESA_DISK_CACHE_READ_ONLY_FOZ_DBS=steam_cache,steam_precompiled",
+                             "Path":  "C:\\Program Files (x86)\\Steam\\logs\\shader_log.txt"
+                         },
+                         {
+                             "File":  "shader_log.txt",
+                             "LineNumber":  10781,
+                             "Text":  "[2026-06-07 19:13:24] AppID 2483190 exited.",
+                             "Path":  "C:\\Program Files (x86)\\Steam\\logs\\shader_log.txt"
+                         },
+                         {
+                             "File":  "shader_log.txt",
+                             "LineNumber":  10783,
+                             "Text":  "[2026-06-07 20:44:26] Setting MESA_GLSL_CACHE_DIR=C:\\Program Files (x86)\\Steam\\steamapps\\shadercache\\2483190 MESA_DISK_CACHE_READ_ONLY_FOZ_DBS=steam_cache,steam_precompiled",
+                             "Path":  "C:\\Program Files (x86)\\Steam\\logs\\shader_log.txt"
+                         },
+                         {
+                             "File":  "shader_log.txt",
+                             "LineNumber":  10784,
+                             "Text":  "[2026-06-07 21:14:40] AppID 2483190 exited.",
+                             "Path":  "C:\\Program Files (x86)\\Steam\\logs\\shader_log.txt"
+                         },
+                         {
+                             "File":  "shader_log.txt",
+                             "LineNumber":  10850,
+                             "Text":  "[2026-06-07 23:50:40] Setting MESA_GLSL_CACHE_DIR=C:\\Program Files (x86)\\Steam\\steamapps\\shadercache\\2483190 MESA_DISK_CACHE_READ_ONLY_FOZ_DBS=steam_cache,steam_precompiled",
+                             "Path":  "C:\\Program Files (x86)\\Steam\\logs\\shader_log.txt"
+                         },
+                         {
+                             "File":  "shader_log.txt",
+                             "LineNumber":  10851,
+                             "Text":  "[2026-06-08 00:03:21] AppID 2483190 exited.",
+                             "Path":  "C:\\Program Files (x86)\\Steam\\logs\\shader_log.txt"
+                         },
+                         {
+                             "File":  "shader_log.txt",
+                             "LineNumber":  10885,
+                             "Text":  "[2026-06-08 18:48:12] Setting MESA_GLSL_CACHE_DIR=C:\\Program Files (x86)\\Steam\\steamapps\\shadercache\\2483190 MESA_DISK_CACHE_READ_ONLY_FOZ_DBS=steam_cache,steam_precompiled",
+                             "Path":  "C:\\Program Files (x86)\\Steam\\logs\\shader_log.txt"
+                         },
+                         {
+                             "File":  "shader_log.txt",
+                             "LineNumber":  10886,
+                             "Text":  "[2026-06-08 18:49:03] AppID 2483190 exited.",
+                             "Path":  "C:\\Program Files (x86)\\Steam\\logs\\shader_log.txt"
+                         }
+                     ],
+    "Devices":  [
+                    {
+                        "Name":  " SPI (flash) Controller - 7F24",
+                        "Status":  "OK",
+                        "Class":  "System",
+                        "Manufacturer":  "INTEL",
+                        "DeviceId":  "PCI\\VEN_8086\u0026DEV_7F24\u0026SUBSYS_12141043\u0026REV_10\\3\u002636CB97A3\u00260\u0026FD"
+                    },
+                    {
+                        "Name":  "ASUS Precision Touchpad",
+                        "Status":  "OK",
+                        "Class":  "HIDClass",
+                        "Manufacturer":  "ASUSTek COMPUTER INC.",
+                        "DeviceId":  "HID\\ASUF1209\u0026COL02\\5\u00262A62A8F2\u00260\u00260001"
+                    },
+                    {
+                        "Name":  "Camera DFU Device",
+                        "Status":  "OK",
+                        "Class":  "USBDevice",
+                        "Manufacturer":  "WinUsb Device",
+                        "DeviceId":  "USB\\VID_2B7E\u0026PID_C711\u0026MI_04\\6\u00261604019\u00260\u00260004"
+                    },
+                    {
+                        "Name":  "Generic SuperSpeed USB Hub",
+                        "Status":  "OK",
+                        "Class":  "USB",
+                        "Manufacturer":  "(Standard USB HUBs)",
+                        "DeviceId":  "USB\\VID_0424\u0026PID_5807\\8\u0026CB1CE69\u00260\u00263"
+                    },
+                    {
+                        "Name":  "Generic USB Hub",
+                        "Status":  "OK",
+                        "Class":  "USB",
+                        "Manufacturer":  "(Standard USB HUBs)",
+                        "DeviceId":  "USB\\VID_0424\u0026PID_2807\\5\u0026230B0289\u00260\u00262"
+                    },
+                    {
+                        "Name":  "HID Keyboard Device",
+                        "Status":  "OK",
+                        "Class":  "Keyboard",
+                        "Manufacturer":  "(Standard keyboards)",
+                        "DeviceId":  "HID\\VID_0B05\u0026PID_19B6\u0026MI_00\u0026COL02\\7\u00264322C2E\u00260\u00260001"
+                    },
+                    {
+                        "Name":  "HID Keyboard Device",
+                        "Status":  "OK",
+                        "Class":  "Keyboard",
+                        "Manufacturer":  "(Standard keyboards)",
+                        "DeviceId":  "HID\\VID_046D\u0026PID_C099\u0026MI_01\u0026COL01\\7\u00269D82D7A\u00260\u00260000"
+                    },
+                    {
+                        "Name":  "HID-compliant consumer control device",
+                        "Status":  "OK",
+                        "Class":  "HIDClass",
+                        "Manufacturer":  "Microsoft",
+                        "DeviceId":  "HID\\VID_0B05\u0026PID_19B6\u0026MI_00\u0026COL05\\7\u00264322C2E\u00260\u00260004"
+                    },
+                    {
+                        "Name":  "HID-compliant consumer control device",
+                        "Status":  "OK",
+                        "Class":  "HIDClass",
+                        "Manufacturer":  "Microsoft",
+                        "DeviceId":  "HID\\VID_046D\u0026PID_C099\u0026MI_01\u0026COL02\\7\u00269D82D7A\u00260\u00260001"
+                    },
+                    {
+                        "Name":  "HID-compliant device",
+                        "Status":  "OK",
+                        "Class":  "HIDClass",
+                        "Manufacturer":  "(Standard system devices)",
+                        "DeviceId":  "HID\\VID_0B05\u0026PID_19B6\u0026MI_01\\7\u00261FA51194\u00260\u00260000"
+                    },
+                    {
+                        "Name":  "HID-compliant mouse",
+                        "Status":  "OK",
+                        "Class":  "Mouse",
+                        "Manufacturer":  "Microsoft",
+                        "DeviceId":  "HID\\VID_046D\u0026PID_C099\u0026MI_00\\7\u00262DAF6B3C\u00260\u00260000"
+                    },
+                    {
+                        "Name":  "HID-compliant mouse",
+                        "Status":  "OK",
+                        "Class":  "Mouse",
+                        "Manufacturer":  "Microsoft",
+                        "DeviceId":  "HID\\VID_0B05\u0026PID_19B6\u0026MI_00\u0026COL07\\7\u00264322C2E\u00260\u00260006"
+                    },
+                    {
+                        "Name":  "HID-compliant mouse",
+                        "Status":  "OK",
+                        "Class":  "Mouse",
+                        "Manufacturer":  "Microsoft",
+                        "DeviceId":  "HID\\ASUF1209\u0026COL01\\5\u00262A62A8F2\u00260\u00260000"
+                    },
+                    {
+                        "Name":  "HID-compliant system controller",
+                        "Status":  "OK",
+                        "Class":  "HIDClass",
+                        "Manufacturer":  "(Standard system devices)",
+                        "DeviceId":  "HID\\VID_0B05\u0026PID_19B6\u0026MI_00\u0026COL08\\7\u00264322C2E\u00260\u00260007"
+                    },
+                    {
+                        "Name":  "HID-compliant system controller",
+                        "Status":  "OK",
+                        "Class":  "HIDClass",
+                        "Manufacturer":  "(Standard system devices)",
+                        "DeviceId":  "HID\\VID_046D\u0026PID_C099\u0026MI_01\u0026COL03\\7\u00269D82D7A\u00260\u00260002"
+                    },
+                    {
+                        "Name":  "HID-compliant vendor-defined device",
+                        "Status":  "OK",
+                        "Class":  "HIDClass",
+                        "Manufacturer":  "(Standard system devices)",
+                        "DeviceId":  "HID\\VID_0B05\u0026PID_19B6\u0026MI_00\u0026COL04\\7\u00264322C2E\u00260\u00260003"
+                    },
+                    {
+                        "Name":  "HID-compliant vendor-defined device",
+                        "Status":  "OK",
+                        "Class":  "HIDClass",
+                        "Manufacturer":  "(Standard system devices)",
+                        "DeviceId":  "HID\\VID_0B05\u0026PID_19B6\u0026MI_00\u0026COL01\\7\u00264322C2E\u00260\u00260000"
+                    },
+                    {
+                        "Name":  "HID-compliant vendor-defined device",
+                        "Status":  "OK",
+                        "Class":  "HIDClass",
+                        "Manufacturer":  "(Standard system devices)",
+                        "DeviceId":  "HID\\ASUF1209\u0026COL04\\5\u00262A62A8F2\u00260\u00260003"
+                    },
+                    {
+                        "Name":  "HID-compliant vendor-defined device",
+                        "Status":  "OK",
+                        "Class":  "HIDClass",
+                        "Manufacturer":  "(Standard system devices)",
+                        "DeviceId":  "HID\\VID_0B05\u0026PID_19B6\u0026MI_00\u0026COL03\\7\u00264322C2E\u00260\u00260002"
+                    },
+                    {
+                        "Name":  "HID-compliant vendor-defined device",
+                        "Status":  "OK",
+                        "Class":  "HIDClass",
+                        "Manufacturer":  "(Standard system devices)",
+                        "DeviceId":  "HID\\VID_046D\u0026PID_C099\u0026MI_01\u0026COL04\\7\u00269D82D7A\u00260\u00260003"
+                    },
+                    {
+                        "Name":  "HID-compliant vendor-defined device",
+                        "Status":  "OK",
+                        "Class":  "HIDClass",
+                        "Manufacturer":  "(Standard system devices)",
+                        "DeviceId":  "HID\\VID_046D\u0026PID_C099\u0026MI_01\u0026COL05\\7\u00269D82D7A\u00260\u00260004"
+                    },
+                    {
+                        "Name":  "HID-compliant vendor-defined device",
+                        "Status":  "OK",
+                        "Class":  "HIDClass",
+                        "Manufacturer":  "(Standard system devices)",
+                        "DeviceId":  "HID\\ASUF1209\u0026COL05\\5\u00262A62A8F2\u00260\u00260004"
+                    },
+                    {
+                        "Name":  "HID-compliant wireless radio controls",
+                        "Status":  "OK",
+                        "Class":  "HIDClass",
+                        "Manufacturer":  "(Standard system devices)",
+                        "DeviceId":  "HID\\VID_0B05\u0026PID_19B6\u0026MI_00\u0026COL06\\7\u00264322C2E\u00260\u00260005"
+                    },
+                    {
+                        "Name":  "High Definition Audio Controller",
+                        "Status":  "OK",
+                        "Class":  "System",
+                        "Manufacturer":  "Microsoft",
+                        "DeviceId":  "PCI\\VEN_10DE\u0026DEV_22E9\u0026SUBSYS_000010DE\u0026REV_A1\\4\u00263881A6D8\u00260\u00260130"
+                    },
+                    {
+                        "Name":  "I2C HID Device",
+                        "Status":  "OK",
+                        "Class":  "HIDClass",
+                        "Manufacturer":  "Microsoft",
+                        "DeviceId":  "ACPI\\ASUF1209\\4\u002620B4DC47\u00260"
+                    },
+                    {
+                        "Name":  "Intel(R) Serial IO GPIO Host Controller - INTC1082",
+                        "Status":  "OK",
+                        "Class":  "System",
+                        "Manufacturer":  "Intel Corporation",
+                        "DeviceId":  "ACPI\\INTC1082\\2\u0026DABA3FF\u00260"
+                    },
+                    {
+                        "Name":  "Intel(R) Serial IO GPIO Host Controller - INTC1084",
+                        "Status":  "OK",
+                        "Class":  "System",
+                        "Manufacturer":  "Intel Corporation",
+                        "DeviceId":  "ACPI\\INTC1084\\2\u0026DABA3FF\u00260"
+                    },
+                    {
+                        "Name":  "Intel(R) Serial IO I2C Host Controller - 7F4C",
+                        "Status":  "OK",
+                        "Class":  "System",
+                        "Manufacturer":  "Intel Corporation",
+                        "DeviceId":  "PCI\\VEN_8086\u0026DEV_7F4C\u0026SUBSYS_12141043\u0026REV_10\\3\u002636CB97A3\u00260\u0026A8"
+                    },
+                    {
+                        "Name":  "Intel(R) Serial IO I2C Host Controller - 7F7A",
+                        "Status":  "OK",
+                        "Class":  "System",
+                        "Manufacturer":  "Intel Corporation",
+                        "DeviceId":  "PCI\\VEN_8086\u0026DEV_7F7A\u0026SUBSYS_12141043\u0026REV_10\\3\u002636CB97A3\u00260\u0026C8"
+                    },
+                    {
+                        "Name":  "Intel(R) Serial IO SPI Host Controller - 7F2A",
+                        "Status":  "OK",
+                        "Class":  "System",
+                        "Manufacturer":  "Intel Corporation",
+                        "DeviceId":  "PCI\\VEN_8086\u0026DEV_7F2A\u0026SUBSYS_12141043\u0026REV_10\\3\u002636CB97A3\u00260\u0026F2"
+                    },
+                    {
+                        "Name":  "Intel(R) Serial IO UART Host Controller - 7F28",
+                        "Status":  "OK",
+                        "Class":  "System",
+                        "Manufacturer":  "Intel Corporation",
+                        "DeviceId":  "PCI\\VEN_8086\u0026DEV_7F28\u0026SUBSYS_12141043\u0026REV_10\\3\u002636CB97A3\u00260\u0026F0"
+                    },
+                    {
+                        "Name":  "Intel(R) SPI (flash) Controller - AE23",
+                        "Status":  "OK",
+                        "Class":  "System",
+                        "Manufacturer":  "INTEL",
+                        "DeviceId":  "PCI\\VEN_8086\u0026DEV_AE23\u0026SUBSYS_12141043\u0026REV_10\\3\u002611583659\u00260\u0026FD"
+                    },
+                    {
+                        "Name":  "Intel(R) USB 3.20 eXtensible Host Controller - 1.20 (Microsoft)",
+                        "Status":  "OK",
+                        "Class":  "USB",
+                        "Manufacturer":  "Generic USB xHCI Host Controller",
+                        "DeviceId":  "PCI\\VEN_8086\u0026DEV_7F6E\u0026SUBSYS_201F1043\u0026REV_10\\3\u002636CB97A3\u00260\u0026A0"
+                    },
+                    {
+                        "Name":  "Intel(R) USB 3.20 eXtensible Host Controller - 1.20 (Microsoft)",
+                        "Status":  "OK",
+                        "Class":  "USB",
+                        "Manufacturer":  "Generic USB xHCI Host Controller",
+                        "DeviceId":  "PCI\\VEN_8086\u0026DEV_5782\u0026SUBSYS_00000000\u0026REV_00\\6\u00262B4E8A41\u00260\u002600100031"
+                    },
+                    {
+                        "Name":  "Intel(R) USB 3.20 eXtensible Host Controller - 1.20 (Microsoft)",
+                        "Status":  "OK",
+                        "Class":  "USB",
+                        "Manufacturer":  "Generic USB xHCI Host Controller",
+                        "DeviceId":  "PCI\\VEN_8086\u0026DEV_7EC0\u0026SUBSYS_201F1043\u0026REV_10\\3\u002611583659\u00260\u002668"
+                    },
+                    {
+                        "Name":  "Intel® Smart Sound Technology for Bluetooth® Audio",
+                        "Status":  "OK",
+                        "Class":  "MEDIA",
+                        "Manufacturer":  "Intel(R) Corporation",
+                        "DeviceId":  "INTELAUDIO\\CTLR_DEV_7F50\u0026LINKTYPE_03\u0026DEVTYPE_00\u0026VEN_8086\u0026DEV_AE30\u0026SUBSYS_3F201043\u0026REV_0001\\5\u0026355701E7\u00260\u00260000"
+                    },
+                    {
+                        "Name":  "Intel® Smart Sound Technology for Bluetooth® LE Audio",
+                        "Status":  "OK",
+                        "Class":  "MEDIA",
+                        "Manufacturer":  "Intel® Corporation",
+                        "DeviceId":  "INTELAUDIO\\CTLR_DEV_7F50\u0026LINKTYPE_03\u0026DEVTYPE_03\u0026VEN_8086\u0026DEV_AE33\u0026SUBSYS_3F201043\u0026REV_0001\\5\u0026355701E7\u00260\u00260301"
+                    },
+                    {
+                        "Name":  "Intel® Smart Sound Technology for USB Audio",
+                        "Status":  "OK",
+                        "Class":  "MEDIA",
+                        "Manufacturer":  "Intel(R) Corporation",
+                        "DeviceId":  "INTELAUDIO\\CTLR_DEV_7F50\u0026LINKTYPE_06\u0026DEVTYPE_06\u0026VEN_8086\u0026DEV_AE50\u0026SUBSYS_3F201043\u0026REV_0001\\0604"
+                    },
+                    {
+                        "Name":  "Logitech G HUB Virtual Bus Enumerator",
+                        "Status":  "OK",
+                        "Class":  "System",
+                        "Manufacturer":  "(Standard system devices)",
+                        "DeviceId":  "ROOT\\SYSTEM\\0001"
+                    },
+                    {
+                        "Name":  "Microsoft ACPI-Compliant Embedded Controller",
+                        "Status":  "OK",
+                        "Class":  "System",
+                        "Manufacturer":  "(Standard system devices)",
+                        "DeviceId":  "ACPI\\PNP0C09\\4\u00265C787F3\u00260"
+                    },
+                    {
+                        "Name":  "Microsoft Input Configuration Device",
+                        "Status":  "OK",
+                        "Class":  "HIDClass",
+                        "Manufacturer":  "Microsoft",
+                        "DeviceId":  "HID\\ASUF1209\u0026COL03\\5\u00262A62A8F2\u00260\u00260002"
+                    },
+                    {
+                        "Name":  "Microsoft Storage Spaces Controller",
+                        "Status":  "OK",
+                        "Class":  "SCSIAdapter",
+                        "Manufacturer":  "Microsoft",
+                        "DeviceId":  "ROOT\\SPACEPORT\\0000"
+                    },
+                    {
+                        "Name":  "Microsoft Streaming Service Proxy",
+                        "Status":  "OK",
+                        "Class":  "MEDIA",
+                        "Manufacturer":  "Microsoft",
+                        "DeviceId":  "SW\\{96E080C7-143C-11D1-B40F-00A0C9223196}\\{3C0D501A-140B-11D1-B40F-00A0C9223196}"
+                    },
+                    {
+                        "Name":  "Microsoft VHD Loopback Controller",
+                        "Status":  "OK",
+                        "Class":  "SCSIAdapter",
+                        "Manufacturer":  "Microsoft",
+                        "DeviceId":  "{8E7BD593-6E6C-4C52-86A6-77175494DD8E}\\MSVHDHBA\\1\u00263030E83\u00260\u002601"
+                    },
+                    {
+                        "Name":  "NVIDIA High Definition Audio",
+                        "Status":  "OK",
+                        "Class":  "MEDIA",
+                        "Manufacturer":  "NVIDIA",
+                        "DeviceId":  "HDAUDIO\\FUNC_01\u0026VEN_10DE\u0026DEV_00AB\u0026SUBSYS_10DE0000\u0026REV_1001\\5\u0026D76BA05\u00260\u00260001"
+                    },
+                    {
+                        "Name":  "NVIDIA Platform Controllers and Framework",
+                        "Status":  "OK",
+                        "Class":  "SoftwareDevice",
+                        "Manufacturer":  "NVIDIA",
+                        "DeviceId":  "ACPI\\NVDA0820\\NPCF"
+                    },
+                    {
+                        "Name":  "NVIDIA Virtual Audio Device (Wave Extensible) (WDM)",
+                        "Status":  "OK",
+                        "Class":  "MEDIA",
+                        "Manufacturer":  "NVIDIA",
+                        "DeviceId":  "ROOT\\UNNAMED_DEVICE\\0000"
+                    },
+                    {
+                        "Name":  "PCI standard RAM Controller",
+                        "Status":  "OK",
+                        "Class":  "System",
+                        "Manufacturer":  "(Standard system devices)",
+                        "DeviceId":  "PCI\\VEN_8086\u0026DEV_AE7F\u0026SUBSYS_12141043\u0026REV_10\\3\u002611583659\u00260\u0026A0"
+                    },
+                    {
+                        "Name":  "Programmable interrupt controller",
+                        "Status":  "OK",
+                        "Class":  "System",
+                        "Manufacturer":  "(Standard system devices)",
+                        "DeviceId":  "ACPI\\PNP0000\\4\u00265C787F3\u00260"
+                    },
+                    {
+                        "Name":  "Realtek PCIe 2.5GbE Family Controller",
+                        "Status":  "OK",
+                        "Class":  "Net",
+                        "Manufacturer":  "Realtek",
+                        "DeviceId":  "PCI\\VEN_10EC\u0026DEV_8125\u0026SUBSYS_208F1043\u0026REV_0C\\01000000684CE00000"
+                    },
+                    {
+                        "Name":  "Realtek USB Audio",
+                        "Status":  "OK",
+                        "Class":  "MEDIA",
+                        "Manufacturer":  "Realtek",
+                        "DeviceId":  "USB\\VID_0BDA\u0026PID_4014\u0026MI_00\\7\u0026ED3730\u00260\u00260000"
+                    },
+                    {
+                        "Name":  "Realtek USB GbE Family Controller",
+                        "Status":  "OK",
+                        "Class":  "Net",
+                        "Manufacturer":  "Realtek",
+                        "DeviceId":  "USB\\VID_0BDA\u0026PID_8153\\000002000000"
+                    },
+                    {
+                        "Name":  "Realtek(R) Audio",
+                        "Status":  "OK",
+                        "Class":  "MEDIA",
+                        "Manufacturer":  "Realtek",
+                        "DeviceId":  "INTELAUDIO\\FUNC_01\u0026VEN_10EC\u0026DEV_0285\u0026SUBSYS_10433F20\u0026REV_1000\\5\u0026355701E7\u00260\u00260001"
+                    },
+                    {
+                        "Name":  "Standard NVM Express Controller",
+                        "Status":  "OK",
+                        "Class":  "SCSIAdapter",
+                        "Manufacturer":  "Standard NVM Express Controller",
+                        "DeviceId":  "PCI\\VEN_144D\u0026DEV_A80A\u0026SUBSYS_A801144D\u0026REV_00\\4\u0026B2418F5\u00260\u00260008"
+                    },
+                    {
+                        "Name":  "Standard NVM Express Controller",
+                        "Status":  "OK",
+                        "Class":  "SCSIAdapter",
+                        "Manufacturer":  "Standard NVM Express Controller",
+                        "DeviceId":  "PCI\\VEN_144D\u0026DEV_A80A\u0026SUBSYS_A801144D\u0026REV_00\\4\u00262FD16FF7\u00260\u00260034"
+                    },
+                    {
+                        "Name":  "TI Smart Amplifier Driver for Speakers",
+                        "Status":  "OK",
+                        "Class":  "MEDIA",
+                        "Manufacturer":  "Texas Instruments",
+                        "DeviceId":  "ACPI\\TXNW2781\\0"
+                    },
+                    {
+                        "Name":  "USB Composite Device",
+                        "Status":  "OK",
+                        "Class":  "USB",
+                        "Manufacturer":  "(Standard USB Host Controller)",
+                        "DeviceId":  "USB\\VID_2B7E\u0026PID_C711\\200901010001"
+                    },
+                    {
+                        "Name":  "USB Composite Device",
+                        "Status":  "OK",
+                        "Class":  "USB",
+                        "Manufacturer":  "(Standard USB Host Controller)",
+                        "DeviceId":  "USB\\VID_0BDA\u0026PID_4014\\200901010001"
+                    },
+                    {
+                        "Name":  "USB Composite Device",
+                        "Status":  "OK",
+                        "Class":  "USB",
+                        "Manufacturer":  "(Standard USB Host Controller)",
+                        "DeviceId":  "USB\\VID_0B05\u0026PID_19B6\\5\u0026230B0289\u00260\u00264"
+                    },
+                    {
+                        "Name":  "USB Composite Device",
+                        "Status":  "OK",
+                        "Class":  "USB",
+                        "Manufacturer":  "(Standard USB Host Controller)",
+                        "DeviceId":  "USB\\VID_046D\u0026PID_C099\\205F37864E33"
+                    },
+                    {
+                        "Name":  "USB Input Device",
+                        "Status":  "OK",
+                        "Class":  "HIDClass",
+                        "Manufacturer":  "(Standard system devices)",
+                        "DeviceId":  "USB\\VID_046D\u0026PID_C099\u0026MI_00\\6\u0026224513E3\u00260\u00260000"
+                    },
+                    {
+                        "Name":  "USB Input Device",
+                        "Status":  "OK",
+                        "Class":  "HIDClass",
+                        "Manufacturer":  "(Standard system devices)",
+                        "DeviceId":  "USB\\VID_0B05\u0026PID_19B6\u0026MI_00\\6\u00262B745301\u00260\u00260000"
+                    },
+                    {
+                        "Name":  "USB Input Device",
+                        "Status":  "OK",
+                        "Class":  "HIDClass",
+                        "Manufacturer":  "(Standard system devices)",
+                        "DeviceId":  "USB\\VID_046D\u0026PID_C099\u0026MI_01\\6\u0026224513E3\u00260\u00260001"
+                    },
+                    {
+                        "Name":  "USB Input Device",
+                        "Status":  "OK",
+                        "Class":  "HIDClass",
+                        "Manufacturer":  "(Standard system devices)",
+                        "DeviceId":  "USB\\VID_0B05\u0026PID_19B6\u0026MI_01\\6\u00262B745301\u00260\u00260001"
+                    },
+                    {
+                        "Name":  "USB Root Hub (USB 3.0)",
+                        "Status":  "OK",
+                        "Class":  "USB",
+                        "Manufacturer":  "(Standard USB HUBs)",
+                        "DeviceId":  "USB\\ROOT_HUB30\\7\u0026387F7A3D\u00260\u00260"
+                    },
+                    {
+                        "Name":  "USB Root Hub (USB 3.0)",
+                        "Status":  "OK",
+                        "Class":  "USB",
+                        "Manufacturer":  "(Standard USB HUBs)",
+                        "DeviceId":  "USB\\ROOT_HUB30\\4\u002620839074\u00260\u00260"
+                    },
+                    {
+                        "Name":  "USB Root Hub (USB 3.0)",
+                        "Status":  "OK",
+                        "Class":  "USB",
+                        "Manufacturer":  "(Standard USB HUBs)",
+                        "DeviceId":  "USB\\ROOT_HUB30\\4\u002643AFE80\u00260\u00260"
+                    },
+                    {
+                        "Name":  "USB4 Root Router (2.0)",
+                        "Status":  "OK",
+                        "Class":  "USB",
+                        "Manufacturer":  "Generic USB4 Device Router",
+                        "DeviceId":  "USB4\\ROOT_DEVICE_ROUTER\u0026VID_8086\u0026PID_5781\\7\u0026156ED62C\u00260\u00260"
+                    },
+                    {
+                        "Name":  "USB4(TM) Host Router (Microsoft)",
+                        "Status":  "OK",
+                        "Class":  "USB",
+                        "Manufacturer":  "Generic USB4 Host Router",
+                        "DeviceId":  "PCI\\VEN_8086\u0026DEV_5781\u0026SUBSYS_00008086\u0026REV_84\u0026USB4_MS_CM\\694EB4000000539300"
+                    }
+                ]
+}

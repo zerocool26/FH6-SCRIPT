@@ -1,0 +1,82 @@
+﻿FH6 Companion Doctor State Snapshot
+Generated: 06/08/2026 19:24:22
+Label: nogui
+
+== Status ==
+Game process running: False
+Gaming Services: 36.113.14003.0
+Steam install: C:\Program Files (x86)\Steam\steamapps\common\ForzaHorizon6\forzahorizon6.exe exists=True
+Local FH6 root: C:\Users\boss\AppData\Local\ForzaHorizon6
+Xbox GameSave root: C:\XboxGames\GameSave\pgs
+Backups: C:\Users\boss\Downloads\FH6_CompanionDoctor_Backups
+Reports: C:\Users\boss\Downloads\FH6_CompanionDoctor_Reports
+Support packages: C:\Users\boss\Downloads\FH6_CompanionDoctor_SupportPackages
+Logs: C:\Users\boss\Downloads\FH6_CompanionDoctor_Logs
+Snapshots: C:\Users\boss\Downloads\FH6_CompanionDoctor_Snapshots
+Telemetry: configure FH6 Data Out to IP 127.0.0.1 and the port shown in the Telemetry tab.
+Steam Cloud: turn it off in Steam > FH6 > Properties > General before deleting saves.
+
+== Health Warnings ==
+[Info] Account / Administrator: User=boss
+  Some official troubleshooting steps require admin, but routine scans do not.
+[Info] Steam / Manifest state: StateFlags=4; LastUpdated=1779927869
+  StateFlags 4 usually means installed/ready.
+[Info] Windows / OS: Microsoft Windows 11 Enterprise build 26200
+  Keep Windows updated.
+[Info] Windows / Free memory: 7.5 GB free physical memory
+  Close heavy background apps before crash testing.
+[Info] GPU / NVIDIA GeForce RTX 5080 Laptop GPU: Driver=32.0.15.9649; Date=05/04/2026 19:00:00
+  Use the latest stable vendor driver; test without overlays.
+[Info] GPU / Intel(R) Graphics: Driver=32.0.101.8424; Date=01/05/2026 18:00:00
+  Use the latest stable vendor driver; test without overlays.
+[Info] Storage / C:: Free=675.6 GB Total=1,862.0 GB
+  Keep enough free disk space for updates and shader/cache writes.
+[Info] Storage / D:: Free=659.1 GB Total=1,863.0 GB
+  Keep enough free disk space for updates and shader/cache writes.
+[Info] Storage / E:: Free=14.0 GB Total=50.0 GB
+  Keep enough free disk space for updates and shader/cache writes.
+[Warn] Processes / Overlay/conflict scan: 1 possible match(es)
+  Disable overlays, monitoring, capture, input-hook, and tuning tools while testing.
+[Info] Xbox Services / GamingServices: Running Automatic
+  If FH6 authentication/cloud/game-save issues appear, repair Gaming Services and Xbox app components.
+[Info] Xbox Services / GamingServicesNet: Running Automatic
+  If FH6 authentication/cloud/game-save issues appear, repair Gaming Services and Xbox app components.
+[Info] Xbox Services / XblAuthManager: Running Manual
+  If FH6 authentication/cloud/game-save issues appear, repair Gaming Services and Xbox app components.
+[Info] Xbox Services / XblGameSave: Stopped Manual
+  If FH6 authentication/cloud/game-save issues appear, repair Gaming Services and Xbox app components.
+[Info] Xbox Services / XboxGipSvc: Stopped Manual
+  If FH6 authentication/cloud/game-save issues appear, repair Gaming Services and Xbox app components.
+[Info] Xbox Services / XboxNetApiSvc: Stopped Manual
+  If FH6 authentication/cloud/game-save issues appear, repair Gaming Services and Xbox app components.
+[Info] Xbox Services / InstallService: Running Manual
+  If FH6 authentication/cloud/game-save issues appear, repair Gaming Services and Xbox app components.
+[Info] Xbox Services / ClipSVC: Stopped Manual
+  If FH6 authentication/cloud/game-save issues appear, repair Gaming Services and Xbox app components.
+[Info] Xbox Services / TokenBroker: Running Manual
+  If FH6 authentication/cloud/game-save issues appear, repair Gaming Services and Xbox app components.
+[Warn] Runtime / Visual C++ redistributables: 12 Visual C++ redistributable entries found
+  Install/repair the latest Microsoft Visual C++ Redistributable if crashes persist.
+[Warn] Crash Lab / WER report folders: 9 FH6 WER folder(s) found
+  Include WER data in a support package after reproducing the crash.
+[Info] Steam / Log matches: 321 FH6/app/cloud log match(es)
+  Use Steam Logs to inspect cloud/sync/content activity around launch attempts.
+[Warn] Crash Lab / Latest crash: 06/08/2026 18:49:01 BEX64 c0000005
+  Export support package after reproducing a crash.
+
+== Latest Crashes ==
+06/08/2026 18:49:01 BEX64 c0000005 module=
+06/08/2026 18:49:00 BEX64 c0000005 module=
+06/08/2026 18:48:57 Application Error 0xc0000005 module=unknown
+06/07/2026 10:55:27 BEX64 c0000005 module=
+06/07/2026 10:55:26 BEX64 c0000005 module=
+06/07/2026 10:55:24 Application Error 0xc0000005 module=unknown
+06/07/2026 10:53:45 BEX64 c0000005 module=
+06/07/2026 10:53:44 BEX64 c0000005 module=
+06/07/2026 10:53:42 Application Error 0xc0000005 module=unknown
+06/07/2026 07:50:16 BEX64 c0000005 module=
+
+== Conflicts ==
+PresentMonService pid=8848 
+
+JSON: C:\Users\boss\Downloads\FH6_CompanionDoctor_Snapshots\FH6_StateSnapshot_20260608_192418_nogui.json

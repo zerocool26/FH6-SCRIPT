@@ -1,0 +1,256 @@
+﻿{
+    "ToolName":  "FH6 Companion Doctor",
+    "Version":  "5.2",
+    "GeneratedAt":  "2026-06-09T01:36:48.8831707-05:00",
+    "SafetyBoundary":  [
+                           "No game install modification",
+                           "No forzahorizon6.exe modification",
+                           "No memory read/write",
+                           "No injection/hooks",
+                           "No gameplay/input automation",
+                           "No save editing for advantage/unlocks/currency"
+                       ],
+    "Folders":  {
+                    "Backups":  "C:\\Users\\boss\\Downloads\\FH6TOOLBELT\\CompanionDoctorData\\FH6_CompanionDoctor_Backups",
+                    "Reports":  "C:\\Users\\boss\\Downloads\\FH6TOOLBELT\\CompanionDoctorData\\FH6_CompanionDoctor_Reports",
+                    "Packages":  "C:\\Users\\boss\\Downloads\\FH6TOOLBELT\\CompanionDoctorData\\FH6_CompanionDoctor_SupportPackages",
+                    "Logs":  "C:\\Users\\boss\\Downloads\\FH6TOOLBELT\\CompanionDoctorData\\FH6_CompanionDoctor_Logs",
+                    "Telemetry":  "C:\\Users\\boss\\Downloads\\FH6TOOLBELT\\CompanionDoctorData\\FH6_CompanionDoctor_Telemetry",
+                    "Snapshots":  "C:\\Users\\boss\\Downloads\\FH6TOOLBELT\\CompanionDoctorData\\FH6_CompanionDoctor_Snapshots",
+                    "Sessions":  "C:\\Users\\boss\\Downloads\\FH6TOOLBELT\\CompanionDoctorData\\FH6_CompanionDoctor_Sessions",
+                    "Bundles":  "C:\\Users\\boss\\Downloads\\FH6TOOLBELT\\CompanionDoctorData\\FH6_CompanionDoctor_PortableBundles"
+                },
+    "Files":  [
+                  {
+                      "Name":  "FH6-CompanionDoctor.ps1",
+                      "Path":  "C:\\Users\\boss\\Downloads\\FH6TOOLBELT\\Tools\\FH6-CompanionDoctor.ps1",
+                      "Length":  321155,
+                      "LastWriteTime":  "\/Date(1780986732494)\/",
+                      "SHA256":  "3BB5834BDFEFB4CEF2F5EE841AC9D061B43DC899CFC400F53B0887939F7C5864"
+                  },
+                  {
+                      "Name":  "Run-FH6-CompanionDoctor.cmd",
+                      "Path":  "C:\\Users\\boss\\Downloads\\FH6TOOLBELT\\Tools\\Run-FH6-CompanionDoctor.cmd",
+                      "Length":  206,
+                      "LastWriteTime":  "\/Date(1780971477603)\/",
+                      "SHA256":  "FC5ABCCD8CE62E063B3BCAC677E2F0EC9B676285DE25EDD3244944435F66FB16"
+                  },
+                  {
+                      "Name":  "FH6-CompanionDoctor-README.txt",
+                      "Path":  "C:\\Users\\boss\\Downloads\\FH6TOOLBELT\\Tools\\FH6-CompanionDoctor-README.txt",
+                      "Length":  13630,
+                      "LastWriteTime":  "\/Date(1780986934924)\/",
+                      "SHA256":  "F29FDC325E2FFFDC14FF3B0295026D82F340B8F0ADA80B24A4C26BF278ABF22E"
+                  },
+                  {
+                      "Name":  "FH6-SaveDoctor.ps1",
+                      "Path":  "C:\\Users\\boss\\Downloads\\FH6TOOLBELT\\Tools\\FH6-SaveDoctor.ps1",
+                      "Length":  52507,
+                      "LastWriteTime":  "\/Date(1780963228294)\/",
+                      "SHA256":  "92DE026ED750CBEF23857F35C6530226DAD2A42454985DA195FCA88A53387129"
+                  },
+                  {
+                      "Name":  "Run-FH6-SaveDoctor.cmd",
+                      "Path":  "C:\\Users\\boss\\Downloads\\FH6TOOLBELT\\Tools\\Run-FH6-SaveDoctor.cmd",
+                      "Length":  201,
+                      "LastWriteTime":  "\/Date(1780971477604)\/",
+                      "SHA256":  "7DABF17F3D0B742226CCFB99D9971780D5CF9309ED53D7AD9EF801BBCA0D6D21"
+                  },
+                  {
+                      "Name":  "FH6-SaveDoctor-README.txt",
+                      "Path":  "C:\\Users\\boss\\Downloads\\FH6TOOLBELT\\Tools\\FH6-SaveDoctor-README.txt",
+                      "Length":  1885,
+                      "LastWriteTime":  "\/Date(1780963256869)\/",
+                      "SHA256":  "E19F4A3C01FCB4497E58DAE5947196582A014D08C915AF261AA119A9F769C5FA"
+                  }
+              ],
+    "OfficialReferences":  [
+                               {
+                                   "Area":  "Official PC crash guide",
+                                   "Url":  "https://support.forza.net/hc/en-us/articles/360007593074-My-Game-is-Not-Launching-or-is-Crashing-on-PC",
+                                   "Why":  "Forza Support crash guide covering Gaming Services, drivers, clean boot, overlays, software conflicts, power settings, Game Mode, and support steps."
+                               },
+                               {
+                                   "Area":  "FH6 crash error codes",
+                                   "Url":  "https://support.forza.net/hc/en-us/articles/51642089902739-Forza-Horizon-6-PC-Crash-Error-Codes",
+                                   "Why":  "Official FH6 PC crash code reference."
+                               },
+                               {
+                                   "Area":  "FH6 Data Out",
+                                   "Url":  "https://support.forza.net/hc/en-us/articles/51744149102611-Forza-Horizon-6-Data-Out-Documentation",
+                                   "Why":  "Official one-way UDP telemetry format used by the Telemetry tab."
+                               },
+                               {
+                                   "Area":  "FH6 Steam install troubleshooting",
+                                   "Url":  "https://support.forza.net/hc/en-us/articles/51673672925459-FH6-Steam-Installation-Troubleshooting",
+                                   "Why":  "Official Steam install/path troubleshooting reference."
+                               },
+                               {
+                                   "Area":  "FH6 known issues",
+                                   "Url":  "https://support.forza.net/hc/en-us/articles/51701860097811-Forza-Horizon-6-Known-Issues",
+                                   "Why":  "Known-issues page for comparing current crash/device behavior."
+                               },
+                               {
+                                   "Area":  "FH6 wheels/devices",
+                                   "Url":  "https://support.forza.net/hc/en-us/articles/51674028831251-FH6-Supported-Wheels-and-Devices",
+                                   "Why":  "Device and wheel support reference used by the Devices tab guidance."
+                               },
+                               {
+                                   "Area":  "Forza Code of Conduct",
+                                   "Url":  "https://support.forza.net/hc/en-us/articles/360035563914-Forza-Code-of-Conduct",
+                                   "Why":  "Boundary reference: this tool avoids cheating, memory editing, file tampering, automation, trainers, and unlock/save manipulation."
+                               },
+                               {
+                                   "Area":  "Windows application crash troubleshooting",
+                                   "Url":  "https://learn.microsoft.com/en-us/troubleshoot/windows-server/performance/troubleshoot-application-service-crashing-behavior",
+                                   "Why":  "Microsoft guidance for Event ID 1000/1001 crash evidence and dump collection."
+                               },
+                               {
+                                   "Area":  "Windows Error Reporting LocalDumps",
+                                   "Url":  "https://learn.microsoft.com/en-us/windows/win32/wer/collecting-user-mode-dumps",
+                                   "Why":  "Official per-application dump configuration used by CrashScope command playbooks."
+                               },
+                               {
+                                   "Area":  "Sysinternals ProcDump",
+                                   "Url":  "https://learn.microsoft.com/en-us/sysinternals/downloads/procdump",
+                                   "Why":  "Microsoft Sysinternals utility for crash/hang dump capture when Event Viewer evidence is not enough."
+                               },
+                               {
+                                   "Area":  "Windows Performance Recorder and WPA",
+                                   "Url":  "https://learn.microsoft.com/en-us/troubleshoot/windows-server/support-tools/support-tools-xperf-wpa-wpr",
+                                   "Why":  "Official ETW recording workflow for system, driver, GPU, performance, and timing context."
+                               },
+                               {
+                                   "Area":  "Event Tracing for Windows",
+                                   "Url":  "https://learn.microsoft.com/en-us/windows-hardware/test/wpt/event-tracing-for-windows",
+                                   "Why":  "Core Windows tracing layer used by WPR/WPA for advanced system diagnosis."
+                               },
+                               {
+                                   "Area":  "DirectX Diagnostic Tool",
+                                   "Url":  "https://support.microsoft.com/en-us/windows/open-and-run-dxdiag-exe-dad7792c-2ad5-f6cd-5a37-bf92228dfd85",
+                                   "Why":  "Microsoft support reference for DxDiag hardware/driver diagnostics."
+                               },
+                               {
+                                   "Area":  "System File Checker",
+                                   "Url":  "https://support.microsoft.com/en-us/windows/using-system-file-checker-in-windows-365e0031-36b1-6031-f804-8fd86e0ef4ca",
+                                   "Why":  "Microsoft guidance for DISM/SFC repair flow when crashes affect multiple unrelated games or apps."
+                               },
+                               {
+                                   "Area":  "Game Bar known issues",
+                                   "Url":  "https://learn.microsoft.com/en-us/gaming/game-bar/known-issues",
+                                   "Why":  "Microsoft Game Bar/capture limitations relevant to overlay and capture-stack crash isolation."
+                               },
+                               {
+                                   "Area":  "Defender attack surface reduction events",
+                                   "Url":  "https://learn.microsoft.com/en-us/defender-endpoint/attack-surface-reduction-windows-events",
+                                   "Why":  "Official event IDs and log paths for ASR and Controlled Folder Access block/audit events used by the Stability timeline."
+                               },
+                               {
+                                   "Area":  "Controlled Folder Access",
+                                   "Url":  "https://learn.microsoft.com/en-us/defender-endpoint/enable-controlled-folders",
+                                   "Why":  "Microsoft Defender guidance for Controlled Folder Access behavior, audit mode, and event log review."
+                               },
+                               {
+                                   "Area":  "NVIDIA clean driver install",
+                                   "Url":  "https://nvidia.custhelp.com/app/answers/detail/a_id/10/",
+                                   "Why":  "Official NVIDIA clean driver installation guidance for GPU-driver crash isolation."
+                               },
+                               {
+                                   "Area":  "Windows GPU TDR",
+                                   "Url":  "https://learn.microsoft.com/en-us/windows-hardware/drivers/display/timeout-detection-and-recovery",
+                                   "Why":  "Microsoft WDDM Timeout Detection and Recovery reference for GPU hangs, resets, and device-removed style crash patterns."
+                               },
+                               {
+                                   "Area":  "Reliability Monitor records",
+                                   "Url":  "https://learn.microsoft.com/en-us/previous-versions/windows/desktop/racwmiprov/win32-reliabilityrecords",
+                                   "Why":  "WMI class used by Crash Intel to correlate Windows Reliability Monitor failures."
+                               },
+                               {
+                                   "Area":  "Application Verifier",
+                                   "Url":  "https://learn.microsoft.com/en-us/windows-hardware/drivers/devtest/application-verifier-testing-applications",
+                                   "Why":  "Advanced runtime verification concept. This tool does not enable it automatically, especially for games or protected processes."
+                               },
+                               {
+                                   "Area":  "GFlags and PageHeap",
+                                   "Url":  "https://learn.microsoft.com/en-us/windows-hardware/drivers/debugger/gflags-and-pageheap",
+                                   "Why":  "Advanced heap verification concept for developer-grade memory fault investigations; the tool documents but does not silently enable it."
+                               },
+                               {
+                                   "Area":  "Debug Diagnostic Tool",
+                                   "Url":  "https://www.microsoft.com/en-us/download/details.aspx?id=103453",
+                                   "Why":  "Microsoft DebugDiag is another user-mode crash/hang analysis option for advanced support workflows."
+                               }
+                           ],
+    "SafetyAudit":  [
+                        {
+                            "Check":  "Forbidden pattern: \\bWriteProcessMemory\\s*\\(",
+                            "Status":  "OK",
+                            "Detail":  "Not present."
+                        },
+                        {
+                            "Check":  "Forbidden pattern: \\bReadProcessMemory\\s*\\(",
+                            "Status":  "OK",
+                            "Detail":  "Not present."
+                        },
+                        {
+                            "Check":  "Forbidden pattern: \\bOpenProcess\\s*\\(",
+                            "Status":  "OK",
+                            "Detail":  "Not present."
+                        },
+                        {
+                            "Check":  "Forbidden pattern: \\bCreateRemoteThread\\s*\\(",
+                            "Status":  "OK",
+                            "Detail":  "Not present."
+                        },
+                        {
+                            "Check":  "Forbidden pattern: \\bSetWindowsHookEx\\s*\\(",
+                            "Status":  "OK",
+                            "Detail":  "Not present."
+                        },
+                        {
+                            "Check":  "Forbidden pattern: \\bSendInput\\s*\\(",
+                            "Status":  "OK",
+                            "Detail":  "Not present."
+                        },
+                        {
+                            "Check":  "Forbidden pattern: \\bkeybd_event\\s*\\(",
+                            "Status":  "OK",
+                            "Detail":  "Not present."
+                        },
+                        {
+                            "Check":  "Forbidden pattern: \\bmouse_event\\s*\\(",
+                            "Status":  "OK",
+                            "Detail":  "Not present."
+                        },
+                        {
+                            "Check":  "Forbidden pattern: \\bVirtualAllocEx\\s*\\(",
+                            "Status":  "OK",
+                            "Detail":  "Not present."
+                        },
+                        {
+                            "Check":  "Forbidden pattern: ForzaHorizon6\\\\forzahorizon6.exe.*Remove-Item",
+                            "Status":  "OK",
+                            "Detail":  "Not present."
+                        },
+                        {
+                            "Check":  "Forbidden pattern: steamapps\\\\common\\\\ForzaHorizon6.*Remove-Item",
+                            "Status":  "OK",
+                            "Detail":  "Not present."
+                        },
+                        {
+                            "Check":  "Game install modification policy",
+                            "Status":  "OK",
+                            "Detail":  "Assert-FH6SafeTarget refuses steamapps\\common\\ForzaHorizon6 and forzahorizon6.exe paths before cleanup actions."
+                        },
+                        {
+                            "Check":  "Telemetry direction",
+                            "Status":  "OK",
+                            "Detail":  "Telemetry listener uses UDP receive only. It does not send data back to FH6."
+                        },
+                        {
+                            "Check":  "Destructive action defaults",
+                            "Status":  "OK",
+                            "Detail":  "Backup is enabled by default; Dry Run is available; delete/rename operations require selected cleanable records."
+                        }
+                    ]
+}
