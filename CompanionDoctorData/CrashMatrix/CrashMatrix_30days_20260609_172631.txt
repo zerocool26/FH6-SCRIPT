@@ -1,0 +1,100 @@
+Universal Crash Matrix
+======================
+Window: last 30 day(s)
+Generated: 06/09/2026 17:26:39
+
+System-wide signals:
+  [P1 High 80] Multi-app crash spread
+    Evidence: 26 distinct crashing app(s) in 30 day(s).
+    Action: Treat this as system-wide until proven otherwise: compare GPU/TDR, drivers, runtimes, security, storage, memory, and Windows health before app-specific fixes.
+  [P1 High 75] Repeated memory-fault signatures
+    Evidence: 50x 0xc0000005 module=DAX3API.exe, app spread=1.
+    Action: Prioritize overlay/hook isolation, runtime repair, clean boot, and dump capture before repeating data wipes.
+  [P1 High 70] GPU/device instability path
+    Evidence: 12 GPU/TDR/system graphics row(s); 2 GPU/DXGI cluster(s).
+    Action: Use DxDiag/WPR, disable capture overlays, verify power/thermal state, and test a clean GPU driver path.
+  [P3 Medium 32] Recent driver/update correlation
+    Evidence: 3 recent driver/update change(s) near latest crash.
+    Action: Isolate one update/driver variable at a time; avoid stacking fixes in one test.
+  [P4 Info 15] Advanced tooling gap
+    Evidence: ProcDump, WinDbg
+    Action: Install/use missing Microsoft tools only if escalation evidence is needed.
+
+App crash leaderboard:
+  186x 117.exe class=GPU/Kernel code=256 module=0 last=06/09/2026 17:01:47
+    Focus: GPU/device path; Check GPU driver, overlays, HAGS/MPO/capture features, thermals, power, and WPR/GPU evidence.
+  186x 193.exe class=GPU/Kernel code=256 module=ffffe587822ac080 last=06/09/2026 17:01:46
+    Focus: GPU/device path; Check GPU driver, overlays, HAGS/MPO/capture features, thermals, power, and WPR/GPU evidence.
+  107x DAX3API.exe class=Unknown/generic code=000000000015e60a module=DAX3API.exe last=06/09/2026 16:55:12
+    Focus: Repeated app failure; Group fingerprints, collect WER/LocalDump evidence, and correlate with drivers, overlays, and recent changes.
+  28x forzahorizon6.exe class=Access violation code=c0000005 module=StackHash_2264 last=06/08/2026 18:49:01
+    Focus: Memory/runtime/conflict; Capture a dump, isolate overlays/hooks, test clean boot, repair runtimes, and compare the fault module.
+  14x Update;MoUpdateOrchestratorUserScan-MoUsoCoreWorker-SearchForAllUpdatesWithUpdateOptionsAsync.exe class=Unknown/generic code=P9 module=8457 last=06/05/2026 01:59:15
+    Focus: Repeated app failure; Group fingerprints, collect WER/LocalDump evidence, and correlate with drivers, overlays, and recent changes.
+  14x 10.0.26100.8456:1.exe class=Unknown/generic code=P9 module=1834 last=06/07/2026 06:33:30
+    Focus: Repeated app failure; Group fingerprints, collect WER/LocalDump evidence, and correlate with drivers, overlays, and recent changes.
+  12x mscorsvw.exe class=Unknown/generic code=0002f004 module=clr.dll last=06/07/2026 06:43:46
+    Focus: Repeated app failure; Group fingerprints, collect WER/LocalDump evidence, and correlate with drivers, overlays, and recent changes.
+  12x Malwarebytes.exe class=Unknown/generic code=00000000000bfe0a module=KERNELBASE.dll last=06/06/2026 16:39:26
+    Focus: Repeated app failure; Group fingerprints, collect WER/LocalDump evidence, and correlate with drivers, overlays, and recent changes.
+  7x DontSleep.exe class=Unknown/generic code=00050378 module=ntdll.dll last=06/05/2026 17:53:24
+    Focus: Repeated app failure; Group fingerprints, collect WER/LocalDump evidence, and correlate with drivers, overlays, and recent changes.
+  5x 10.0.26100.8247:1.exe class=Unknown/generic code=P9 module=2203 last=05/12/2026 18:42:57
+    Focus: Monitor; Group fingerprints, collect WER/LocalDump evidence, and correlate with drivers, overlays, and recent changes.
+  4x Microsoft.YourPhone_1.26042.95.0_x64__8wekyb3d8bbwe.exe class=Unknown/generic code=80000013 module=5bc61463 last=06/07/2026 18:02:14
+    Focus: Monitor; Group fingerprints, collect WER/LocalDump evidence, and correlate with drivers, overlays, and recent changes.
+  4x GHelper.exe class=Unknown/generic code=P9 module=9148 last=05/15/2026 19:35:53
+    Focus: Monitor; Group fingerprints, collect WER/LocalDump evidence, and correlate with drivers, overlays, and recent changes.
+  4x 0x80004004.exe class=Unknown/generic code=P9 module=1.1.24010.2001 last=06/06/2026 16:39:28
+    Focus: Monitor; Group fingerprints, collect WER/LocalDump evidence, and correlate with drivers, overlays, and recent changes.
+  4x Explorer.EXE class=Unknown/generic code=00000000000217b0 module=DUI70.dll last=05/27/2026 02:40:08
+    Focus: Repeated app failure; Group fingerprints, collect WER/LocalDump evidence, and correlate with drivers, overlays, and recent changes.
+  4x Update;.exe class=Unknown/generic code=P9 module=8246 last=05/14/2026 18:36:51
+    Focus: Monitor; Group fingerprints, collect WER/LocalDump evidence, and correlate with drivers, overlays, and recent changes.
+
+Shared signature clusters:
+  186x apps=1 code=256 module=ffffe587822ac080 class=GPU/Kernel
+    Apps: 193.exe(186)
+    Next: Check GPU driver, overlays, HAGS/MPO/capture features, thermals, power, and WPR/GPU evidence.
+  186x apps=1 code=256 module=0 class=GPU/Kernel
+    Apps: 117.exe(186)
+    Next: Check GPU driver, overlays, HAGS/MPO/capture features, thermals, power, and WPR/GPU evidence.
+  57x apps=1 code=000000000015e60a module=DAX3API.exe class=Unknown/generic
+    Apps: DAX3API.exe(57)
+    Next: Group fingerprints, collect WER/LocalDump evidence, and correlate with drivers, overlays, and recent changes.
+  50x apps=1 code=0xc0000005 module=DAX3API.exe class=Access violation
+    Apps: DAX3API.exe(50)
+    Next: Capture a dump, isolate overlays/hooks, test clean boot, repair runtimes, and compare the fault module.
+  18x apps=1 code=c0000005 module=StackHash_2264 class=Access violation
+    Apps: forzahorizon6.exe(18)
+    Next: Capture a dump, isolate overlays/hooks, test clean boot, repair runtimes, and compare the fault module.
+  10x apps=1 code=P9 module=8457 class=Unknown/generic
+    Apps: Update;MoUpdateOrchestratorUserScan-MoUsoCoreWorker-SearchForAllUpdatesWithUpdateOptionsAsync.exe(10)
+    Next: Group fingerprints, collect WER/LocalDump evidence, and correlate with drivers, overlays, and recent changes.
+  10x apps=2 code=P9 module=2203 class=Unknown/generic
+    Apps: 10.0.26100.8247:1.exe(5), 10.0.26100.8456:1.exe(5)
+    Next: Group fingerprints, collect WER/LocalDump evidence, and correlate with drivers, overlays, and recent changes.
+  10x apps=10 code=P9 module=P5: class=Unknown/generic
+    Apps: bun.exe(1), chrome-headless-shell.exe(1), Code.exe(1), explorer.exe(1)
+    Next: Group fingerprints, collect WER/LocalDump evidence, and correlate with drivers, overlays, and recent changes.
+  9x apps=1 code=0xc0000005 module=unknown class=Access violation
+    Apps: forzahorizon6.exe(9)
+    Next: Capture a dump, isolate overlays/hooks, test clean boot, repair runtimes, and compare the fault module.
+  9x apps=1 code=P9 module=1834 class=Unknown/generic
+    Apps: 10.0.26100.8456:1.exe(9)
+    Next: Group fingerprints, collect WER/LocalDump evidence, and correlate with drivers, overlays, and recent changes.
+  8x apps=2 code=P9 module=8246 class=Unknown/generic
+    Apps: Update;.exe(4), Update;MoUpdateOrchestratorUserScan-MoUsoCoreWorker-SearchForAllUpdatesWithUpdateOptionsAsync.exe(4)
+    Next: Group fingerprints, collect WER/LocalDump evidence, and correlate with drivers, overlays, and recent changes.
+  8x apps=1 code=00000000000bfe0a module=KERNELBASE.dll class=Unknown/generic
+    Apps: Malwarebytes.exe(8)
+    Next: Group fingerprints, collect WER/LocalDump evidence, and correlate with drivers, overlays, and recent changes.
+  6x apps=1 code=0002f004 module=clr.dll class=Unknown/generic
+    Apps: mscorsvw.exe(6)
+    Next: Group fingerprints, collect WER/LocalDump evidence, and correlate with drivers, overlays, and recent changes.
+  4x apps=1 code=80000013 module=5bc61463 class=Unknown/generic
+    Apps: Microsoft.YourPhone_1.26042.95.0_x64__8wekyb3d8bbwe.exe(4)
+    Next: Group fingerprints, collect WER/LocalDump evidence, and correlate with drivers, overlays, and recent changes.
+  4x apps=1 code=P9 module=1.1.24010.2001 class=Unknown/generic
+    Apps: 0x80004004.exe(4)
+    Next: Group fingerprints, collect WER/LocalDump evidence, and correlate with drivers, overlays, and recent changes.

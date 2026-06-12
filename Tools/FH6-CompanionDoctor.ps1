@@ -1,5 +1,5 @@
 <#
-FH6 Companion Doctor v5.2
+FH6 Companion Doctor v5.5
 
 External Forza Horizon 6 companion, diagnostics, save/cache manager, crash lab,
 telemetry listener, device doctor, launcher, and support-package builder.
@@ -28,7 +28,7 @@ param(
 
 $ErrorActionPreference = 'Stop'
 
-$script:ToolVersion = '5.2'
+$script:ToolVersion = '5.5'
 $script:UserDownloads = Join-Path $env:USERPROFILE 'Downloads'
 $script:ToolRoot = if ($PSScriptRoot) { $PSScriptRoot } else { $script:UserDownloads }
 $script:ToolRootName = Split-Path -Path $script:ToolRoot -Leaf
@@ -66,6 +66,9 @@ $script:Config = [ordered]@{
     SessionRoot  = Join-Path $script:DataRoot 'FH6_CompanionDoctor_Sessions'
     BundleRoot   = Join-Path $script:DataRoot 'FH6_CompanionDoctor_PortableBundles'
     UniversalRoot = Join-Path $script:DataRoot 'CrashScope_Universal'
+    ExperimentRoot = Join-Path $script:DataRoot 'CrashExperimentLab'
+    MatrixRoot   = Join-Path $script:DataRoot 'CrashMatrix'
+    OpsRoot      = Join-Path $script:DataRoot 'CrashOpsCenter'
     ManifestPath = Join-Path $script:ToolRoot 'FH6_CompanionDoctor_Manifest.json'
     SettingsPath = Join-Path $script:ToolRoot 'FH6_CompanionDoctor_Settings.json'
 }
@@ -92,7 +95,7 @@ $script:CrashWatchLastAction = 'Idle'
 $script:StabilityCache = @{}
 
 function New-ToolDirectory {
-    foreach ($path in @($script:Config.BackupRoot, $script:Config.ReportRoot, $script:Config.PackageRoot, $script:Config.LogRoot, $script:Config.TelemetryRoot, $script:Config.SnapshotRoot, $script:Config.SessionRoot, $script:Config.BundleRoot, $script:Config.UniversalRoot)) {
+    foreach ($path in @($script:Config.BackupRoot, $script:Config.ReportRoot, $script:Config.PackageRoot, $script:Config.LogRoot, $script:Config.TelemetryRoot, $script:Config.SnapshotRoot, $script:Config.SessionRoot, $script:Config.BundleRoot, $script:Config.UniversalRoot, $script:Config.ExperimentRoot, $script:Config.MatrixRoot, $script:Config.OpsRoot)) {
         New-Item -ItemType Directory -Path $path -Force | Out-Null
     }
 }
@@ -1843,6 +1846,694 @@ function Export-CrashStabilityWorkbench {
     return "$base.txt"
 }
 
+function Get-CrashExperimentJournalPath {
+    New-ToolDirectory
+    return (Join-Path $script:Config.ExperimentRoot 'crash-experiment-journal.csv')
+}
+
+function Get-CrashEvidenceQualityRows {
+    param([string]$Target = '')
+    $rows = New-Object System.Collections.Generic.List[object]
+    function Add-Quality($Component, $Status, [int]$Score, [int]$MaxScore, $Evidence, $NextAction) {
+        [void]$rows.Add([pscustomobject]@{
+            Component = $Component
+            Status    = $Status
+            Score     = $Score
+            MaxScore  = $MaxScore
+            Evidence  = $Evidence
+            NextAction = $NextAction
+        })
+    }
+
+    $events = @(Get-UniversalCrashRows -Target $Target -Days 30 -Max 400)
+    $fingerprints = @(Get-UniversalCrashFingerprintRows -Target $Target | Where-Object { $_.Count -gt 0 })
+    $wer = @(Get-WERUniversalReportRows -Target $Target)
+    $timeline = @(Get-CrashEvidenceTimelineRows -Target $Target -Days 30 -Max 600)
+    $dumps = @(Get-LocalDumpConfigRows -Target $(if ($Target) { $Target } else { $script:Config.ExeName }))
+    $dumpConfigured = @($dumps | Where-Object { $_.Status -eq 'Configured' -and ($_.Target -eq $Target -or $_.Target -eq '<all apps>' -or ($Target -eq '' -and $_.Target -eq '<all apps>')) })
+    $tools = @(Get-ExternalEvidenceToolRows)
+    $availableToolCount = @($tools | Where-Object { $_.Status -eq 'Available' }).Count
+    $latestCrash = @($timeline | Where-Object { $_.Lane -eq 'Crash' } | Sort-Object Time -Descending | Select-Object -First 1)
+    $supportAfterCrash = $null
+    if ($latestCrash.Count -gt 0 -and $latestCrash[0].Time) { $supportAfterCrash = Get-LatestSupportPackageAfter -After ([datetime]$latestCrash[0].Time) }
+    $journalRows = @(Get-CrashExperimentJournalRows)
+
+    Add-Quality 'Crash events' ($(if ($events.Count -gt 0) { 'OK' } else { 'Gap' })) ($(if ($events.Count -gt 0) { 20 } else { 0 })) 20 "$($events.Count) event row(s)" 'Reproduce once, then run Stability Analyze.'
+    Add-Quality 'Fingerprint repeatability' ($(if ($fingerprints.Count -gt 0) { 'OK' } else { 'Gap' })) ($(if ($fingerprints.Count -gt 0) { 15 } else { 0 })) 15 ($(if ($fingerprints.Count) { "$($fingerprints[0].Count)x $($fingerprints[0].Code) module=$($fingerprints[0].Module)" } else { 'No grouped fingerprint yet.' })) 'Use the same launch path and compare whether the top fingerprint changes.'
+    Add-Quality 'WER reports' ($(if ($wer.Count -gt 0) { 'OK' } else { 'Info' })) ($(if ($wer.Count -gt 0) { 10 } else { 0 })) 10 "$($wer.Count) WER folder(s)" 'Export support package before WER evidence ages out.'
+    Add-Quality 'Dump readiness' ($(if ($dumpConfigured.Count -gt 0) { 'OK' } else { 'Gap' })) ($(if ($dumpConfigured.Count -gt 0) { 15 } else { 0 })) 15 ($(if ($dumpConfigured.Count) { (($dumpConfigured | ForEach-Object { "$($_.Hive)/$($_.Target)" }) -join '; ') } else { 'No matching LocalDumps config detected.' })) 'Use generated LocalDumps/ProcDump commands only when stronger evidence is needed.'
+    Add-Quality 'Tool readiness' ($(if ($availableToolCount -ge 4) { 'OK' } elseif ($availableToolCount -ge 2) { 'Info' } else { 'Gap' })) ([Math]::Min(10, $availableToolCount * 2)) 10 "$availableToolCount/$($tools.Count) evidence tools available" 'Install/use Microsoft tools only as needed: DxDiag, WPR, ProcDump, WinDbg, SFC, DISM.'
+    Add-Quality 'Stability timeline' ($(if ($timeline.Count -gt 20) { 'OK' } elseif ($timeline.Count -gt 0) { 'Info' } else { 'Gap' })) ($(if ($timeline.Count -gt 20) { 10 } elseif ($timeline.Count -gt 0) { 5 } else { 0 })) 10 "$($timeline.Count) unified timeline row(s)" 'Use Stability tab to correlate crash, GPU, security, and change lanes.'
+    Add-Quality 'Post-crash package' ($(if ($supportAfterCrash) { 'OK' } else { 'Gap' })) ($(if ($supportAfterCrash) { 10 } else { 0 })) 10 ($(if ($supportAfterCrash) { "$($supportAfterCrash.Name) written $($supportAfterCrash.LastWriteTime)" } else { 'No support package newer than the latest crash anchor.' })) 'Build Support Zip immediately after the next crash.'
+    Add-Quality 'Experiment journal' ($(if ($journalRows.Count -gt 0) { 'OK' } else { 'Info' })) ($(if ($journalRows.Count -gt 0) { 10 } else { 0 })) 10 "$($journalRows.Count) logged attempt(s)" 'Log each changed variable and result so repeated tests become useful evidence.'
+
+    $scored = @($rows.ToArray())
+    $score = ($scored | Measure-Object Score -Sum).Sum
+    $max = ($scored | Measure-Object MaxScore -Sum).Sum
+    $percent = if ($max -gt 0) { [math]::Round(($score / $max) * 100, 0) } else { 0 }
+    $status = if ($percent -ge 75) { 'Strong' } elseif ($percent -ge 45) { 'Usable' } else { 'Weak' }
+    Add-Quality 'Overall' $status ([int]$score) ([int]$max) "$percent% evidence quality" ($(if ($percent -ge 75) { 'Proceed with one-variable experiments.' } else { 'Capture stronger baseline evidence before making more changes.' }))
+    return $rows.ToArray()
+}
+
+function Get-CrashExperimentPlanRows {
+    param([string]$Target = '')
+    $rows = New-Object System.Collections.Generic.List[object]
+    function Add-ExperimentStep($Step, $Phase, $Variable, $Action, $KeepConstant, $SuccessCheck, $Evidence, $Risk) {
+        [void]$rows.Add([pscustomobject]@{
+            Step         = $Step
+            Phase        = $Phase
+            Variable     = $Variable
+            Action       = $Action
+            KeepConstant = $KeepConstant
+            SuccessCheck = $SuccessCheck
+            Evidence     = $Evidence
+            Risk         = $Risk
+        })
+    }
+
+    $targetText = if ($Target) { $Target } else { '<all apps>' }
+    $scores = @(Get-UniversalRootCauseScoreRows -Target $Target)
+    $quality = @(Get-CrashEvidenceQualityRows -Target $Target)
+    $overall = @($quality | Where-Object { $_.Component -eq 'Overall' } | Select-Object -First 1)
+    $topFingerprint = @(Get-UniversalCrashFingerprintRows -Target $Target | Where-Object { $_.Count -gt 0 } | Select-Object -First 1)
+    $securityBlocks = @(Get-SecurityBlockEventRows -Target $Target | Where-Object { $_.EventId -in @(1121,1123,1127) })
+    $step = 1
+
+    Add-ExperimentStep $step 'Baseline' 'Evidence' 'Export Stability Workbench, run Support Zip, and note the exact crash fingerprint before changing anything.' 'Same target, same launch path, same graphics settings, same account.' 'Baseline has crash event, fingerprint, timeline, and package artifacts.' ($(if ($overall.Count) { "$($overall[0].Evidence)" } else { "Target=$targetText" })) 'Low'
+    $step++
+    Add-ExperimentStep $step 'Repro' 'Control run' 'Launch once with no new fixes to confirm the crash still reproduces.' 'Do not change drivers, overlays, saves, config, or launch options between baseline and control.' 'Same fingerprint repeats, or the app stays stable and journal records that surprise result.' ($(if ($topFingerprint.Count) { "$($topFingerprint[0].Count)x $($topFingerprint[0].Code) module=$($topFingerprint[0].Module)" } else { 'No top fingerprint yet.' })) 'Low'
+    $step++
+
+    if (@($scores | Where-Object { $_.Cause -match 'Overlay|hook|capture' -and $_.Score -ge 20 }).Count -gt 0) {
+        Add-ExperimentStep $step 'Isolation' 'Overlay/capture' 'Stop overlay, capture, tuning, input-hook, and performance-monitor tools for exactly one test.' 'Leave save data, driver, Windows settings, and launch path unchanged.' 'Fingerprint disappears or changes when overlay/capture stack is absent.' (@($scores | Where-Object { $_.Cause -match 'Overlay|hook|capture' } | Select-Object -First 1).Evidence) 'Low'
+        $step++
+    }
+    if (@($scores | Where-Object { $_.Cause -match 'GPU' }).Count -gt 0) {
+        Add-ExperimentStep $step 'Isolation' 'GPU path' 'Test a clean graphics path: no capture overlay, stable power mode, then clean-install/update GPU driver only if evidence still points there.' 'Do not wipe saves or change runtimes during the GPU-path test.' 'GPU/TDR rows stop appearing near crashes, or crash code/module changes.' (@($scores | Where-Object { $_.Cause -match 'GPU' } | Select-Object -First 1).Evidence) 'Medium'
+        $step++
+    }
+    if (@($scores | Where-Object { $_.Cause -match 'Memory|runtime|Dependency' }).Count -gt 0) {
+        Add-ExperimentStep $step 'Repair' 'Runtime/dependency' 'Repair VC++/.NET/DirectX/media prerequisites, then run one launch with all other variables frozen.' 'Do not change GPU driver, saves, or overlays in the same attempt.' 'Access-violation/dependency fingerprint clears or changes.' (@($scores | Where-Object { $_.Cause -match 'Memory|runtime|Dependency' } | Select-Object -First 1).Evidence) 'Low'
+        $step++
+    }
+    if ($securityBlocks.Count -gt 0) {
+        Add-ExperimentStep $step 'Review' 'Security block' 'Inspect Defender ASR/Controlled Folder Access event details and only allowlist trusted signed paths if a real block is confirmed.' 'Do not disable security globally; test a narrow trusted exception only if needed.' 'No matching security block appears at launch/crash time.' "$($securityBlocks.Count) block event(s)" 'Medium'
+        $step++
+    }
+    if ([string]::IsNullOrWhiteSpace($Target) -or $Target -match 'forzahorizon6|forza') {
+        Add-ExperimentStep $step 'Isolation' 'FH6 user data' 'With Steam Cloud off and backups present, run Deep Fresh for local save/cache/settings only.' 'Keep overlays, driver, runtimes, and launch path unchanged for this test.' 'Fresh local data is recreated and the crash either clears or repeats with the same fingerprint.' 'FH6 target detected.' 'Medium'
+        $step++
+    }
+    Add-ExperimentStep $step 'System isolation' 'Clean boot' 'Use a Microsoft clean-boot style isolation only after simpler one-variable tests are logged.' 'Re-enable services/startup items in groups so the journal can identify the culprit.' 'Crash reproduces only when a specific service/startup group returns, or remains stable in clean boot.' 'Used when no visible conflict process explains the crash.' 'Medium'
+    $step++
+    Add-ExperimentStep $step 'Escalation' 'Developer-grade evidence' 'If the same fingerprint survives controlled tests, collect dump/WPR/ProcMon-style evidence and export a full package.' 'Keep the repro short and targeted; do not leave heavy tracing enabled.' 'Support package contains dump/config/timeline/runbook/journal evidence tied to one fingerprint.' 'Stable fingerprint after controlled experiments.' 'Medium'
+    return @($rows | Sort-Object Step)
+}
+
+function Get-CrashExperimentJournalRows {
+    $path = Get-CrashExperimentJournalPath
+    if (-not (Test-Path -LiteralPath $path)) { return @() }
+    try { return @(Import-Csv -LiteralPath $path | Sort-Object Time -Descending) } catch { return @() }
+}
+
+function Add-CrashExperimentJournalEntry {
+    param(
+        [string]$Target = '',
+        [string]$Outcome = 'Note',
+        [string]$Notes = ''
+    )
+    New-ToolDirectory
+    $path = Get-CrashExperimentJournalPath
+    $fingerprint = @(Get-UniversalCrashFingerprintRows -Target $Target | Where-Object { $_.Count -gt 0 } | Select-Object -First 1)
+    $score = @(Get-UniversalRootCauseScoreRows -Target $Target | Select-Object -First 1)
+    $quality = @(Get-CrashEvidenceQualityRows -Target $Target | Where-Object { $_.Component -eq 'Overall' } | Select-Object -First 1)
+    $row = [pscustomobject]@{
+        Time           = (Get-Date).ToString('o')
+        Target         = if ($Target) { $Target } else { '<all apps>' }
+        Outcome        = $Outcome
+        TopFingerprint = if ($fingerprint.Count) { "$($fingerprint[0].Count)x $($fingerprint[0].EventName) $($fingerprint[0].Code) module=$($fingerprint[0].Module)" } else { '<none>' }
+        TopCause       = if ($score.Count) { "$($score[0].Cause) score=$($score[0].Score) confidence=$($score[0].Confidence)" } else { '<none>' }
+        EvidenceQuality = if ($quality.Count) { "$($quality[0].Score)/$($quality[0].MaxScore) $($quality[0].Status)" } else { '<unknown>' }
+        Notes          = $Notes
+    }
+    if (Test-Path -LiteralPath $path) {
+        $row | Export-Csv -LiteralPath $path -NoTypeInformation -Encoding UTF8 -Append
+    }
+    else {
+        $row | Export-Csv -LiteralPath $path -NoTypeInformation -Encoding UTF8
+    }
+    return $row
+}
+
+function Get-CrashExperimentLabText {
+    param([string]$Target = '')
+    $lines = New-Object System.Collections.Generic.List[string]
+    [void]$lines.Add('Crash Experiment Lab')
+    [void]$lines.Add('====================')
+    [void]$lines.Add("Target: $(if ($Target) { $Target } else { '<all apps>' })")
+    [void]$lines.Add("Generated: $(Get-Date)")
+    [void]$lines.Add('')
+    [void]$lines.Add('Evidence quality:')
+    foreach ($row in Get-CrashEvidenceQualityRows -Target $Target) {
+        [void]$lines.Add("  [$($row.Status)] $($row.Component): $($row.Score)/$($row.MaxScore)")
+        [void]$lines.Add("    Evidence: $($row.Evidence)")
+        [void]$lines.Add("    Next: $($row.NextAction)")
+    }
+    [void]$lines.Add('')
+    [void]$lines.Add('Experiment plan:')
+    foreach ($step in Get-CrashExperimentPlanRows -Target $Target) {
+        [void]$lines.Add("  $($step.Step). $($step.Phase) / $($step.Variable) [risk=$($step.Risk)]")
+        [void]$lines.Add("     Action: $($step.Action)")
+        [void]$lines.Add("     Keep constant: $($step.KeepConstant)")
+        [void]$lines.Add("     Success check: $($step.SuccessCheck)")
+    }
+    [void]$lines.Add('')
+    [void]$lines.Add('Recent journal:')
+    foreach ($entry in Get-CrashExperimentJournalRows | Select-Object -First 12) {
+        [void]$lines.Add("  $($entry.Time) [$($entry.Outcome)] $($entry.Target) $($entry.TopFingerprint)")
+        if ($entry.Notes) { [void]$lines.Add("    Notes: $($entry.Notes)") }
+    }
+    return ($lines -join [Environment]::NewLine)
+}
+
+function Export-CrashExperimentLab {
+    param([string]$Target = '')
+    New-ToolDirectory
+    $safeTarget = if ([string]::IsNullOrWhiteSpace($Target)) { 'all-apps' } else { ConvertTo-SafeName -Text $Target }
+    $stamp = Get-Date -Format 'yyyyMMdd_HHmmss'
+    $base = Join-Path $script:Config.ExperimentRoot ("CrashExperimentLab_{0}_{1}" -f $safeTarget, $stamp)
+    $quality = @(Get-CrashEvidenceQualityRows -Target $Target)
+    $plan = @(Get-CrashExperimentPlanRows -Target $Target)
+    $journal = @(Get-CrashExperimentJournalRows)
+    $quality | Export-Csv -LiteralPath "$base.quality.csv" -NoTypeInformation -Encoding UTF8
+    $plan | Export-Csv -LiteralPath "$base.plan.csv" -NoTypeInformation -Encoding UTF8
+    $journal | Export-Csv -LiteralPath "$base.journal.csv" -NoTypeInformation -Encoding UTF8
+    [pscustomobject]@{
+        GeneratedAt = (Get-Date).ToString('o')
+        Target      = if ($Target) { $Target } else { '<all apps>' }
+        Quality     = $quality
+        Plan        = $plan
+        Journal     = $journal
+    } | ConvertTo-Json -Depth 8 | Set-Content -LiteralPath "$base.json" -Encoding UTF8
+    Get-CrashExperimentLabText -Target $Target | Set-Content -LiteralPath "$base.txt" -Encoding UTF8
+    return "$base.txt"
+}
+
+function Get-CrashMatrixAppRows {
+    param([int]$Days = 30, [int]$Max = 1000)
+    $cacheKey = "CrashMatrixApps|$Days|$Max"
+    if ($script:StabilityCache.ContainsKey($cacheKey)) { return $script:StabilityCache[$cacheKey] }
+    $events = @(Get-UniversalCrashRows -Target '' -Days $Days -Max $Max | Where-Object { $_.App })
+    $rows = New-Object System.Collections.Generic.List[object]
+    foreach ($group in $events | Group-Object App | Sort-Object Count -Descending) {
+        $items = @($group.Group | Sort-Object Time)
+        if ($items.Count -eq 0) { continue }
+        $topSignature = @($items | Group-Object EventName, Code, Module | Sort-Object Count -Descending | Select-Object -First 1)
+        $sigRows = @($topSignature[0].Group | Sort-Object Time)
+        $sample = if ($sigRows.Count) { $sigRows[0] } else { $items[0] }
+        $tax = Get-CrashCodeTaxonomy -Code $sample.Code -EventName $sample.EventName -Module $sample.Module
+        $first = [datetime]$items[0].Time
+        $last = [datetime]$items[-1].Time
+        $spanDays = [Math]::Max(1, ($last - $first).TotalDays)
+        $distinctCodes = @($items | Select-Object -ExpandProperty Code -Unique | Where-Object { $_ }).Count
+        $distinctModules = @($items | Select-Object -ExpandProperty Module -Unique | Where-Object { $_ }).Count
+        $focus = if ($tax.Class -match 'GPU|DXGI|Kernel') { 'GPU/device path' } elseif ($tax.Class -match 'Access violation|Heap|Stack') { 'Memory/runtime/conflict' } elseif ($tax.Class -match 'Missing|DLL|Bad image|C\+\+') { 'Dependency/runtime' } elseif ($group.Count -ge 10 -or $distinctCodes -gt 2) { 'Repeated app failure' } else { 'Monitor' }
+        [void]$rows.Add([pscustomobject]@{
+            App             = $group.Name
+            Count           = $group.Count
+            DistinctCodes   = $distinctCodes
+            DistinctModules = $distinctModules
+            FirstSeen       = $first
+            LastSeen        = $last
+            EventsPerDay    = [math]::Round($group.Count / $spanDays, 2)
+            TopEvent        = $sample.EventName
+            TopCode         = $sample.Code
+            TopModule       = $sample.Module
+            TopClass        = $tax.Class
+            Severity        = $tax.Severity
+            Focus           = $focus
+            Recommendation  = $tax.NextAction
+        })
+    }
+    if ($rows.Count -eq 0) {
+        [void]$rows.Add([pscustomobject]@{ App='<none>'; Count=0; DistinctCodes=0; DistinctModules=0; FirstSeen=''; LastSeen=''; EventsPerDay=0; TopEvent=''; TopCode=''; TopModule=''; TopClass='No evidence'; Severity='Info'; Focus='Reproduce'; Recommendation='No recent app crash rows found.' })
+    }
+    $result = $rows.ToArray()
+    $script:StabilityCache[$cacheKey] = $result
+    return $result
+}
+
+function Get-CrashMatrixClusterRows {
+    param([int]$Days = 30, [int]$Max = 1000)
+    $cacheKey = "CrashMatrixClusters|$Days|$Max"
+    if ($script:StabilityCache.ContainsKey($cacheKey)) { return $script:StabilityCache[$cacheKey] }
+    $events = @(Get-UniversalCrashRows -Target '' -Days $Days -Max $Max | Where-Object { $_.App })
+    $rows = New-Object System.Collections.Generic.List[object]
+    foreach ($group in $events | Group-Object Code, Module | Sort-Object Count -Descending) {
+        $items = @($group.Group | Sort-Object Time)
+        if ($items.Count -eq 0) { continue }
+        $sample = $items[0]
+        $tax = Get-CrashCodeTaxonomy -Code $sample.Code -EventName $sample.EventName -Module $sample.Module
+        $apps = @($items | Select-Object -ExpandProperty App -Unique | Where-Object { $_ })
+        $topApps = (($items | Group-Object App | Sort-Object Count -Descending | Select-Object -First 4 | ForEach-Object { "$($_.Name)($($_.Count))" }) -join ', ')
+        [void]$rows.Add([pscustomobject]@{
+            Count        = $group.Count
+            AppCount     = $apps.Count
+            Code         = $sample.Code
+            Module       = $sample.Module
+            Class        = $tax.Class
+            Severity     = $tax.Severity
+            FirstSeen    = $items[0].Time
+            LastSeen     = $items[-1].Time
+            TopApps      = $topApps
+            Interpretation = $tax.Meaning
+            NextAction   = $tax.NextAction
+        })
+    }
+    if ($rows.Count -eq 0) {
+        [void]$rows.Add([pscustomobject]@{ Count=0; AppCount=0; Code=''; Module=''; Class='No evidence'; Severity='Info'; FirstSeen=''; LastSeen=''; TopApps=''; Interpretation='No recent crash clusters found.'; NextAction='Reproduce the issue, then refresh the matrix.' })
+    }
+    $result = $rows.ToArray()
+    $script:StabilityCache[$cacheKey] = $result
+    return $result
+}
+
+function Get-CrashMatrixSignalRows {
+    param([int]$Days = 30)
+    $cacheKey = "CrashMatrixSignals|$Days"
+    if ($script:StabilityCache.ContainsKey($cacheKey)) { return $script:StabilityCache[$cacheKey] }
+    $rows = New-Object System.Collections.Generic.List[object]
+    function Add-MatrixSignal($Priority, $Signal, $Severity, [int]$Score, $Evidence, $Action) {
+        [void]$rows.Add([pscustomobject]@{
+            Priority = $Priority
+            Signal   = $Signal
+            Severity = $Severity
+            Score    = [Math]::Min(100, [Math]::Max(0, $Score))
+            Evidence = $Evidence
+            Action   = $Action
+        })
+    }
+
+    $events = @(Get-UniversalCrashRows -Target '' -Days $Days -Max 1000 | Where-Object { $_.App })
+    $appRows = @(Get-CrashMatrixAppRows -Days $Days)
+    $clusters = @(Get-CrashMatrixClusterRows -Days $Days)
+    $apps = @($events | Select-Object -ExpandProperty App -Unique | Where-Object { $_ })
+    $accessClusters = @($clusters | Where-Object { $_.Class -match 'Access violation|Heap|Stack' -and $_.Count -gt 0 })
+    $gpuClusters = @($clusters | Where-Object { $_.Class -match 'GPU|DXGI|Kernel' -and $_.Count -gt 0 })
+    $tdrRows = @(Get-GpuTdrEventRows -Days $Days)
+    $securityBlocks = @(Get-SecurityBlockEventRows -Days $Days | Where-Object { $_.EventId -in @(1121,1123,1127) })
+    $tools = @(Get-ExternalEvidenceToolRows)
+    $missingTools = @($tools | Where-Object { $_.Status -eq 'Missing' -and $_.Tool -in @('ProcDump','WinDbg') })
+    $latest = @($events | Sort-Object Time -Descending | Select-Object -First 1)
+    $changes = if ($latest.Count) { @(Get-RecentSystemChangeRows -Anchor ([datetime]$latest[0].Time) -DaysBack ([Math]::Min($Days, 30))) } else { @() }
+    $driverChanges = @($changes | Where-Object { $_.Type -match 'Driver|Windows Update' })
+    $dumpConfig = @(Get-LocalDumpConfigRows -Target '' | Where-Object { $_.Status -eq 'Configured' -and $_.Target -eq '<all apps>' })
+
+    if ($apps.Count -ge 8) {
+        Add-MatrixSignal 1 'Multi-app crash spread' 'High' (45 + [Math]::Min(35, $apps.Count * 3)) "$($apps.Count) distinct crashing app(s) in $Days day(s)." 'Treat this as system-wide until proven otherwise: compare GPU/TDR, drivers, runtimes, security, storage, memory, and Windows health before app-specific fixes.'
+    }
+    elseif ($apps.Count -ge 3) {
+        Add-MatrixSignal 2 'Multi-app crash spread' 'Medium' (25 + $apps.Count * 4) "$($apps.Count) distinct crashing app(s) in $Days day(s)." 'Check common layers shared by games/apps: GPU driver, overlays, runtimes, capture stack, security blocks, and recent installs.'
+    }
+    else {
+        Add-MatrixSignal 4 'Crash scope' 'Info' 10 "$($apps.Count) distinct crashing app(s) found." 'Current evidence looks app-limited, but refresh after the next crash.'
+    }
+
+    if ($accessClusters.Count -gt 0) {
+        $top = $accessClusters[0]
+        Add-MatrixSignal 1 'Repeated memory-fault signatures' $top.Severity (35 + [Math]::Min(40, $top.Count * 2)) "$($top.Count)x $($top.Code) module=$($top.Module), app spread=$($top.AppCount)." 'Prioritize overlay/hook isolation, runtime repair, clean boot, and dump capture before repeating data wipes.'
+    }
+    if ($gpuClusters.Count -gt 0 -or $tdrRows.Count -gt 0) {
+        Add-MatrixSignal 1 'GPU/device instability path' ($(if ($tdrRows.Count -ge 5) { 'High' } else { 'Medium' })) (25 + [Math]::Min(45, ($tdrRows.Count * 3) + ($gpuClusters.Count * 8))) "$($tdrRows.Count) GPU/TDR/system graphics row(s); $($gpuClusters.Count) GPU/DXGI cluster(s)." 'Use DxDiag/WPR, disable capture overlays, verify power/thermal state, and test a clean GPU driver path.'
+    }
+    if ($securityBlocks.Count -gt 0) {
+        Add-MatrixSignal 2 'Security enforcement blocks' 'High' (30 + [Math]::Min(40, $securityBlocks.Count * 5)) "$($securityBlocks.Count) Defender ASR/CFA block event(s)." 'Inspect Defender Operational event details; use narrow trusted allowlisting only when a real block is confirmed.'
+    }
+    if ($driverChanges.Count -gt 0) {
+        Add-MatrixSignal 3 'Recent driver/update correlation' 'Medium' (20 + [Math]::Min(30, $driverChanges.Count * 4)) "$($driverChanges.Count) recent driver/update change(s) near latest crash." 'Isolate one update/driver variable at a time; avoid stacking fixes in one test.'
+    }
+    if ($events.Count -gt 0 -and $dumpConfig.Count -eq 0) {
+        Add-MatrixSignal 3 'Dump evidence gap' 'Medium' 30 "$($events.Count) crash event(s), but no all-app LocalDumps config." 'Use per-app LocalDumps/ProcDump playbooks for the next persistent fingerprint when stronger evidence is needed.'
+    }
+    if ($missingTools.Count -gt 0) {
+        Add-MatrixSignal 4 'Advanced tooling gap' 'Info' 15 (($missingTools | ForEach-Object { $_.Tool }) -join ', ') 'Install/use missing Microsoft tools only if escalation evidence is needed.'
+    }
+    if ($rows.Count -eq 0) {
+        Add-MatrixSignal 4 'No strong matrix signal' 'Info' 0 'No matrix rule matched.' 'Reproduce, refresh Matrix, then compare app leaderboard and clusters.'
+    }
+    $result = @($rows | Sort-Object Priority, @{ Expression = 'Score'; Descending = $true }, Signal)
+    $script:StabilityCache[$cacheKey] = $result
+    return $result
+}
+
+function Get-CrashMatrixReportText {
+    param([int]$Days = 30)
+    $lines = New-Object System.Collections.Generic.List[string]
+    [void]$lines.Add('Universal Crash Matrix')
+    [void]$lines.Add('======================')
+    [void]$lines.Add("Window: last $Days day(s)")
+    [void]$lines.Add("Generated: $(Get-Date)")
+    [void]$lines.Add('')
+    [void]$lines.Add('System-wide signals:')
+    foreach ($signal in Get-CrashMatrixSignalRows -Days $Days) {
+        [void]$lines.Add("  [P$($signal.Priority) $($signal.Severity) $($signal.Score)] $($signal.Signal)")
+        [void]$lines.Add("    Evidence: $($signal.Evidence)")
+        [void]$lines.Add("    Action: $($signal.Action)")
+    }
+    [void]$lines.Add('')
+    [void]$lines.Add('App crash leaderboard:')
+    foreach ($app in Get-CrashMatrixAppRows -Days $Days | Select-Object -First 15) {
+        [void]$lines.Add("  $($app.Count)x $($app.App) class=$($app.TopClass) code=$($app.TopCode) module=$($app.TopModule) last=$($app.LastSeen)")
+        [void]$lines.Add("    Focus: $($app.Focus); $($app.Recommendation)")
+    }
+    [void]$lines.Add('')
+    [void]$lines.Add('Shared signature clusters:')
+    foreach ($cluster in Get-CrashMatrixClusterRows -Days $Days | Select-Object -First 15) {
+        [void]$lines.Add("  $($cluster.Count)x apps=$($cluster.AppCount) code=$($cluster.Code) module=$($cluster.Module) class=$($cluster.Class)")
+        [void]$lines.Add("    Apps: $($cluster.TopApps)")
+        [void]$lines.Add("    Next: $($cluster.NextAction)")
+    }
+    return ($lines -join [Environment]::NewLine)
+}
+
+function Export-CrashMatrixReport {
+    param([int]$Days = 30)
+    New-ToolDirectory
+    $stamp = Get-Date -Format 'yyyyMMdd_HHmmss'
+    $base = Join-Path $script:Config.MatrixRoot ("CrashMatrix_{0}days_{1}" -f $Days, $stamp)
+    $apps = @(Get-CrashMatrixAppRows -Days $Days)
+    $clusters = @(Get-CrashMatrixClusterRows -Days $Days)
+    $signals = @(Get-CrashMatrixSignalRows -Days $Days)
+    $apps | Export-Csv -LiteralPath "$base.apps.csv" -NoTypeInformation -Encoding UTF8
+    $clusters | Export-Csv -LiteralPath "$base.clusters.csv" -NoTypeInformation -Encoding UTF8
+    $signals | Export-Csv -LiteralPath "$base.signals.csv" -NoTypeInformation -Encoding UTF8
+    [pscustomobject]@{
+        GeneratedAt = (Get-Date).ToString('o')
+        Days        = $Days
+        Apps        = $apps
+        Clusters    = $clusters
+        Signals     = $signals
+    } | ConvertTo-Json -Depth 8 | Set-Content -LiteralPath "$base.json" -Encoding UTF8
+    Get-CrashMatrixReportText -Days $Days | Set-Content -LiteralPath "$base.txt" -Encoding UTF8
+    return "$base.txt"
+}
+
+function Get-CrashOpsToolRows {
+    $toolSpecs = @(
+        @{ Tool='DxDiag'; Commands=@('dxdiag.exe'); Class='Inventory'; Purpose='DirectX, GPU, audio, display, driver, and input inventory.' },
+        @{ Tool='ProcDump'; Commands=@('procdump.exe'); Class='Dump capture'; Purpose='Sysinternals crash or hang dump capture for one target process.' },
+        @{ Tool='Process Monitor'; Commands=@('procmon64.exe','procmon.exe'); Class='File/registry/process trace'; Purpose='Launch-time access denied, missing file, registry, filter-driver, and security clues.' },
+        @{ Tool='WPR'; Commands=@('wpr.exe'); Class='ETW trace'; Purpose='Short Windows Performance Recorder trace for GPU, CPU, storage, driver, and system context.' },
+        @{ Tool='WPA'; Commands=@('wpa.exe'); Class='Trace analysis'; Purpose='Windows Performance Analyzer opens ETL traces created by WPR.' },
+        @{ Tool='WinDbg'; Commands=@('windbg.exe'); Class='Dump analysis'; Purpose='Analyze user-mode dump files and inspect faulting stack/module context.' },
+        @{ Tool='GFlags'; Commands=@('gflags.exe'); Class='Advanced debug'; Purpose='Advanced page-heap/user-mode debug flags; use only for targeted vendor/support work.' },
+        @{ Tool='DISM'; Commands=@('dism.exe'); Class='Windows repair'; Purpose='Windows image health check and repair for system-wide instability.' },
+        @{ Tool='SFC'; Commands=@('sfc.exe'); Class='Windows repair'; Purpose='Protected Windows system file integrity scan.' }
+    )
+    $rows = New-Object System.Collections.Generic.List[object]
+    foreach ($spec in $toolSpecs) {
+        $found = $null
+        foreach ($cmdName in $spec.Commands) {
+            $cmd = Get-Command $cmdName -ErrorAction SilentlyContinue | Select-Object -First 1
+            if ($cmd) { $found = $cmd; break }
+        }
+        [void]$rows.Add([pscustomobject]@{
+            Tool       = $spec.Tool
+            Status     = if ($found) { 'Available' } else { 'Missing' }
+            Command    = if ($found) { $found.Name } else { ($spec.Commands -join ' or ') }
+            Path       = if ($found) { $found.Source } else { '' }
+            Class      = $spec.Class
+            Purpose    = $spec.Purpose
+            UseWhen    = switch ($spec.Tool) {
+                'Process Monitor' { 'Use for launch failures, access denied, missing dependency, security/filter-driver, and save/cache write clues.'; break }
+                'WPR' { 'Use for GPU/TDR, system-wide stutter/crash, driver, storage, CPU, and multi-app instability context.'; break }
+                'ProcDump' { 'Use when a stable crash/hang fingerprint needs a dump file.'; break }
+                'WinDbg' { 'Use after a dump exists, not before.'; break }
+                'GFlags' { 'Use only if support asks for page heap or advanced memory-corruption tracing.'; break }
+                'DISM' { 'Use when crashes span unrelated apps or Windows component corruption is suspected.'; break }
+                'SFC' { 'Run after DISM for system-wide instability checks.'; break }
+                default { 'Use as supporting evidence.' }
+            }
+        })
+    }
+    return $rows.ToArray()
+}
+
+function Get-CrashOpsReadinessRows {
+    param([string]$Target = '', [int]$Days = 30)
+    $rows = New-Object System.Collections.Generic.List[object]
+    function Add-OpsReady($Priority, $Area, $Status, [int]$Score, $Evidence, $NextAction) {
+        [void]$rows.Add([pscustomobject]@{
+            Priority   = $Priority
+            Area       = $Area
+            Status     = $Status
+            Score      = [Math]::Min(100, [Math]::Max(0, $Score))
+            Evidence   = $Evidence
+            NextAction = $NextAction
+        })
+    }
+
+    $targetText = if ($Target) { $Target } else { '<all apps>' }
+    $events = @(Get-UniversalCrashRows -Target $Target -Days $Days -Max 800)
+    $fingerprints = @(Get-UniversalCrashFingerprintRows -Target $Target | Where-Object { $_.Count -gt 0 })
+    $quality = @(Get-CrashEvidenceQualityRows -Target $Target)
+    $overall = @($quality | Where-Object { $_.Component -eq 'Overall' } | Select-Object -First 1)
+    $tools = @(Get-CrashOpsToolRows)
+    $availableTools = @($tools | Where-Object { $_.Status -eq 'Available' })
+    $dumps = @(Get-LocalDumpConfigRows -Target $(if ($Target) { $Target } else { $script:Config.ExeName }))
+    $dumpConfigured = @($dumps | Where-Object { $_.Status -eq 'Configured' -and ($_.Target -eq $Target -or $_.Target -eq '<all apps>' -or ($Target -eq '' -and $_.Target -eq '<all apps>')) })
+    $matrixSignals = @(Get-CrashMatrixSignalRows -Days $Days)
+    $highMatrix = @($matrixSignals | Where-Object { $_.Severity -eq 'High' })
+    $securityBlocks = @(Get-SecurityBlockEventRows -Target $Target -Days $Days | Where-Object { $_.EventId -in @(1121,1123,1127) })
+    $journal = @(Get-CrashExperimentJournalRows)
+    $latestCrash = @($events | Sort-Object Time -Descending | Select-Object -First 1)
+    $supportAfterCrash = $null
+    if ($latestCrash.Count -gt 0 -and $latestCrash[0].Time) { $supportAfterCrash = Get-LatestSupportPackageAfter -After ([datetime]$latestCrash[0].Time) }
+
+    Add-OpsReady 1 'Crash evidence' ($(if ($events.Count -gt 0) { 'OK' } else { 'Gap' })) ($(if ($events.Count -gt 0) { 80 } else { 15 })) "$($events.Count) event row(s) for $targetText in $Days day(s)." 'Reproduce once, then refresh Ops Center if this is empty.'
+    Add-OpsReady 1 'Fingerprint strength' ($(if ($fingerprints.Count -gt 0 -and $fingerprints[0].Count -ge 3) { 'OK' } elseif ($fingerprints.Count -gt 0) { 'Info' } else { 'Gap' })) ($(if ($fingerprints.Count -gt 0) { [Math]::Min(100, 40 + ($fingerprints[0].Count * 8)) } else { 10 })) ($(if ($fingerprints.Count) { "$($fingerprints[0].Count)x $($fingerprints[0].App) $($fingerprints[0].Code) module=$($fingerprints[0].Module)" } else { 'No grouped fingerprint yet.' })) 'A repeated fingerprint is the anchor for one-variable testing.'
+    Add-OpsReady 1 'Evidence quality' ($(if ($overall.Count) { $overall[0].Status } else { 'Gap' })) ($(if ($overall.Count) { [int]$overall[0].Score } else { 0 })) ($(if ($overall.Count) { "$($overall[0].Score)/$($overall[0].MaxScore) $($overall[0].Evidence)" } else { 'Evidence quality not available.' })) 'Use Experiment Lab when quality is strong; capture more evidence when weak.'
+    Add-OpsReady 2 'Dump capture readiness' ($(if ($dumpConfigured.Count -gt 0) { 'OK' } else { 'Gap' })) ($(if ($dumpConfigured.Count -gt 0) { 85 } else { 25 })) ($(if ($dumpConfigured.Count) { (($dumpConfigured | ForEach-Object { "$($_.Hive)/$($_.Target) -> $($_.DumpFolder)" }) -join '; ') } else { 'No matching LocalDumps config found.' })) 'Use per-target LocalDumps or ProcDump only for persistent crash fingerprints.'
+    Add-OpsReady 2 'Tool coverage' ($(if ($availableTools.Count -ge 6) { 'OK' } elseif ($availableTools.Count -ge 4) { 'Info' } else { 'Gap' })) ([Math]::Min(100, $availableTools.Count * 12)) "$($availableTools.Count)/$($tools.Count) Ops tools available." 'Install missing Microsoft/Sysinternals tools only if the next evidence step needs them.'
+    Add-OpsReady 2 'System-wide signal' ($(if ($highMatrix.Count -gt 0) { 'Warn' } else { 'Info' })) ($(if ($highMatrix.Count -gt 0) { [int]$highMatrix[0].Score } else { 20 })) ($(if ($highMatrix.Count) { "$($highMatrix[0].Signal): $($highMatrix[0].Evidence)" } else { 'No high Crash Matrix signal.' })) 'When Matrix is high, prefer system-wide isolation over app-only data wipes.'
+    Add-OpsReady 2 'Security enforcement' ($(if ($securityBlocks.Count -gt 0) { 'Warn' } else { 'OK' })) ($(if ($securityBlocks.Count -gt 0) { 70 } else { 90 })) "$($securityBlocks.Count) ASR/CFA block event(s)." 'Review event details before creating any security exception.'
+    Add-OpsReady 3 'Post-crash package' ($(if ($supportAfterCrash) { 'OK' } else { 'Gap' })) ($(if ($supportAfterCrash) { 90 } else { 20 })) ($(if ($supportAfterCrash) { "$($supportAfterCrash.Name) after latest crash." } else { 'No support package newer than latest crash anchor.' })) 'Build Support Zip immediately after the next crash.'
+    Add-OpsReady 3 'Experiment journal' ($(if ($journal.Count -gt 0) { 'OK' } else { 'Info' })) ([Math]::Min(100, $journal.Count * 20)) "$($journal.Count) logged attempt(s)." 'Log each test so the tool can separate lucky launches from real fixes.'
+
+    return @($rows | Sort-Object Priority, @{ Expression = 'Score'; Descending = $true }, Area)
+}
+
+function Get-CrashOpsCapturePlanRows {
+    param([string]$Target = '', [int]$Days = 30)
+    $rows = New-Object System.Collections.Generic.List[object]
+    function Add-Capture($Priority, $Mode, $Trigger, $UseWhen, $Tools, $Admin, $Risk, $Output, $StopCondition) {
+        [void]$rows.Add([pscustomobject]@{
+            Priority      = $Priority
+            Mode          = $Mode
+            Trigger       = $Trigger
+            UseWhen       = $UseWhen
+            Tools         = $Tools
+            Admin         = $Admin
+            Risk          = $Risk
+            Output        = $Output
+            StopCondition = $StopCondition
+        })
+    }
+
+    $target = if ($Target) { $Target } else { $script:Config.ExeName }
+    if ($target -notmatch '\.exe$') { $target = "$target.exe" }
+    $events = @(Get-UniversalCrashRows -Target $Target -Days $Days -Max 800)
+    $fingerprints = @(Get-UniversalCrashFingerprintRows -Target $Target | Where-Object { $_.Count -gt 0 })
+    $matrixSignals = @(Get-CrashMatrixSignalRows -Days $Days)
+    $gpuSignal = @($matrixSignals | Where-Object { $_.Signal -match 'GPU|device|TDR' } | Select-Object -First 1)
+    $multiApp = @($matrixSignals | Where-Object { $_.Signal -match 'Multi-app' -and $_.Score -ge 40 } | Select-Object -First 1)
+    $security = @(Get-SecurityBlockEventRows -Target $Target -Days $Days | Where-Object { $_.EventId -in @(1121,1123,1127) })
+    $quality = @(Get-CrashEvidenceQualityRows -Target $Target | Where-Object { $_.Component -eq 'Overall' } | Select-Object -First 1)
+    $dumps = @(Get-LocalDumpConfigRows -Target $target)
+    $dumpConfigured = @($dumps | Where-Object { $_.Status -eq 'Configured' -and ($_.Target -eq $target -or $_.Target -eq '<all apps>') })
+
+    Add-Capture 1 'Baseline Support Package' 'After every new crash or before a risky change' 'Always. This is the lowest-risk evidence bundle and includes current tool outputs.' 'Companion Doctor Support Zip, DxDiag, Event logs, WER, Stability, Matrix, Ops Center' 'No' 'Low' 'Support package zip plus state snapshot.' 'Stop after one package per repro unless the fingerprint changes.'
+    Add-Capture 1 'Fingerprint Control Run' 'Before changing the next variable' 'Use to confirm the crash still reproduces and to avoid chasing stale evidence.' 'Crash Watch, State Snapshot, Experiment Journal' 'No' 'Low' 'Before/after snapshot and journal entry.' 'Stop when the same fingerprint is confirmed or the app stays stable.'
+
+    if ($events.Count -gt 0 -and $dumpConfigured.Count -eq 0) {
+        Add-Capture 2 'Per-target User-Mode Dump' 'Repeated same crash fingerprint' 'Use when Event Viewer shows the same app/code/module pattern and support-grade evidence is needed.' 'WER LocalDumps or ProcDump, WinDbg after capture' 'Usually yes for HKLM LocalDumps; ProcDump may need elevation' 'Medium' "Full dump in $($script:Config.UniversalRoot)\LocalDumps." 'Disable/remove dump capture after collecting enough dumps.'
+    }
+    elseif ($dumpConfigured.Count -gt 0) {
+        Add-Capture 2 'Dump Verification' 'Next crash after LocalDumps is configured' 'Use to confirm dump files are being written and tied to the right target.' 'WER LocalDumps, WinDbg' 'No for verification' 'Low' 'A new .dmp file newer than the crash time.' 'Stop after one or two good dumps.'
+    }
+
+    if ($gpuSignal.Count -gt 0 -or $multiApp.Count -gt 0) {
+        Add-Capture 2 'Short WPR Trace' 'GPU/TDR, driver, multi-app, or hard-restart signal' 'Use for short, controlled repro windows when the problem may be driver/system-wide.' 'WPR, WPA, DxDiag' 'Yes' 'Medium' 'ETL trace plus DxDiag in the support package.' 'Stop immediately after repro; do not leave tracing running.'
+    }
+
+    if ($security.Count -gt 0 -or @($fingerprints | Where-Object { $_.Code -match '0xc0000022|c0000022|0xc0000135|0xc000007b' }).Count -gt 0) {
+        Add-Capture 2 'Process Monitor Launch Trace' 'Access denied, missing dependency, startup failure, or security block clue' 'Use for a short launch-only trace with filters for the target process and Result contains DENIED/NOT FOUND.' 'Process Monitor, Event Viewer' 'Often yes' 'Medium' 'PML/CSV trace plus Defender event details.' 'Stop as soon as the launch failure or crash is reproduced.'
+    }
+
+    if ($multiApp.Count -gt 0) {
+        Add-Capture 3 'Windows Health Repair Evidence' 'Crashes spread across unrelated apps' 'Use before app-specific resets when the Matrix says this is not only FH6.' 'DISM, SFC, CBS/DISM logs' 'Yes' 'Low' 'DISM/SFC console output and CBS/DISM logs.' 'Stop after DISM RestoreHealth and SFC complete; reboot if asked.'
+    }
+
+    Add-Capture 3 'Clean Boot Isolation' 'Same fingerprint survives simple tests' 'Use to prove or disprove background services/startup apps without touching game files.' 'Microsoft clean boot workflow, Experiment Journal' 'Yes for msconfig/task manager changes' 'Medium' 'Journaled stable/crashed result with startup/services changed in groups.' 'Stop when a service/startup group is identified or the crash reproduces in clean boot.'
+
+    if ($quality.Count -gt 0 -and [int]$quality[0].Score -ge 75) {
+        Add-Capture 4 'One-Variable Experiment' 'Evidence quality is strong enough' 'Use to avoid stacking fixes and losing the cause.' 'Experiment Lab, Stability, Matrix' 'No' 'Low' 'Journaled Started/Crashed/Stable rows tied to fingerprint.' 'Stop after one changed variable and record the result.'
+    }
+
+    return @($rows | Sort-Object Priority, Mode)
+}
+
+function Get-CrashOpsDecisionRows {
+    param([string]$Target = '', [int]$Days = 30)
+    $rows = New-Object System.Collections.Generic.List[object]
+    function Add-Decision($Step, $Question, $CurrentSignal, $Decision, $NextMove, $Risk) {
+        [void]$rows.Add([pscustomobject]@{
+            Step          = $Step
+            Question      = $Question
+            CurrentSignal = $CurrentSignal
+            Decision      = $Decision
+            NextMove      = $NextMove
+            Risk          = $Risk
+        })
+    }
+
+    $events = @(Get-UniversalCrashRows -Target $Target -Days $Days -Max 800)
+    $fingerprints = @(Get-UniversalCrashFingerprintRows -Target $Target | Where-Object { $_.Count -gt 0 })
+    $matrixSignals = @(Get-CrashMatrixSignalRows -Days $Days)
+    $multiApp = @($matrixSignals | Where-Object { $_.Signal -match 'Multi-app' -and $_.Score -ge 40 } | Select-Object -First 1)
+    $topFp = if ($fingerprints.Count) { $fingerprints[0] } else { $null }
+    $quality = @(Get-CrashEvidenceQualityRows -Target $Target | Where-Object { $_.Component -eq 'Overall' } | Select-Object -First 1)
+    $dumps = @(Get-LocalDumpConfigRows -Target $(if ($Target) { $Target } else { $script:Config.ExeName }) | Where-Object { $_.Status -eq 'Configured' })
+    $conflicts = @(Get-ConflictProcesses)
+
+    Add-Decision 1 'Is this one app or the whole machine?' ($(if ($multiApp.Count) { $multiApp[0].Evidence } else { "$($events.Count) target event row(s)." })) ($(if ($multiApp.Count) { 'Treat as system-wide first.' } else { 'Treat as target-specific unless new app spread appears.' })) ($(if ($multiApp.Count) { 'Use Matrix, WPR, DISM/SFC, GPU/power/security checks before more FH6 save wipes.' } else { 'Use target fingerprint, LocalDumps/ProcDump, and one-variable target tests.' })) 'Low'
+    Add-Decision 2 'Is the fingerprint stable?' ($(if ($topFp) { "$($topFp.Count)x $($topFp.Code) module=$($topFp.Module)" } else { 'No fingerprint yet.' })) ($(if ($topFp -and $topFp.Count -ge 3) { 'Stable enough for controlled experiments.' } elseif ($topFp) { 'Usable but weak.' } else { 'Need a fresh repro.' })) ($(if ($topFp) { 'Change exactly one variable and compare code/module/class.' } else { 'Run Crash Watch or reproduce once, then refresh.' })) 'Low'
+    Add-Decision 3 'Do we need a dump or trace?' ($(if ($dumps.Count) { "$($dumps.Count) dump config row(s)." } else { 'No active dump config row.' })) ($(if ($topFp -and $topFp.Count -ge 3 -and $dumps.Count -eq 0) { 'Prepare dump capture.' } elseif ($dumps.Count) { 'Verify dump output after next crash.' } else { 'Delay dump setup until fingerprint repeats.' })) 'Use LocalDumps/ProcDump only for persistent fingerprints; use WPR for GPU/system clues.' 'Medium'
+    Add-Decision 4 'Are overlays/hooks still plausible?' ($(if ($conflicts.Count) { (($conflicts | Select-Object -ExpandProperty ProcessName -Unique) -join ', ') } else { 'No visible conflict process now.' })) ($(if ($conflicts.Count) { 'Isolate visible conflicts first.' } else { 'Use clean boot if fingerprint survives.' })) 'Stop capture/overlay/tuning/input-hook tools for one test, then log Crashed or Stable.' 'Low'
+    Add-Decision 5 'Is evidence good enough to act?' ($(if ($quality.Count) { "$($quality[0].Score)/$($quality[0].MaxScore) $($quality[0].Status)" } else { 'No quality row.' })) ($(if ($quality.Count -and [int]$quality[0].Score -ge 75) { 'Yes: experiment.' } else { 'No: capture stronger baseline evidence.' })) ($(if ($quality.Count -and [int]$quality[0].Score -ge 75) { 'Use Experiment Lab plan.' } else { 'Build support zip, enable Crash Watch, and capture the next crash.' })) 'Low'
+    Add-Decision 6 'When should we escalate?' 'Same fingerprint after clean overlay, clean boot, runtime repair, and user-data test.' 'Escalate only with a coherent package.' 'Export Ops Center, Stability, Matrix, Experiment Lab, dump/WPR evidence if captured, and a redacted summary.' 'Medium'
+
+    return @($rows | Sort-Object Step)
+}
+
+function Get-CrashOpsCommandRows {
+    param([string]$Target = '', [int]$Days = 30)
+    $target = if ($Target) { $Target } else { $script:Config.ExeName }
+    if ($target -notmatch '\.exe$') { $target = "$target.exe" }
+    $dumpFolder = Join-Path $script:Config.UniversalRoot 'LocalDumps'
+    $tracePath = Join-Path $script:Config.OpsRoot ("WPR_{0}_short.etl" -f (ConvertTo-SafeName -Text $target))
+    $dxPath = Join-Path $script:Config.OpsRoot 'dxdiag.txt'
+    $eventPath = Join-Path $script:Config.OpsRoot 'application-crash-events.evtx'
+    $pmlPath = Join-Path $script:Config.OpsRoot ("ProcMon_{0}.pml" -f (ConvertTo-SafeName -Text $target))
+    $rows = New-Object System.Collections.Generic.List[object]
+    function Add-Command($Priority, $Mode, $Admin, $Tool, $Purpose, $Command, $ExpectedOutput, $Cleanup) {
+        [void]$rows.Add([pscustomobject]@{
+            Priority       = $Priority
+            Mode           = $Mode
+            Admin          = $Admin
+            Tool           = $Tool
+            Purpose        = $Purpose
+            Command        = $Command
+            ExpectedOutput = $ExpectedOutput
+            Cleanup        = $Cleanup
+        })
+    }
+
+    Add-Command 1 'Prepare' 'No' 'PowerShell' 'Create the project evidence folders.' "New-Item -ItemType Directory -Path `"$($script:Config.OpsRoot)`", `"$dumpFolder`" -Force" 'CrashOpsCenter and LocalDumps folders exist.' 'None.'
+    Add-Command 1 'Snapshot' 'No' 'Companion Doctor' 'Capture current state before changing variables.' "Run GUI: Reports > State Snapshot, or run: powershell.exe -NoProfile -ExecutionPolicy Bypass -File `"$($script:Config.Downloads)\FH6-CompanionDoctor.ps1`" -NoGui -Snapshot" 'Snapshot text/json in the Snapshots folder.' 'None.'
+    Add-Command 1 'DxDiag' 'No' 'DxDiag' 'Collect DirectX/GPU/audio/input inventory.' "dxdiag.exe /t `"$dxPath`"" 'dxdiag.txt in CrashOpsCenter.' 'None.'
+    Add-Command 2 'LocalDumps' 'Yes' 'WER LocalDumps' 'Capture a full user-mode dump on the next target crash.' "reg add `"HKLM\SOFTWARE\Microsoft\Windows\Windows Error Reporting\LocalDumps\$target`" /v DumpFolder /t REG_EXPAND_SZ /d `"$dumpFolder`" /f && reg add `"HKLM\SOFTWARE\Microsoft\Windows\Windows Error Reporting\LocalDumps\$target`" /v DumpCount /t REG_DWORD /d 10 /f && reg add `"HKLM\SOFTWARE\Microsoft\Windows\Windows Error Reporting\LocalDumps\$target`" /v DumpType /t REG_DWORD /d 2 /f" ".dmp files appear in $dumpFolder after crashes." "reg delete `"HKLM\SOFTWARE\Microsoft\Windows\Windows Error Reporting\LocalDumps\$target`" /f"
+    Add-Command 2 'ProcDump crash' 'Maybe' 'ProcDump' 'Alternative per-process dump capture for a persistent crash.' "procdump.exe -ma -e -x `"$dumpFolder`" $target" 'A dump file is written when the target throws an unhandled exception.' 'Close ProcDump window or Ctrl+C after the test.'
+    Add-Command 2 'ProcDump hang' 'Maybe' 'ProcDump' 'Capture a dump if the app hangs instead of crashing.' "procdump.exe -ma -h $target `"$dumpFolder`"" 'A hang dump in LocalDumps.' 'None after command exits.'
+    Add-Command 2 'WPR start' 'Yes' 'WPR' 'Start a short trace for GPU/driver/system context.' 'wpr.exe -start GeneralProfile' 'WPR reports recording started.' 'Stop immediately after repro.'
+    Add-Command 2 'WPR stop' 'Yes' 'WPR' 'Stop the trace and save ETL.' "wpr.exe -stop `"$tracePath`"" 'ETL trace in CrashOpsCenter.' 'None.'
+    Add-Command 3 'ProcMon launch trace' 'Maybe' 'Process Monitor' 'Short launch trace for access denied, missing files, registry, and filter-driver clues.' "procmon.exe /AcceptEula /Quiet /Minimized /BackingFile `"$pmlPath`"" 'PML backing file while ProcMon is running.' 'procmon.exe /Terminate'
+    Add-Command 3 'Event log export' 'No' 'wevtutil' 'Export app crash/hang events for external review.' "wevtutil epl Application `"$eventPath`" /q:`"*[System[(EventID=1000 or EventID=1001 or EventID=1002)]]`"" 'Filtered Application event log export in CrashOpsCenter.' 'None.'
+    Add-Command 3 'Windows image repair' 'Yes' 'DISM' 'Repair Windows component store when crashes are system-wide.' 'DISM.exe /Online /Cleanup-Image /RestoreHealth' 'DISM completes or writes a specific failure to DISM.log.' 'Reboot if requested.'
+    Add-Command 3 'System file scan' 'Yes' 'SFC' 'Scan protected system files after DISM.' 'sfc /scannow' 'SFC reports no violations or repaired files.' 'Reboot if requested.'
+    Add-Command 4 'Dump analysis' 'No' 'WinDbg' 'Open a captured dump for stack/module analysis.' "windbg.exe -z `"$dumpFolder\<dump-file>.dmp`"" 'WinDbg opens dump; run !analyze -v manually.' 'None.'
+    return @($rows | Sort-Object Priority, Mode, Tool)
+}
+
+function Get-CrashOpsReportText {
+    param([string]$Target = '', [int]$Days = 30)
+    $targetText = if ($Target) { $Target } else { '<all apps>' }
+    $lines = New-Object System.Collections.Generic.List[string]
+    [void]$lines.Add('CrashOps Center')
+    [void]$lines.Add('===============')
+    [void]$lines.Add("Target: $targetText")
+    [void]$lines.Add("Window: last $Days day(s)")
+    [void]$lines.Add("Generated: $(Get-Date)")
+    [void]$lines.Add('')
+    [void]$lines.Add('Readiness:')
+    foreach ($row in Get-CrashOpsReadinessRows -Target $Target -Days $Days) {
+        [void]$lines.Add("  [P$($row.Priority) $($row.Status) $($row.Score)] $($row.Area)")
+        [void]$lines.Add("    Evidence: $($row.Evidence)")
+        [void]$lines.Add("    Next: $($row.NextAction)")
+    }
+    [void]$lines.Add('')
+    [void]$lines.Add('Capture plan:')
+    foreach ($row in Get-CrashOpsCapturePlanRows -Target $Target -Days $Days) {
+        [void]$lines.Add("  [P$($row.Priority)] $($row.Mode) risk=$($row.Risk) admin=$($row.Admin)")
+        [void]$lines.Add("    Trigger: $($row.Trigger)")
+        [void]$lines.Add("    Use when: $($row.UseWhen)")
+        [void]$lines.Add("    Output: $($row.Output)")
+        [void]$lines.Add("    Stop: $($row.StopCondition)")
+    }
+    [void]$lines.Add('')
+    [void]$lines.Add('Decision board:')
+    foreach ($row in Get-CrashOpsDecisionRows -Target $Target -Days $Days) {
+        [void]$lines.Add("  $($row.Step). $($row.Question)")
+        [void]$lines.Add("    Signal: $($row.CurrentSignal)")
+        [void]$lines.Add("    Decision: $($row.Decision)")
+        [void]$lines.Add("    Next: $($row.NextMove)")
+    }
+    [void]$lines.Add('')
+    [void]$lines.Add('Command queue:')
+    foreach ($row in Get-CrashOpsCommandRows -Target $Target -Days $Days) {
+        [void]$lines.Add("  [P$($row.Priority)] $($row.Mode) / $($row.Tool) admin=$($row.Admin)")
+        [void]$lines.Add("    Purpose: $($row.Purpose)")
+        [void]$lines.Add("    Command: $($row.Command)")
+        [void]$lines.Add("    Expected: $($row.ExpectedOutput)")
+        [void]$lines.Add("    Cleanup: $($row.Cleanup)")
+    }
+    [void]$lines.Add('')
+    [void]$lines.Add('Safety boundary:')
+    [void]$lines.Add('  Ops Center generates reviewable commands and external diagnostics. It does not modify game install files, inject into processes, read/write game memory, automate gameplay, or edit saves for advantage.')
+    return ($lines -join [Environment]::NewLine)
+}
+
+function Export-CrashOpsCenter {
+    param([string]$Target = '', [int]$Days = 30)
+    New-ToolDirectory
+    $safeTarget = if ([string]::IsNullOrWhiteSpace($Target)) { 'all-apps' } else { ConvertTo-SafeName -Text $Target }
+    $stamp = Get-Date -Format 'yyyyMMdd_HHmmss'
+    $base = Join-Path $script:Config.OpsRoot ("CrashOps_{0}_{1}days_{2}" -f $safeTarget, $Days, $stamp)
+    $readiness = @(Get-CrashOpsReadinessRows -Target $Target -Days $Days)
+    $plan = @(Get-CrashOpsCapturePlanRows -Target $Target -Days $Days)
+    $decisions = @(Get-CrashOpsDecisionRows -Target $Target -Days $Days)
+    $commands = @(Get-CrashOpsCommandRows -Target $Target -Days $Days)
+    $tools = @(Get-CrashOpsToolRows)
+    $readiness | Export-Csv -LiteralPath "$base.readiness.csv" -NoTypeInformation -Encoding UTF8
+    $plan | Export-Csv -LiteralPath "$base.capture-plan.csv" -NoTypeInformation -Encoding UTF8
+    $decisions | Export-Csv -LiteralPath "$base.decisions.csv" -NoTypeInformation -Encoding UTF8
+    $commands | Export-Csv -LiteralPath "$base.commands.csv" -NoTypeInformation -Encoding UTF8
+    $tools | Export-Csv -LiteralPath "$base.tools.csv" -NoTypeInformation -Encoding UTF8
+    [pscustomobject]@{
+        GeneratedAt = (Get-Date).ToString('o')
+        Target      = if ($Target) { $Target } else { '<all apps>' }
+        Days        = $Days
+        Readiness   = $readiness
+        CapturePlan = $plan
+        Decisions   = $decisions
+        Commands    = $commands
+        Tools       = $tools
+    } | ConvertTo-Json -Depth 8 | Set-Content -LiteralPath "$base.json" -Encoding UTF8
+    Get-CrashOpsReportText -Target $Target -Days $Days | Set-Content -LiteralPath "$base.txt" -Encoding UTF8
+    return "$base.txt"
+}
+
 function Get-CrashSummary {
     $lines = New-Object System.Collections.Generic.List[string]
     $reports = @(Get-CrashReportRows)
@@ -2711,6 +3402,16 @@ function Get-OfficialReferenceRows {
             Why  = 'Official per-application dump configuration used by CrashScope command playbooks.'
         },
         [pscustomobject]@{
+            Area = 'User-mode dump files'
+            Url  = 'https://learn.microsoft.com/en-us/windows-hardware/drivers/debugger/user-mode-dump-files'
+            Why  = 'Microsoft debugger reference explaining why user-mode dumps are useful for resolving application crashes.'
+        },
+        [pscustomobject]@{
+            Area = 'Analyze user-mode dumps'
+            Url  = 'https://learn.microsoft.com/en-us/windows-hardware/drivers/debugger/analyzing-a-user-mode-dump-file'
+            Why  = 'Official WinDbg/CDB workflow for analyzing captured user-mode dump files.'
+        },
+        [pscustomobject]@{
             Area = 'Sysinternals ProcDump'
             Url  = 'https://learn.microsoft.com/en-us/sysinternals/downloads/procdump'
             Why  = 'Microsoft Sysinternals utility for crash/hang dump capture when Event Viewer evidence is not enough.'
@@ -2721,9 +3422,19 @@ function Get-OfficialReferenceRows {
             Why  = 'Official ETW recording workflow for system, driver, GPU, performance, and timing context.'
         },
         [pscustomobject]@{
+            Area = 'WPR command-line options'
+            Url  = 'https://learn.microsoft.com/en-us/windows-hardware/test/wpt/wpr-command-line-options'
+            Why  = 'Official command-line reference for start/stop/status/profile WPR capture workflows used by Ops Center.'
+        },
+        [pscustomobject]@{
             Area = 'Event Tracing for Windows'
             Url  = 'https://learn.microsoft.com/en-us/windows-hardware/test/wpt/event-tracing-for-windows'
             Why  = 'Core Windows tracing layer used by WPR/WPA for advanced system diagnosis.'
+        },
+        [pscustomobject]@{
+            Area = 'Install WinDbg'
+            Url  = 'https://learn.microsoft.com/en-us/windows-hardware/drivers/debugger/'
+            Why  = 'Official debugger installation reference for dump analysis escalation.'
         },
         [pscustomobject]@{
             Area = 'DirectX Diagnostic Tool'
@@ -2734,6 +3445,36 @@ function Get-OfficialReferenceRows {
             Area = 'System File Checker'
             Url  = 'https://support.microsoft.com/en-us/windows/using-system-file-checker-in-windows-365e0031-36b1-6031-f804-8fd86e0ef4ca'
             Why  = 'Microsoft guidance for DISM/SFC repair flow when crashes affect multiple unrelated games or apps.'
+        },
+        [pscustomobject]@{
+            Area = 'Repair a Windows image'
+            Url  = 'https://learn.microsoft.com/en-us/windows-hardware/manufacture/desktop/repair-a-windows-image?view=windows-11'
+            Why  = 'Official DISM repair reference for system-wide Windows component health checks.'
+        },
+        [pscustomobject]@{
+            Area = 'Clean boot'
+            Url  = 'https://support.microsoft.com/en-us/help/929135/how-to-perform-a-clean-boot-in-windows'
+            Why  = 'Microsoft clean boot guidance used by Experiment Lab when isolating background service/startup interference.'
+        },
+        [pscustomobject]@{
+            Area = 'Process Monitor'
+            Url  = 'https://learn.microsoft.com/en-us/sysinternals/downloads/procmon'
+            Why  = 'Sysinternals Process Monitor is an advanced file/registry/process tracing option for targeted escalation evidence.'
+        },
+        [pscustomobject]@{
+            Area = 'Sysinternals Suite'
+            Url  = 'https://learn.microsoft.com/en-us/sysinternals/downloads/sysinternals-suite'
+            Why  = 'Official bundle containing ProcDump, Process Monitor, Process Explorer, RAMMap, TCPView, and other troubleshooting utilities.'
+        },
+        [pscustomobject]@{
+            Area = 'TroubleShootingScript Toolset'
+            Url  = 'https://learn.microsoft.com/en-us/troubleshoot/windows-client/windows-tss/introduction-to-troubleshootingscript-toolset-tss'
+            Why  = 'Microsoft support-oriented data collection model that inspired the CrashOps evidence packaging approach.'
+        },
+        [pscustomobject]@{
+            Area = 'Windows Memory Diagnostic'
+            Url  = 'https://www.microsoft.com/en-us/surface/do-more-with-surface/how-to-use-windows-memory-diagnostic'
+            Why  = 'RAM diagnostics concept for persistent access-violation/system-instability patterns after software causes are isolated.'
         },
         [pscustomobject]@{
             Area = 'Game Bar known issues'
@@ -2759,6 +3500,11 @@ function Get-OfficialReferenceRows {
             Area = 'Windows GPU TDR'
             Url  = 'https://learn.microsoft.com/en-us/windows-hardware/drivers/display/timeout-detection-and-recovery'
             Why  = 'Microsoft WDDM Timeout Detection and Recovery reference for GPU hangs, resets, and device-removed style crash patterns.'
+        },
+        [pscustomobject]@{
+            Area = 'Kernel-Power Event ID 41'
+            Url  = 'https://learn.microsoft.com/en-us/troubleshoot/windows-client/performance/event-id-41-restart'
+            Why  = 'Microsoft guidance for unexpected restart/power-loss correlation when app crashes overlap with system instability.'
         },
         [pscustomobject]@{
             Area = 'Reliability Monitor records'
@@ -2873,6 +3619,9 @@ function Invoke-CompanionSelfTest {
     try { Add-Test 'CrashScope universal collectors' 'OK' "$(@(Get-UniversalCrashRows -Target $script:Config.ExeName).Count) event row(s); $(@(Get-UniversalCrashFingerprintRows -Target $script:Config.ExeName).Count) fingerprint row(s)" } catch { Add-Test 'CrashScope universal collectors' 'Warn' $_.Exception.Message }
     try { Add-Test 'Crash intelligence scoring' 'OK' "$(@(Get-UniversalRootCauseScoreRows -Target $script:Config.ExeName).Count) score row(s); $(@(Get-UniversalCrashHeatmapRows -Target $script:Config.ExeName).Count) heatmap row(s)" } catch { Add-Test 'Crash intelligence scoring' 'Warn' $_.Exception.Message }
     try { Add-Test 'Stability workbench collectors' 'OK' "$(@(Get-CrashEvidenceTimelineRows -Target $script:Config.ExeName).Count) timeline row(s); $(@(Get-CrashEvidenceInsightRows -Target $script:Config.ExeName).Count) insight row(s); $(@(Get-CrashStabilityRunbookRows -Target $script:Config.ExeName).Count) runbook step(s)" } catch { Add-Test 'Stability workbench collectors' 'Warn' $_.Exception.Message }
+    try { Add-Test 'Experiment lab collectors' 'OK' "$(@(Get-CrashEvidenceQualityRows -Target $script:Config.ExeName).Count) quality row(s); $(@(Get-CrashExperimentPlanRows -Target $script:Config.ExeName).Count) plan step(s); $(@(Get-CrashExperimentJournalRows).Count) journal row(s)" } catch { Add-Test 'Experiment lab collectors' 'Warn' $_.Exception.Message }
+    try { Add-Test 'Crash matrix collectors' 'OK' "$(@(Get-CrashMatrixAppRows -Days 30).Count) app row(s); $(@(Get-CrashMatrixClusterRows -Days 30).Count) cluster row(s); $(@(Get-CrashMatrixSignalRows -Days 30).Count) signal row(s)" } catch { Add-Test 'Crash matrix collectors' 'Warn' $_.Exception.Message }
+    try { Add-Test 'CrashOps Center collectors' 'OK' "$(@(Get-CrashOpsReadinessRows -Target $script:Config.ExeName -Days 30).Count) readiness row(s); $(@(Get-CrashOpsCapturePlanRows -Target $script:Config.ExeName -Days 30).Count) plan row(s); $(@(Get-CrashOpsCommandRows -Target $script:Config.ExeName -Days 30).Count) command row(s)" } catch { Add-Test 'CrashOps Center collectors' 'Warn' $_.Exception.Message }
     try { Add-Test 'CrashScope evidence tools' 'OK' "$(@(Get-ExternalEvidenceToolRows | Where-Object { $_.Status -eq 'Available' }).Count) available tool(s)" } catch { Add-Test 'CrashScope evidence tools' 'Warn' $_.Exception.Message }
     try { Add-Test 'Telemetry port 5606' (Test-TelemetryPortAvailability -Port 5606).Status (Test-TelemetryPortAvailability -Port 5606).Detail } catch { Add-Test 'Telemetry port 5606' 'Warn' $_.Exception.Message }
     try {
@@ -2913,6 +3662,9 @@ function Write-ToolManifest {
             Snapshots = $script:Config.SnapshotRoot
             Sessions  = $script:Config.SessionRoot
             Bundles   = $script:Config.BundleRoot
+            Experiments = $script:Config.ExperimentRoot
+            Matrix    = $script:Config.MatrixRoot
+            Ops       = $script:Config.OpsRoot
         }
         Files           = @(Get-ToolFileRows)
         OfficialReferences = @(Get-OfficialReferenceRows)
@@ -3270,6 +4022,7 @@ Snapshots: $($script:Config.SnapshotRoot)
 Sessions: $($script:Config.SessionRoot)
 Portable bundles: $($script:Config.BundleRoot)
 CrashScope universal: $($script:Config.UniversalRoot)
+CrashOps Center: $($script:Config.OpsRoot)
 Telemetry: configure FH6 Data Out to IP 127.0.0.1 and the port shown in the Telemetry tab.
 Steam Cloud: turn it off in Steam > FH6 > Properties > General before deleting saves.
 "@
@@ -3326,6 +4079,15 @@ function Export-FH6Report {
     [void]$body.Add("")
     [void]$body.Add("== Stability Workbench ==")
     [void]$body.Add((Get-CrashStabilityRunbookText -Target $script:Config.ExeName))
+    [void]$body.Add("")
+    [void]$body.Add("== Experiment Lab ==")
+    [void]$body.Add((Get-CrashExperimentLabText -Target $script:Config.ExeName))
+    [void]$body.Add("")
+    [void]$body.Add("== Crash Matrix ==")
+    [void]$body.Add((Get-CrashMatrixReportText -Days 30))
+    [void]$body.Add("")
+    [void]$body.Add("== CrashOps Center ==")
+    [void]$body.Add((Get-CrashOpsReportText -Target $script:Config.ExeName -Days 30))
     [void]$body.Add("")
     [void]$body.Add("== CrashScope Universal Fingerprints ==")
     foreach ($f in Get-UniversalCrashFingerprintRows -Target $script:Config.ExeName) {
@@ -3500,6 +4262,17 @@ function New-StateSnapshot {
         StabilityTimeline = @(Get-CrashEvidenceTimelineRows -Target $script:Config.ExeName)
         StabilityInsights = @(Get-CrashEvidenceInsightRows -Target $script:Config.ExeName)
         StabilityRunbook = @(Get-CrashStabilityRunbookRows -Target $script:Config.ExeName)
+        ExperimentQuality = @(Get-CrashEvidenceQualityRows -Target $script:Config.ExeName)
+        ExperimentPlan = @(Get-CrashExperimentPlanRows -Target $script:Config.ExeName)
+        ExperimentJournal = @(Get-CrashExperimentJournalRows)
+        CrashMatrixApps = @(Get-CrashMatrixAppRows -Days 30)
+        CrashMatrixClusters = @(Get-CrashMatrixClusterRows -Days 30)
+        CrashMatrixSignals = @(Get-CrashMatrixSignalRows -Days 30)
+        CrashOpsReadiness = @(Get-CrashOpsReadinessRows -Target $script:Config.ExeName -Days 30)
+        CrashOpsCapturePlan = @(Get-CrashOpsCapturePlanRows -Target $script:Config.ExeName -Days 30)
+        CrashOpsDecisions = @(Get-CrashOpsDecisionRows -Target $script:Config.ExeName -Days 30)
+        CrashOpsCommands = @(Get-CrashOpsCommandRows -Target $script:Config.ExeName -Days 30)
+        CrashOpsTools = @(Get-CrashOpsToolRows)
         SecurityBlockEvents = @(Get-SecurityBlockEventRows -Target $script:Config.ExeName)
         ExternalEvidenceTools = @(Get-ExternalEvidenceToolRows)
         LocalDumpConfig = @(Get-LocalDumpConfigRows -Target $script:Config.ExeName)
@@ -3568,6 +4341,36 @@ function New-StateSnapshot {
     foreach ($runStep in $snapshot.StabilityRunbook | Select-Object -First 10) {
         [void]$lines.Add("$($runStep.Step). $($runStep.Phase) [$($runStep.Mode), risk=$($runStep.Risk)]: $($runStep.Action)")
         [void]$lines.Add("  Success: $($runStep.SuccessCheck)")
+    }
+    [void]$lines.Add("")
+    [void]$lines.Add("== Experiment Quality ==")
+    foreach ($quality in $snapshot.ExperimentQuality | Select-Object -First 10) {
+        [void]$lines.Add("[$($quality.Status)] $($quality.Component): $($quality.Score)/$($quality.MaxScore)")
+        [void]$lines.Add("  $($quality.Evidence)")
+    }
+    [void]$lines.Add("")
+    [void]$lines.Add("== Experiment Plan ==")
+    foreach ($experiment in $snapshot.ExperimentPlan | Select-Object -First 10) {
+        [void]$lines.Add("$($experiment.Step). $($experiment.Phase) / $($experiment.Variable) [risk=$($experiment.Risk)]: $($experiment.Action)")
+        [void]$lines.Add("  Keep constant: $($experiment.KeepConstant)")
+    }
+    [void]$lines.Add("")
+    [void]$lines.Add("== Crash Matrix Signals ==")
+    foreach ($signal in $snapshot.CrashMatrixSignals | Select-Object -First 10) {
+        [void]$lines.Add("[P$($signal.Priority) $($signal.Severity) $($signal.Score)] $($signal.Signal): $($signal.Action)")
+        [void]$lines.Add("  $($signal.Evidence)")
+    }
+    [void]$lines.Add("")
+    [void]$lines.Add("== CrashOps Readiness ==")
+    foreach ($ready in $snapshot.CrashOpsReadiness | Select-Object -First 10) {
+        [void]$lines.Add("[P$($ready.Priority) $($ready.Status) $($ready.Score)] $($ready.Area): $($ready.NextAction)")
+        [void]$lines.Add("  $($ready.Evidence)")
+    }
+    [void]$lines.Add("")
+    [void]$lines.Add("== CrashOps Capture Plan ==")
+    foreach ($capture in $snapshot.CrashOpsCapturePlan | Select-Object -First 10) {
+        [void]$lines.Add("[P$($capture.Priority)] $($capture.Mode) [risk=$($capture.Risk), admin=$($capture.Admin)]: $($capture.Trigger)")
+        [void]$lines.Add("  Output: $($capture.Output)")
     }
     [void]$lines.Add("")
     [void]$lines.Add("== CrashScope Universal Action Plan ==")
@@ -3713,6 +4516,20 @@ function New-SupportPackage {
         Get-CrashEvidenceInsightRows -Target $script:Config.ExeName | ConvertTo-Json -Depth 5 | Set-Content -LiteralPath (Join-Path $stage 'stability-evidence-insights.json') -Encoding UTF8
         Get-CrashStabilityRunbookRows -Target $script:Config.ExeName | ConvertTo-Json -Depth 5 | Set-Content -LiteralPath (Join-Path $stage 'stability-runbook.json') -Encoding UTF8
         Get-CrashStabilityRunbookText -Target $script:Config.ExeName | Set-Content -LiteralPath (Join-Path $stage 'stability-runbook.txt') -Encoding UTF8
+        Get-CrashEvidenceQualityRows -Target $script:Config.ExeName | ConvertTo-Json -Depth 5 | Set-Content -LiteralPath (Join-Path $stage 'experiment-evidence-quality.json') -Encoding UTF8
+        Get-CrashExperimentPlanRows -Target $script:Config.ExeName | ConvertTo-Json -Depth 5 | Set-Content -LiteralPath (Join-Path $stage 'experiment-plan.json') -Encoding UTF8
+        Get-CrashExperimentJournalRows | ConvertTo-Json -Depth 5 | Set-Content -LiteralPath (Join-Path $stage 'experiment-journal.json') -Encoding UTF8
+        Get-CrashExperimentLabText -Target $script:Config.ExeName | Set-Content -LiteralPath (Join-Path $stage 'experiment-lab.txt') -Encoding UTF8
+        Get-CrashMatrixAppRows -Days 30 | ConvertTo-Json -Depth 5 | Set-Content -LiteralPath (Join-Path $stage 'crash-matrix-apps.json') -Encoding UTF8
+        Get-CrashMatrixClusterRows -Days 30 | ConvertTo-Json -Depth 5 | Set-Content -LiteralPath (Join-Path $stage 'crash-matrix-clusters.json') -Encoding UTF8
+        Get-CrashMatrixSignalRows -Days 30 | ConvertTo-Json -Depth 5 | Set-Content -LiteralPath (Join-Path $stage 'crash-matrix-signals.json') -Encoding UTF8
+        Get-CrashMatrixReportText -Days 30 | Set-Content -LiteralPath (Join-Path $stage 'crash-matrix-report.txt') -Encoding UTF8
+        Get-CrashOpsReadinessRows -Target $script:Config.ExeName -Days 30 | ConvertTo-Json -Depth 5 | Set-Content -LiteralPath (Join-Path $stage 'crashops-readiness.json') -Encoding UTF8
+        Get-CrashOpsCapturePlanRows -Target $script:Config.ExeName -Days 30 | ConvertTo-Json -Depth 5 | Set-Content -LiteralPath (Join-Path $stage 'crashops-capture-plan.json') -Encoding UTF8
+        Get-CrashOpsDecisionRows -Target $script:Config.ExeName -Days 30 | ConvertTo-Json -Depth 5 | Set-Content -LiteralPath (Join-Path $stage 'crashops-decisions.json') -Encoding UTF8
+        Get-CrashOpsCommandRows -Target $script:Config.ExeName -Days 30 | ConvertTo-Json -Depth 5 | Set-Content -LiteralPath (Join-Path $stage 'crashops-command-queue.json') -Encoding UTF8
+        Get-CrashOpsToolRows | ConvertTo-Json -Depth 5 | Set-Content -LiteralPath (Join-Path $stage 'crashops-tool-readiness.json') -Encoding UTF8
+        Get-CrashOpsReportText -Target $script:Config.ExeName -Days 30 | Set-Content -LiteralPath (Join-Path $stage 'crashops-report.txt') -Encoding UTF8
         Get-SecurityBlockEventRows -Target $script:Config.ExeName | ConvertTo-Json -Depth 5 | Set-Content -LiteralPath (Join-Path $stage 'security-block-events.json') -Encoding UTF8
         Get-ExternalEvidenceToolRows | ConvertTo-Json -Depth 5 | Set-Content -LiteralPath (Join-Path $stage 'external-evidence-tools.json') -Encoding UTF8
         Get-LocalDumpConfigRows -Target $script:Config.ExeName | ConvertTo-Json -Depth 5 | Set-Content -LiteralPath (Join-Path $stage 'localdump-config.json') -Encoding UTF8
@@ -3932,6 +4749,36 @@ function Start-NoGuiScan {
         Write-Output 'Stability runbook:'
         Get-CrashStabilityRunbookRows -Target $script:Config.ExeName | Format-Table Step, Phase, Mode, Risk, Action -AutoSize
         Write-Output ''
+        Write-Output 'Experiment evidence quality:'
+        Get-CrashEvidenceQualityRows -Target $script:Config.ExeName | Format-Table Component, Status, Score, MaxScore, Evidence -AutoSize
+        Write-Output ''
+        Write-Output 'Experiment plan:'
+        Get-CrashExperimentPlanRows -Target $script:Config.ExeName | Format-Table Step, Phase, Variable, Risk, Action -AutoSize
+        Write-Output ''
+        Write-Output 'Experiment journal:'
+        Get-CrashExperimentJournalRows | Select-Object -First 12 | Format-Table Time, Target, Outcome, EvidenceQuality, TopFingerprint -AutoSize
+        Write-Output ''
+        Write-Output 'Crash Matrix system-wide signals:'
+        Get-CrashMatrixSignalRows -Days 30 | Format-Table Priority, Signal, Severity, Score, Evidence -AutoSize
+        Write-Output ''
+        Write-Output 'Crash Matrix app leaderboard:'
+        Get-CrashMatrixAppRows -Days 30 | Select-Object -First 20 | Format-Table App, Count, TopCode, TopModule, TopClass, Focus -AutoSize
+        Write-Output ''
+        Write-Output 'Crash Matrix shared clusters:'
+        Get-CrashMatrixClusterRows -Days 30 | Select-Object -First 20 | Format-Table Count, AppCount, Code, Module, Class, TopApps -AutoSize
+        Write-Output ''
+        Write-Output 'CrashOps readiness:'
+        Get-CrashOpsReadinessRows -Target $script:Config.ExeName -Days 30 | Format-Table Priority, Area, Status, Score, Evidence -AutoSize
+        Write-Output ''
+        Write-Output 'CrashOps capture plan:'
+        Get-CrashOpsCapturePlanRows -Target $script:Config.ExeName -Days 30 | Format-Table Priority, Mode, Admin, Risk, Trigger, Output -AutoSize
+        Write-Output ''
+        Write-Output 'CrashOps decisions:'
+        Get-CrashOpsDecisionRows -Target $script:Config.ExeName -Days 30 | Format-Table Step, Question, Decision, Risk -AutoSize
+        Write-Output ''
+        Write-Output 'CrashOps command queue:'
+        Get-CrashOpsCommandRows -Target $script:Config.ExeName -Days 30 | Format-Table Priority, Mode, Admin, Tool, Purpose -AutoSize
+        Write-Output ''
         Write-Output 'Security block/audit events:'
         Get-SecurityBlockEventRows -Target $script:Config.ExeName | Select-Object -First 20 | Format-Table Time, EventId, Category, Process, Level -AutoSize
         Write-Output ''
@@ -4027,6 +4874,21 @@ $tabStability = New-Object System.Windows.Forms.TabPage
 $tabStability.Text = 'Stability'
 $tabStability.BackColor = [System.Drawing.ColorTranslator]::FromHtml('#F4F7FB')
 $tabs.Controls.Add($tabStability)
+
+$tabExperiments = New-Object System.Windows.Forms.TabPage
+$tabExperiments.Text = 'Experiments'
+$tabExperiments.BackColor = [System.Drawing.ColorTranslator]::FromHtml('#F4F7FB')
+$tabs.Controls.Add($tabExperiments)
+
+$tabMatrix = New-Object System.Windows.Forms.TabPage
+$tabMatrix.Text = 'Matrix'
+$tabMatrix.BackColor = [System.Drawing.ColorTranslator]::FromHtml('#F4F7FB')
+$tabs.Controls.Add($tabMatrix)
+
+$tabOps = New-Object System.Windows.Forms.TabPage
+$tabOps.Text = 'Ops Center'
+$tabOps.BackColor = [System.Drawing.ColorTranslator]::FromHtml('#F4F7FB')
+$tabs.Controls.Add($tabOps)
 
 $tabHealth = New-Object System.Windows.Forms.TabPage
 $tabHealth.Text = 'Health'
@@ -4402,9 +5264,11 @@ $tabDashboard.Controls.Add($chkCrashWatchPackage)
 $lblCrashWatchStatus = New-Object System.Windows.Forms.Label
 $lblCrashWatchStatus.Text = 'Idle'
 $lblCrashWatchStatus.Location = New-Object System.Drawing.Point(380, 623)
-$lblCrashWatchStatus.Size = New-Object System.Drawing.Size(860, 24)
+$lblCrashWatchStatus.Size = New-Object System.Drawing.Size(745, 24)
 $lblCrashWatchStatus.ForeColor = [System.Drawing.ColorTranslator]::FromHtml('#475569')
 $tabDashboard.Controls.Add($lblCrashWatchStatus)
+$btnDashOps = New-Button 'Ops Center' 1245 617 105 32
+$tabDashboard.Controls.Add($btnDashOps)
 
 # Guided Fix tab
 $lblGuidedTitle = New-SectionLabel 'Evidence-Based Workflow' 10 12 300 26
@@ -4571,6 +5435,166 @@ $txtStabilityDetail.Font = New-Object System.Drawing.Font('Consolas', 9)
 $txtStabilityDetail.BackColor = [System.Drawing.ColorTranslator]::FromHtml('#FFFFFF')
 $txtStabilityDetail.BorderStyle = 'FixedSingle'
 $tabStability.Controls.Add($txtStabilityDetail)
+
+# Experiment Lab tab
+$lblExperimentTitle = New-SectionLabel 'Crash Experiment Lab' 10 12 270 26
+$tabExperiments.Controls.Add($lblExperimentTitle)
+$lblExperimentTarget = New-Object System.Windows.Forms.Label
+$lblExperimentTarget.Text = 'Target exe:'
+$lblExperimentTarget.Location = New-Object System.Drawing.Point(285, 17)
+$lblExperimentTarget.Size = New-Object System.Drawing.Size(75, 22)
+$tabExperiments.Controls.Add($lblExperimentTarget)
+$txtExperimentTarget = New-Object System.Windows.Forms.TextBox
+$txtExperimentTarget.Text = $script:Config.ExeName
+$txtExperimentTarget.Location = New-Object System.Drawing.Point(360, 14)
+$txtExperimentTarget.Size = New-Object System.Drawing.Size(170, 24)
+$tabExperiments.Controls.Add($txtExperimentTarget)
+$btnExperimentPlan = New-Button 'Plan' 540 10 75 32
+$btnExperimentStart = New-Button 'Log Start' 625 10 95 32
+$btnExperimentCrash = New-Button 'Log Crash' 730 10 95 32
+$btnExperimentStable = New-Button 'Log Stable' 835 10 100 32
+$btnExperimentExport = New-Button 'Export' 945 10 85 32
+$btnExperimentOpen = New-Button 'Open Folder' 1040 10 110 32
+foreach ($b in @($btnExperimentPlan,$btnExperimentStart,$btnExperimentCrash,$btnExperimentStable,$btnExperimentExport,$btnExperimentOpen)) { $tabExperiments.Controls.Add($b) }
+
+$lblExperimentQuality = New-SectionLabel 'Evidence Quality' 10 52 220 24
+$lblExperimentPlan = New-SectionLabel 'One-Variable Experiment Plan' 535 52 320 24
+$tabExperiments.Controls.Add($lblExperimentQuality)
+$tabExperiments.Controls.Add($lblExperimentPlan)
+$gridExperimentQuality = New-Grid 10 80 515 250
+$gridExperimentPlan = New-Grid 535 80 795 250
+$tabExperiments.Controls.Add($gridExperimentQuality)
+$tabExperiments.Controls.Add($gridExperimentPlan)
+
+$lblExperimentJournal = New-SectionLabel 'Attempt Journal' 10 342 220 24
+$lblExperimentDetail = New-SectionLabel 'Experiment Detail' 775 342 240 24
+$tabExperiments.Controls.Add($lblExperimentJournal)
+$tabExperiments.Controls.Add($lblExperimentDetail)
+$gridExperimentJournal = New-Grid 10 370 765 245
+$tabExperiments.Controls.Add($gridExperimentJournal)
+$txtExperimentDetail = New-Object System.Windows.Forms.TextBox
+$txtExperimentDetail.Location = New-Object System.Drawing.Point(785, 370)
+$txtExperimentDetail.Size = New-Object System.Drawing.Size(545, 245)
+$txtExperimentDetail.Multiline = $true
+$txtExperimentDetail.ReadOnly = $true
+$txtExperimentDetail.ScrollBars = 'Both'
+$txtExperimentDetail.WordWrap = $false
+$txtExperimentDetail.Font = New-Object System.Drawing.Font('Consolas', 9)
+$txtExperimentDetail.BackColor = [System.Drawing.ColorTranslator]::FromHtml('#FFFFFF')
+$txtExperimentDetail.BorderStyle = 'FixedSingle'
+$tabExperiments.Controls.Add($txtExperimentDetail)
+
+# Crash Matrix tab
+$lblMatrixTitle = New-SectionLabel 'Universal Crash Matrix' 10 12 290 26
+$tabMatrix.Controls.Add($lblMatrixTitle)
+$lblMatrixDays = New-Object System.Windows.Forms.Label
+$lblMatrixDays.Text = 'Days:'
+$lblMatrixDays.Location = New-Object System.Drawing.Point(305, 17)
+$lblMatrixDays.Size = New-Object System.Drawing.Size(45, 22)
+$tabMatrix.Controls.Add($lblMatrixDays)
+$numMatrixDays = New-Object System.Windows.Forms.NumericUpDown
+$numMatrixDays.Minimum = 1
+$numMatrixDays.Maximum = 90
+$numMatrixDays.Value = 30
+$numMatrixDays.Location = New-Object System.Drawing.Point(350, 14)
+$numMatrixDays.Size = New-Object System.Drawing.Size(65, 24)
+$tabMatrix.Controls.Add($numMatrixDays)
+$btnMatrixRefresh = New-Button 'Refresh' 430 10 90 32
+$btnMatrixExport = New-Button 'Export' 530 10 85 32
+$btnMatrixSupport = New-Button 'Support Zip' 625 10 105 32
+$btnMatrixOpen = New-Button 'Open Folder' 740 10 110 32
+foreach ($b in @($btnMatrixRefresh,$btnMatrixExport,$btnMatrixSupport,$btnMatrixOpen)) { $tabMatrix.Controls.Add($b) }
+
+$lblMatrixApps = New-SectionLabel 'Crashing Apps' 10 52 200 24
+$lblMatrixClusters = New-SectionLabel 'Shared Signature Clusters' 690 52 285 24
+$tabMatrix.Controls.Add($lblMatrixApps)
+$tabMatrix.Controls.Add($lblMatrixClusters)
+$gridMatrixApps = New-Grid 10 80 670 250
+$gridMatrixClusters = New-Grid 690 80 640 250
+$tabMatrix.Controls.Add($gridMatrixApps)
+$tabMatrix.Controls.Add($gridMatrixClusters)
+
+$lblMatrixSignals = New-SectionLabel 'System-Wide Signals' 10 342 240 24
+$lblMatrixDetail = New-SectionLabel 'Matrix Interpretation' 690 342 260 24
+$tabMatrix.Controls.Add($lblMatrixSignals)
+$tabMatrix.Controls.Add($lblMatrixDetail)
+$gridMatrixSignals = New-Grid 10 370 670 245
+$tabMatrix.Controls.Add($gridMatrixSignals)
+$txtMatrixDetail = New-Object System.Windows.Forms.TextBox
+$txtMatrixDetail.Location = New-Object System.Drawing.Point(690, 370)
+$txtMatrixDetail.Size = New-Object System.Drawing.Size(640, 245)
+$txtMatrixDetail.Multiline = $true
+$txtMatrixDetail.ReadOnly = $true
+$txtMatrixDetail.ScrollBars = 'Both'
+$txtMatrixDetail.WordWrap = $false
+$txtMatrixDetail.Font = New-Object System.Drawing.Font('Consolas', 9)
+$txtMatrixDetail.BackColor = [System.Drawing.ColorTranslator]::FromHtml('#FFFFFF')
+$txtMatrixDetail.BorderStyle = 'FixedSingle'
+$tabMatrix.Controls.Add($txtMatrixDetail)
+
+# CrashOps Center tab
+$lblOpsTitle = New-SectionLabel 'CrashOps Center' 10 12 230 26
+$tabOps.Controls.Add($lblOpsTitle)
+$lblOpsTarget = New-Object System.Windows.Forms.Label
+$lblOpsTarget.Text = 'Target exe:'
+$lblOpsTarget.Location = New-Object System.Drawing.Point(245, 17)
+$lblOpsTarget.Size = New-Object System.Drawing.Size(75, 22)
+$tabOps.Controls.Add($lblOpsTarget)
+$txtOpsTarget = New-Object System.Windows.Forms.TextBox
+$txtOpsTarget.Text = $script:Config.ExeName
+$txtOpsTarget.Location = New-Object System.Drawing.Point(320, 14)
+$txtOpsTarget.Size = New-Object System.Drawing.Size(170, 24)
+$tabOps.Controls.Add($txtOpsTarget)
+$lblOpsDays = New-Object System.Windows.Forms.Label
+$lblOpsDays.Text = 'Days:'
+$lblOpsDays.Location = New-Object System.Drawing.Point(505, 17)
+$lblOpsDays.Size = New-Object System.Drawing.Size(45, 22)
+$tabOps.Controls.Add($lblOpsDays)
+$numOpsDays = New-Object System.Windows.Forms.NumericUpDown
+$numOpsDays.Minimum = 1
+$numOpsDays.Maximum = 90
+$numOpsDays.Value = 30
+$numOpsDays.Location = New-Object System.Drawing.Point(550, 14)
+$numOpsDays.Size = New-Object System.Drawing.Size(65, 24)
+$tabOps.Controls.Add($numOpsDays)
+$btnOpsRefresh = New-Button 'Refresh' 630 10 90 32
+$btnOpsAll = New-Button 'All Apps' 730 10 90 32
+$btnOpsExport = New-Button 'Export' 830 10 85 32
+$btnOpsCommands = New-Button 'Commands' 925 10 100 32
+$btnOpsSupport = New-Button 'Support Zip' 1035 10 105 32
+$btnOpsOpen = New-Button 'Open Folder' 1150 10 110 32
+foreach ($b in @($btnOpsRefresh,$btnOpsAll,$btnOpsExport,$btnOpsCommands,$btnOpsSupport,$btnOpsOpen)) { $tabOps.Controls.Add($b) }
+
+$lblOpsReady = New-SectionLabel 'Readiness Scoreboard' 10 52 260 24
+$lblOpsPlan = New-SectionLabel 'Evidence Capture Plan' 450 52 260 24
+$tabOps.Controls.Add($lblOpsReady)
+$tabOps.Controls.Add($lblOpsPlan)
+$gridOpsReadiness = New-Grid 10 80 430 250
+$gridOpsCapturePlan = New-Grid 450 80 880 250
+$tabOps.Controls.Add($gridOpsReadiness)
+$tabOps.Controls.Add($gridOpsCapturePlan)
+
+$lblOpsDecision = New-SectionLabel 'Decision Board' 10 342 210 24
+$lblOpsCommands = New-SectionLabel 'Command Queue' 540 342 210 24
+$lblOpsDetail = New-SectionLabel 'Ops Detail' 1050 342 160 24
+$tabOps.Controls.Add($lblOpsDecision)
+$tabOps.Controls.Add($lblOpsCommands)
+$tabOps.Controls.Add($lblOpsDetail)
+$gridOpsDecisions = New-Grid 10 370 520 245
+$gridOpsCommands = New-Grid 540 370 500 245
+$tabOps.Controls.Add($gridOpsDecisions)
+$tabOps.Controls.Add($gridOpsCommands)
+$txtOpsDetail = New-Object System.Windows.Forms.TextBox
+$txtOpsDetail.Location = New-Object System.Drawing.Point(1050, 370)
+$txtOpsDetail.Size = New-Object System.Drawing.Size(280, 245)
+$txtOpsDetail.Multiline = $true
+$txtOpsDetail.ReadOnly = $true
+$txtOpsDetail.ScrollBars = 'Both'
+$txtOpsDetail.WordWrap = $false
+$txtOpsDetail.Font = New-Object System.Drawing.Font('Consolas', 9)
+$txtOpsDetail.BackColor = [System.Drawing.ColorTranslator]::FromHtml('#FFFFFF')
+$txtOpsDetail.BorderStyle = 'FixedSingle'
+$tabOps.Controls.Add($txtOpsDetail)
 
 # Health tab
 $gridHealth = New-Grid 10 50 1280 520
@@ -5016,6 +6040,63 @@ function Refresh-StabilityWorkbench {
     Add-Log "Stability workbench refreshed. Target=$(if ($target) { $target } else { '<all>' }) Timeline=$($timeline.Count) Insights=$($insights.Count) Runbook=$($runbook.Count)"
 }
 
+function Refresh-ExperimentLab {
+    param([switch]$All)
+    $target = if ($All) { '' } else { [string]$txtExperimentTarget.Text }
+    if (-not $All -and [string]::IsNullOrWhiteSpace($target)) { $target = $script:Config.ExeName; $txtExperimentTarget.Text = $target }
+    $script:ExperimentCurrentTarget = $target
+    $quality = @(Get-CrashEvidenceQualityRows -Target $target)
+    $plan = @(Get-CrashExperimentPlanRows -Target $target)
+    $journal = @(Get-CrashExperimentJournalRows)
+    $gridExperimentQuality.DataSource = $quality
+    $gridExperimentPlan.DataSource = $plan
+    $gridExperimentJournal.DataSource = $journal
+    Apply-GridStatusStyle $gridExperimentQuality
+    Apply-GridStatusStyle $gridExperimentPlan
+    Apply-GridStatusStyle $gridExperimentJournal
+    $txtExperimentDetail.Text = Get-CrashExperimentLabText -Target $target
+    Add-Log "Experiment Lab refreshed. Target=$(if ($target) { $target } else { '<all>' }) Quality=$($quality.Count) Plan=$($plan.Count) Journal=$($journal.Count)"
+}
+
+function Refresh-CrashMatrix {
+    $script:StabilityCache.Clear()
+    $days = [int]$numMatrixDays.Value
+    $apps = @(Get-CrashMatrixAppRows -Days $days)
+    $clusters = @(Get-CrashMatrixClusterRows -Days $days)
+    $signals = @(Get-CrashMatrixSignalRows -Days $days)
+    $gridMatrixApps.DataSource = $apps
+    $gridMatrixClusters.DataSource = $clusters
+    $gridMatrixSignals.DataSource = $signals
+    Apply-GridStatusStyle $gridMatrixApps
+    Apply-GridStatusStyle $gridMatrixClusters
+    Apply-GridStatusStyle $gridMatrixSignals
+    $txtMatrixDetail.Text = Get-CrashMatrixReportText -Days $days
+    Add-Log "Crash Matrix refreshed. Days=$days Apps=$($apps.Count) Clusters=$($clusters.Count) Signals=$($signals.Count)"
+}
+
+function Refresh-CrashOpsCenter {
+    param([switch]$All)
+    $script:StabilityCache.Clear()
+    $target = if ($All) { '' } else { [string]$txtOpsTarget.Text }
+    if (-not $All -and [string]::IsNullOrWhiteSpace($target)) { $target = $script:Config.ExeName; $txtOpsTarget.Text = $target }
+    $script:OpsCurrentTarget = $target
+    $days = [int]$numOpsDays.Value
+    $readiness = @(Get-CrashOpsReadinessRows -Target $target -Days $days)
+    $plan = @(Get-CrashOpsCapturePlanRows -Target $target -Days $days)
+    $decisions = @(Get-CrashOpsDecisionRows -Target $target -Days $days)
+    $commands = @(Get-CrashOpsCommandRows -Target $target -Days $days)
+    $gridOpsReadiness.DataSource = $readiness
+    $gridOpsCapturePlan.DataSource = $plan
+    $gridOpsDecisions.DataSource = $decisions
+    $gridOpsCommands.DataSource = $commands
+    Apply-GridStatusStyle $gridOpsReadiness
+    Apply-GridStatusStyle $gridOpsCapturePlan
+    Apply-GridStatusStyle $gridOpsDecisions
+    Apply-GridStatusStyle $gridOpsCommands
+    $txtOpsDetail.Text = Get-CrashOpsReportText -Target $target -Days $days
+    Add-Log "CrashOps Center refreshed. Target=$(if ($target) { $target } else { '<all>' }) Days=$days Readiness=$($readiness.Count) Plan=$($plan.Count) Commands=$($commands.Count)"
+}
+
 function Update-Dashboard {
     try {
         $health = @(Get-HealthRows)
@@ -5067,6 +6148,9 @@ function Refresh-AllViews {
     Refresh-CrashScope
     Refresh-CrashIntel
     Refresh-StabilityWorkbench
+    Refresh-ExperimentLab
+    Refresh-CrashMatrix
+    Refresh-CrashOpsCenter
     $txtPreflight.Text = Get-PreflightText
     Update-Dashboard
     Add-Log 'All dashboard views refreshed.'
@@ -5327,17 +6411,17 @@ $uiStatusTimer.Interval = 2500
 $uiStatusTimer.Add_Tick({ Update-GlobalStatus })
 
 function Initialize-UiGuidance {
-    foreach ($grid in @($gridDashboardRecommendations,$gridDashboardTimeline,$gridGuidedPlan,$gridUniversalCrashes,$gridUniversalFingerprints,$gridUniversalPlan,$gridRootCauseScores,$gridCrashHeatmap,$gridChangeCorrelation,$gridStabilityTimeline,$gridStabilityInsights,$gridStabilityRunbook,$gridHealth,$gridCrashReports,$gridCrashEvents,$gridDevices)) {
+    foreach ($grid in @($gridDashboardRecommendations,$gridDashboardTimeline,$gridGuidedPlan,$gridUniversalCrashes,$gridUniversalFingerprints,$gridUniversalPlan,$gridRootCauseScores,$gridCrashHeatmap,$gridChangeCorrelation,$gridStabilityTimeline,$gridStabilityInsights,$gridStabilityRunbook,$gridExperimentQuality,$gridExperimentPlan,$gridExperimentJournal,$gridMatrixApps,$gridMatrixClusters,$gridMatrixSignals,$gridOpsReadiness,$gridOpsCapturePlan,$gridOpsDecisions,$gridOpsCommands,$gridHealth,$gridCrashReports,$gridCrashEvents,$gridDevices)) {
         $grid.Add_DataBindingComplete({ param($sender, $eventArgs) Apply-GridStatusStyle $sender })
     }
 
-    foreach ($button in @($btnHealthScan,$btnSaveScan,$btnCrashRefresh,$btnDevicesRefresh,$btnPreflight,$btnExportReport,$btnStateSnapshot,$btnSnapshotDiff,$btnOpenReports,$btnOpenPackages,$btnOpenSnapshots,$btnOpenSessions,$btnOpenLogs,$btnOpenTelemetry,$btnOpenBundles,$btnDashActionPlan,$btnGuidedRefresh,$btnGuidedExport,$btnGuidedCopy,$btnFingerprints,$btnCrashScopeScanAll,$btnCrashScopeExport,$btnCrashScopeCommands,$btnCrashScopeTools,$btnCrashScopeOpen,$btnCrashIntelAll,$btnCrashIntelExport,$btnCrashIntelPlaybook,$btnCrashIntelOpen,$btnStabilityAll,$btnStabilityExport,$btnStabilityRunbook,$btnStabilityOpen)) {
+    foreach ($button in @($btnHealthScan,$btnSaveScan,$btnCrashRefresh,$btnDevicesRefresh,$btnPreflight,$btnExportReport,$btnStateSnapshot,$btnSnapshotDiff,$btnOpenReports,$btnOpenPackages,$btnOpenSnapshots,$btnOpenSessions,$btnOpenLogs,$btnOpenTelemetry,$btnOpenBundles,$btnDashActionPlan,$btnDashOps,$btnGuidedRefresh,$btnGuidedExport,$btnGuidedCopy,$btnFingerprints,$btnCrashScopeScanAll,$btnCrashScopeExport,$btnCrashScopeCommands,$btnCrashScopeTools,$btnCrashScopeOpen,$btnCrashIntelAll,$btnCrashIntelExport,$btnCrashIntelPlaybook,$btnCrashIntelOpen,$btnStabilityAll,$btnStabilityExport,$btnStabilityRunbook,$btnStabilityOpen,$btnExperimentExport,$btnExperimentOpen,$btnMatrixExport,$btnMatrixOpen,$btnOpsAll,$btnOpsExport,$btnOpsCommands,$btnOpsOpen)) {
         Set-ButtonRole $button 'Quiet'
     }
-    foreach ($button in @($btnHealthReport,$btnHealthSupport,$btnSupportPackage,$btnSessionLaunch,$btnPreflightLaunch,$btnDashRefreshAll,$btnDashSession,$btnDashSupport,$btnDashCrashWatch,$btnGuidedSupport,$btnGuidedSession,$btnCrashScopeScanTarget,$btnCrashIntelAnalyze,$btnStabilityAnalyze,$btnStabilitySupport)) {
+    foreach ($button in @($btnHealthReport,$btnHealthSupport,$btnSupportPackage,$btnSessionLaunch,$btnPreflightLaunch,$btnDashRefreshAll,$btnDashSession,$btnDashSupport,$btnDashCrashWatch,$btnGuidedSupport,$btnGuidedSession,$btnCrashScopeScanTarget,$btnCrashIntelAnalyze,$btnStabilityAnalyze,$btnStabilitySupport,$btnExperimentPlan,$btnExperimentStart,$btnExperimentStable,$btnMatrixRefresh,$btnMatrixSupport,$btnOpsRefresh,$btnOpsSupport)) {
         Set-ButtonRole $button 'Primary'
     }
-    foreach ($button in @($btnDelete,$btnFresh,$btnDeepFresh,$btnClearCrashReports,$btnDashDeepFresh,$btnGuidedDeepFresh)) {
+    foreach ($button in @($btnDelete,$btnFresh,$btnDeepFresh,$btnClearCrashReports,$btnDashDeepFresh,$btnGuidedDeepFresh,$btnExperimentCrash)) {
         Set-ButtonRole $button 'Danger'
     }
 
@@ -5351,6 +6435,7 @@ function Initialize-UiGuidance {
     Set-Tip $btnDashReports 'Opens the reports folder in Downloads.'
     Set-Tip $btnDashCrashWatch 'Starts or stops Crash Watch. It monitors for new FH6 crash events/reports and can capture evidence when one appears.'
     Set-Tip $btnDashActionPlan 'Opens the Guided Fix workflow summary generated from current crash, save, runtime, capture, and conflict evidence.'
+    Set-Tip $btnDashOps 'Opens CrashOps Center for capture planning, decision board, and reviewable command queue.'
     Set-Tip $chkCrashWatchPackage 'When enabled, Crash Watch builds a support package automatically after detecting new crash evidence.'
     Set-Tip $numCrashWatchSec 'How often Crash Watch checks for newer FH6 crash evidence.'
     Set-Tip $btnGuidedRefresh 'Rebuilds the Guided Fix workflow from current evidence.'
@@ -5388,6 +6473,36 @@ function Initialize-UiGuidance {
     Set-Tip $gridStabilityTimeline 'Unified chronological evidence across application crashes, WER, Reliability Monitor, GPU/TDR, Defender/security, changes, reports, and user data.'
     Set-Tip $gridStabilityInsights 'Aggregated interpretation of each evidence lane plus root-cause score signals.'
     Set-Tip $gridStabilityRunbook 'Step-by-step plan generated from current evidence, with risk and success checks.'
+    Set-Tip $txtExperimentTarget 'Enter a target executable for experiment planning, or leave as FH6 for the current crash-loop work.'
+    Set-Tip $btnExperimentPlan 'Scores evidence quality, builds the one-variable experiment plan, and refreshes the journal.'
+    Set-Tip $btnExperimentStart 'Logs a Started attempt in the experiment journal using the current evidence fingerprint.'
+    Set-Tip $btnExperimentCrash 'Logs a Crashed attempt. Use after a repro so the journal keeps the fingerprint and evidence score.'
+    Set-Tip $btnExperimentStable 'Logs a Stable attempt when the latest test no longer crashes.'
+    Set-Tip $btnExperimentExport 'Exports Experiment Lab quality, plan, journal, JSON, CSV, and text artifacts.'
+    Set-Tip $btnExperimentOpen 'Opens the CrashExperimentLab output folder.'
+    Set-Tip $gridExperimentQuality 'Evidence quality score shows whether there is enough signal to run clean experiments.'
+    Set-Tip $gridExperimentPlan 'One-variable test plan: change one thing, keep the rest constant, and compare the fingerprint.'
+    Set-Tip $gridExperimentJournal 'Logged crash/stable attempts preserve outcomes, top fingerprint, top cause, quality, and notes.'
+    Set-Tip $numMatrixDays 'Crash Matrix scan window in days.'
+    Set-Tip $btnMatrixRefresh 'Ranks crashing apps, shared signatures, and system-wide instability signals across the selected time window.'
+    Set-Tip $btnMatrixExport 'Exports app leaderboard, shared clusters, system signals, JSON, CSV, and text report artifacts.'
+    Set-Tip $btnMatrixSupport 'Builds a full support package after refreshing the Matrix view.'
+    Set-Tip $btnMatrixOpen 'Opens the CrashMatrix output folder.'
+    Set-Tip $gridMatrixApps 'Ranks all crashing apps by recent event count, top code/module/class, severity, and recommended focus.'
+    Set-Tip $gridMatrixClusters 'Groups shared code/module crash signatures across apps to reveal common root-cause layers.'
+    Set-Tip $gridMatrixSignals 'System-wide signals summarize multi-app spread, memory faults, GPU/TDR evidence, security blocks, recent changes, and tooling gaps.'
+    Set-Tip $txtOpsTarget 'Enter a target executable for CrashOps planning, or use All Apps for system-wide capture strategy.'
+    Set-Tip $numOpsDays 'CrashOps evidence window in days.'
+    Set-Tip $btnOpsRefresh 'Builds readiness, capture plan, decision board, and command queue for the selected target.'
+    Set-Tip $btnOpsAll 'Builds CrashOps strategy for all recent application crashes on this PC.'
+    Set-Tip $btnOpsExport 'Exports CrashOps text, JSON, CSV readiness, CSV plan, CSV decisions, CSV command queue, and CSV tool inventory.'
+    Set-Tip $btnOpsCommands 'Shows the reviewable command queue for dump, WPR, ProcMon, event export, DISM/SFC, DxDiag, and WinDbg workflows.'
+    Set-Tip $btnOpsSupport 'Builds a full support package after refreshing CrashOps.'
+    Set-Tip $btnOpsOpen 'Opens the CrashOpsCenter output folder.'
+    Set-Tip $gridOpsReadiness 'Shows whether evidence, tools, dump readiness, security signals, support package freshness, and journal state are good enough for the next step.'
+    Set-Tip $gridOpsCapturePlan 'Recommended capture modes with trigger, risk, output, admin requirement, and stop condition.'
+    Set-Tip $gridOpsDecisions 'Decision tree that chooses app-specific versus system-wide strategy and decides when to capture stronger evidence.'
+    Set-Tip $gridOpsCommands 'Reviewable commands. The tool generates them, but does not silently run system-level changes.'
     Set-Tip $btnDeepFresh 'Deletes selected FH6 save/cache/settings user-data only after confirmation; it never touches the Steam install folder.'
     Set-Tip $btnFresh 'Deletes save roots only after confirmation; use with Steam Cloud off for a clean local repro.'
     Set-Tip $btnBackup 'Creates a zip backup of selected FH6 user-data roots before any risky operation.'
@@ -5410,6 +6525,9 @@ $tabs.Add_SelectedIndexChanged({
     if ($tabs.SelectedTab -eq $tabCrashScope) { Refresh-CrashScope }
     if ($tabs.SelectedTab -eq $tabCrashIntel) { Refresh-CrashIntel }
     if ($tabs.SelectedTab -eq $tabStability) { Refresh-StabilityWorkbench }
+    if ($tabs.SelectedTab -eq $tabExperiments) { Refresh-ExperimentLab }
+    if ($tabs.SelectedTab -eq $tabMatrix) { Refresh-CrashMatrix }
+    if ($tabs.SelectedTab -eq $tabOps) { Refresh-CrashOpsCenter }
 })
 
 $btnDashRefreshAll.Add_Click({ Refresh-AllViews })
@@ -5461,6 +6579,10 @@ $btnDashCrashWatch.Add_Click({
 $btnDashActionPlan.Add_Click({
     Refresh-GuidedWorkflow
     $tabs.SelectedTab = $tabGuided
+})
+$btnDashOps.Add_Click({
+    Refresh-CrashOpsCenter
+    $tabs.SelectedTab = $tabOps
 })
 
 $btnGuidedRefresh.Add_Click({ Refresh-GuidedWorkflow })
@@ -5781,6 +6903,326 @@ $gridStabilityRunbook.Add_SelectionChanged({
             "Why: $($item.Why)",
             '',
             "Success check: $($item.SuccessCheck)"
+        ) -join [Environment]::NewLine
+    }
+    catch {}
+})
+
+$btnExperimentPlan.Add_Click({ Refresh-ExperimentLab })
+$btnExperimentStart.Add_Click({
+    $target = [string]$txtExperimentTarget.Text
+    if ([string]::IsNullOrWhiteSpace($target)) { $target = $script:Config.ExeName }
+    $row = Add-CrashExperimentJournalEntry -Target $target -Outcome 'Started' -Notes 'Experiment attempt started from GUI. Keep one variable changed and record the result.'
+    Refresh-ExperimentLab
+    $txtExperimentDetail.Text = "Journal entry written:`r`n$($row.Time) [$($row.Outcome)] $($row.Target)`r`n`r`n" + (Get-CrashExperimentLabText -Target $target)
+    Add-Log "Experiment journal entry: Started target=$target"
+})
+$btnExperimentCrash.Add_Click({
+    $target = [string]$txtExperimentTarget.Text
+    if ([string]::IsNullOrWhiteSpace($target)) { $target = $script:Config.ExeName }
+    $row = Add-CrashExperimentJournalEntry -Target $target -Outcome 'Crashed' -Notes 'Crash reproduced after the current experiment step.'
+    Refresh-ExperimentLab
+    $txtExperimentDetail.Text = "Journal entry written:`r`n$($row.Time) [$($row.Outcome)] $($row.Target)`r`nTop fingerprint: $($row.TopFingerprint)`r`n`r`n" + (Get-CrashExperimentLabText -Target $target)
+    Add-Log "Experiment journal entry: Crashed target=$target"
+})
+$btnExperimentStable.Add_Click({
+    $target = [string]$txtExperimentTarget.Text
+    if ([string]::IsNullOrWhiteSpace($target)) { $target = $script:Config.ExeName }
+    $row = Add-CrashExperimentJournalEntry -Target $target -Outcome 'Stable' -Notes 'No crash observed in the current experiment attempt.'
+    Refresh-ExperimentLab
+    $txtExperimentDetail.Text = "Journal entry written:`r`n$($row.Time) [$($row.Outcome)] $($row.Target)`r`n`r`n" + (Get-CrashExperimentLabText -Target $target)
+    Add-Log "Experiment journal entry: Stable target=$target"
+})
+$btnExperimentExport.Add_Click({
+    $target = [string]$script:ExperimentCurrentTarget
+    if ([string]::IsNullOrWhiteSpace($target)) { $target = [string]$txtExperimentTarget.Text }
+    $path = Export-CrashExperimentLab -Target $target
+    $txtExperimentDetail.Text = "Experiment Lab exported:`r`n$path`r`n`r`n" + (Get-CrashExperimentLabText -Target $target)
+    Add-Log "Experiment Lab exported: $path"
+})
+$btnExperimentOpen.Add_Click({ Start-Process -FilePath $script:Config.ExperimentRoot })
+$gridExperimentQuality.Add_SelectionChanged({
+    try {
+        if ($gridExperimentQuality.SelectedRows.Count -eq 0) { return }
+        $item = $gridExperimentQuality.SelectedRows[0].DataBoundItem
+        if (-not $item) { return }
+        $txtExperimentDetail.Text = @(
+            'Evidence Quality Detail',
+            '=======================',
+            "Component: $($item.Component)",
+            "Status: $($item.Status)",
+            "Score: $($item.Score)/$($item.MaxScore)",
+            '',
+            "Evidence: $($item.Evidence)",
+            '',
+            "Next action: $($item.NextAction)"
+        ) -join [Environment]::NewLine
+    }
+    catch {}
+})
+$gridExperimentPlan.Add_SelectionChanged({
+    try {
+        if ($gridExperimentPlan.SelectedRows.Count -eq 0) { return }
+        $item = $gridExperimentPlan.SelectedRows[0].DataBoundItem
+        if (-not $item) { return }
+        $txtExperimentDetail.Text = @(
+            'Experiment Step Detail',
+            '======================',
+            "Step: $($item.Step)",
+            "Phase: $($item.Phase)",
+            "Variable: $($item.Variable)",
+            "Risk: $($item.Risk)",
+            '',
+            "Action: $($item.Action)",
+            '',
+            "Keep constant: $($item.KeepConstant)",
+            '',
+            "Success check: $($item.SuccessCheck)",
+            '',
+            "Evidence: $($item.Evidence)"
+        ) -join [Environment]::NewLine
+    }
+    catch {}
+})
+$gridExperimentJournal.Add_SelectionChanged({
+    try {
+        if ($gridExperimentJournal.SelectedRows.Count -eq 0) { return }
+        $item = $gridExperimentJournal.SelectedRows[0].DataBoundItem
+        if (-not $item) { return }
+        $txtExperimentDetail.Text = @(
+            'Experiment Journal Detail',
+            '=========================',
+            "Time: $($item.Time)",
+            "Target: $($item.Target)",
+            "Outcome: $($item.Outcome)",
+            "Evidence quality: $($item.EvidenceQuality)",
+            '',
+            "Top fingerprint: $($item.TopFingerprint)",
+            "Top cause: $($item.TopCause)",
+            '',
+            "Notes: $($item.Notes)"
+        ) -join [Environment]::NewLine
+    }
+    catch {}
+})
+
+$btnMatrixRefresh.Add_Click({ Refresh-CrashMatrix })
+$btnMatrixExport.Add_Click({
+    $days = [int]$numMatrixDays.Value
+    $path = Export-CrashMatrixReport -Days $days
+    $txtMatrixDetail.Text = "Crash Matrix exported:`r`n$path`r`n`r`n" + (Get-CrashMatrixReportText -Days $days)
+    Add-Log "Crash Matrix exported: $path"
+})
+$btnMatrixSupport.Add_Click({
+    Refresh-CrashMatrix
+    $zip = New-SupportPackage -Log ${function:Add-Log}
+    $txtMatrixDetail.Text = "Support package written:`r`n$zip`r`n`r`n" + (Get-CrashMatrixReportText -Days ([int]$numMatrixDays.Value))
+    [System.Windows.Forms.MessageBox]::Show("Support package written:`n$zip", 'Support package', 'OK', 'Information') | Out-Null
+})
+$btnMatrixOpen.Add_Click({ Start-Process -FilePath $script:Config.MatrixRoot })
+$gridMatrixApps.Add_SelectionChanged({
+    try {
+        if ($gridMatrixApps.SelectedRows.Count -eq 0) { return }
+        $item = $gridMatrixApps.SelectedRows[0].DataBoundItem
+        if (-not $item) { return }
+        $txtMatrixDetail.Text = @(
+            'Crashing App Detail',
+            '===================',
+            "App: $($item.App)",
+            "Count: $($item.Count)",
+            "First seen: $($item.FirstSeen)",
+            "Last seen: $($item.LastSeen)",
+            "Events/day: $($item.EventsPerDay)",
+            "Distinct codes: $($item.DistinctCodes)",
+            "Distinct modules: $($item.DistinctModules)",
+            '',
+            "Top event: $($item.TopEvent)",
+            "Top code: $($item.TopCode)",
+            "Top module: $($item.TopModule)",
+            "Top class: $($item.TopClass)",
+            "Severity: $($item.Severity)",
+            "Focus: $($item.Focus)",
+            '',
+            "Recommendation: $($item.Recommendation)"
+        ) -join [Environment]::NewLine
+    }
+    catch {}
+})
+$gridMatrixClusters.Add_SelectionChanged({
+    try {
+        if ($gridMatrixClusters.SelectedRows.Count -eq 0) { return }
+        $item = $gridMatrixClusters.SelectedRows[0].DataBoundItem
+        if (-not $item) { return }
+        $txtMatrixDetail.Text = @(
+            'Shared Signature Cluster',
+            '========================',
+            "Count: $($item.Count)",
+            "App count: $($item.AppCount)",
+            "Code: $($item.Code)",
+            "Module: $($item.Module)",
+            "Class: $($item.Class)",
+            "Severity: $($item.Severity)",
+            "First seen: $($item.FirstSeen)",
+            "Last seen: $($item.LastSeen)",
+            '',
+            "Top apps: $($item.TopApps)",
+            '',
+            "Interpretation: $($item.Interpretation)",
+            '',
+            "Next action: $($item.NextAction)"
+        ) -join [Environment]::NewLine
+    }
+    catch {}
+})
+$gridMatrixSignals.Add_SelectionChanged({
+    try {
+        if ($gridMatrixSignals.SelectedRows.Count -eq 0) { return }
+        $item = $gridMatrixSignals.SelectedRows[0].DataBoundItem
+        if (-not $item) { return }
+        $txtMatrixDetail.Text = @(
+            'System-Wide Signal Detail',
+            '=========================',
+            "Priority: P$($item.Priority)",
+            "Signal: $($item.Signal)",
+            "Severity: $($item.Severity)",
+            "Score: $($item.Score)",
+            '',
+            "Evidence: $($item.Evidence)",
+            '',
+            "Action: $($item.Action)",
+            '',
+            (Get-CrashMatrixReportText -Days ([int]$numMatrixDays.Value))
+        ) -join [Environment]::NewLine
+    }
+    catch {}
+})
+
+$btnOpsRefresh.Add_Click({ Refresh-CrashOpsCenter })
+$btnOpsAll.Add_Click({ Refresh-CrashOpsCenter -All })
+$btnOpsExport.Add_Click({
+    $target = [string]$script:OpsCurrentTarget
+    if ([string]::IsNullOrWhiteSpace($target)) { $target = [string]$txtOpsTarget.Text }
+    $days = [int]$numOpsDays.Value
+    $path = Export-CrashOpsCenter -Target $target -Days $days
+    $txtOpsDetail.Text = "CrashOps Center exported:`r`n$path`r`n`r`n" + (Get-CrashOpsReportText -Target $target -Days $days)
+    Add-Log "CrashOps Center exported: $path"
+})
+$btnOpsCommands.Add_Click({
+    $target = [string]$txtOpsTarget.Text
+    if ([string]::IsNullOrWhiteSpace($target)) { $target = $script:Config.ExeName }
+    $days = [int]$numOpsDays.Value
+    $text = @(
+        'CrashOps Command Queue',
+        '======================',
+        '',
+        ((Get-CrashOpsCommandRows -Target $target -Days $days | Format-Table Priority, Mode, Admin, Tool, Purpose, Command -Wrap -AutoSize | Out-String).Trim()),
+        '',
+        'Tool Readiness',
+        '==============',
+        ((Get-CrashOpsToolRows | Format-Table Tool, Status, Command, Class, Purpose -Wrap -AutoSize | Out-String).Trim())
+    ) -join [Environment]::NewLine
+    $txtOpsDetail.Text = $text
+    Show-TextWindow -Title 'CrashOps Command Queue' -Text $text
+})
+$btnOpsSupport.Add_Click({
+    Refresh-CrashOpsCenter
+    $target = if ($script:OpsCurrentTarget) { [string]$script:OpsCurrentTarget } else { [string]$txtOpsTarget.Text }
+    $zip = New-SupportPackage -Log ${function:Add-Log}
+    $txtOpsDetail.Text = "Support package written:`r`n$zip`r`n`r`n" + (Get-CrashOpsReportText -Target $target -Days ([int]$numOpsDays.Value))
+    [System.Windows.Forms.MessageBox]::Show("Support package written:`n$zip", 'Support package', 'OK', 'Information') | Out-Null
+})
+$btnOpsOpen.Add_Click({ Start-Process -FilePath $script:Config.OpsRoot })
+$gridOpsReadiness.Add_SelectionChanged({
+    try {
+        if ($gridOpsReadiness.SelectedRows.Count -eq 0) { return }
+        $item = $gridOpsReadiness.SelectedRows[0].DataBoundItem
+        if (-not $item) { return }
+        $txtOpsDetail.Text = @(
+            'Readiness Detail',
+            '================',
+            "Priority: P$($item.Priority)",
+            "Area: $($item.Area)",
+            "Status: $($item.Status)",
+            "Score: $($item.Score)",
+            '',
+            "Evidence: $($item.Evidence)",
+            '',
+            "Next action: $($item.NextAction)",
+            '',
+            (Get-CrashOpsReportText -Target $(if ($script:OpsCurrentTarget) { $script:OpsCurrentTarget } else { $txtOpsTarget.Text }) -Days ([int]$numOpsDays.Value))
+        ) -join [Environment]::NewLine
+    }
+    catch {}
+})
+$gridOpsCapturePlan.Add_SelectionChanged({
+    try {
+        if ($gridOpsCapturePlan.SelectedRows.Count -eq 0) { return }
+        $item = $gridOpsCapturePlan.SelectedRows[0].DataBoundItem
+        if (-not $item) { return }
+        $txtOpsDetail.Text = @(
+            'Capture Plan Detail',
+            '===================',
+            "Priority: P$($item.Priority)",
+            "Mode: $($item.Mode)",
+            "Admin: $($item.Admin)",
+            "Risk: $($item.Risk)",
+            "Tools: $($item.Tools)",
+            '',
+            "Trigger: $($item.Trigger)",
+            '',
+            "Use when: $($item.UseWhen)",
+            '',
+            "Output: $($item.Output)",
+            '',
+            "Stop condition: $($item.StopCondition)"
+        ) -join [Environment]::NewLine
+    }
+    catch {}
+})
+$gridOpsDecisions.Add_SelectionChanged({
+    try {
+        if ($gridOpsDecisions.SelectedRows.Count -eq 0) { return }
+        $item = $gridOpsDecisions.SelectedRows[0].DataBoundItem
+        if (-not $item) { return }
+        $txtOpsDetail.Text = @(
+            'Decision Detail',
+            '===============',
+            "Step: $($item.Step)",
+            "Question: $($item.Question)",
+            "Risk: $($item.Risk)",
+            '',
+            "Current signal: $($item.CurrentSignal)",
+            '',
+            "Decision: $($item.Decision)",
+            '',
+            "Next move: $($item.NextMove)"
+        ) -join [Environment]::NewLine
+    }
+    catch {}
+})
+$gridOpsCommands.Add_SelectionChanged({
+    try {
+        if ($gridOpsCommands.SelectedRows.Count -eq 0) { return }
+        $item = $gridOpsCommands.SelectedRows[0].DataBoundItem
+        if (-not $item) { return }
+        $txtOpsDetail.Text = @(
+            'Command Detail',
+            '==============',
+            "Priority: P$($item.Priority)",
+            "Mode: $($item.Mode)",
+            "Tool: $($item.Tool)",
+            "Admin: $($item.Admin)",
+            '',
+            "Purpose: $($item.Purpose)",
+            '',
+            'Command:',
+            $item.Command,
+            '',
+            "Expected output: $($item.ExpectedOutput)",
+            '',
+            "Cleanup: $($item.Cleanup)",
+            '',
+            'Review first. Ops Center does not run these commands automatically.'
         ) -join [Environment]::NewLine
     }
     catch {}

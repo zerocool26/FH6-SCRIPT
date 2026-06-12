@@ -1,0 +1,6 @@
+"Priority","Signal","Severity","Score","Evidence","Action"
+"1","Multi-app crash spread","High","80","26 distinct crashing app(s) in 30 day(s).","Treat this as system-wide until proven otherwise: compare GPU/TDR, drivers, runtimes, security, storage, memory, and Windows health before app-specific fixes."
+"1","Repeated memory-fault signatures","High","75","50x 0xc0000005 module=DAX3API.exe, app spread=1.","Prioritize overlay/hook isolation, runtime repair, clean boot, and dump capture before repeating data wipes."
+"1","GPU/device instability path","High","70","12 GPU/TDR/system graphics row(s); 2 GPU/DXGI cluster(s).","Use DxDiag/WPR, disable capture overlays, verify power/thermal state, and test a clean GPU driver path."
+"3","Recent driver/update correlation","Medium","32","3 recent driver/update change(s) near latest crash.","Isolate one update/driver variable at a time; avoid stacking fixes in one test."
+"4","Advanced tooling gap","Info","15","ProcDump, WinDbg","Install/use missing Microsoft tools only if escalation evidence is needed."

@@ -1,0 +1,161 @@
+{
+  "GeneratedAt": "2026-06-09T06:04:16.3232581-05:00",
+  "Target": "forzahorizon6.exe",
+  "Quality": [
+    {
+      "Component": "Crash events",
+      "Status": "OK",
+      "Score": 20,
+      "MaxScore": 20,
+      "Evidence": "28 event row(s)",
+      "NextAction": "Reproduce once, then run Stability Analyze."
+    },
+    {
+      "Component": "Fingerprint repeatability",
+      "Status": "OK",
+      "Score": 15,
+      "MaxScore": 15,
+      "Evidence": "16x c0000005 module=StackHash_2264",
+      "NextAction": "Use the same launch path and compare whether the top fingerprint changes."
+    },
+    {
+      "Component": "WER reports",
+      "Status": "OK",
+      "Score": 10,
+      "MaxScore": 10,
+      "Evidence": "9 WER folder(s)",
+      "NextAction": "Export support package before WER evidence ages out."
+    },
+    {
+      "Component": "Dump readiness",
+      "Status": "OK",
+      "Score": 15,
+      "MaxScore": 15,
+      "Evidence": "HKLM/<all apps>",
+      "NextAction": "Use generated LocalDumps/ProcDump commands only when stronger evidence is needed."
+    },
+    {
+      "Component": "Tool readiness",
+      "Status": "OK",
+      "Score": 8,
+      "MaxScore": 10,
+      "Evidence": "4/6 evidence tools available",
+      "NextAction": "Install/use Microsoft tools only as needed: DxDiag, WPR, ProcDump, WinDbg, SFC, DISM."
+    },
+    {
+      "Component": "Stability timeline",
+      "Status": "OK",
+      "Score": 10,
+      "MaxScore": 10,
+      "Evidence": "130 unified timeline row(s)",
+      "NextAction": "Use Stability tab to correlate crash, GPU, security, and change lanes."
+    },
+    {
+      "Component": "Post-crash package",
+      "Status": "Gap",
+      "Score": 0,
+      "MaxScore": 10,
+      "Evidence": "No support package newer than the latest crash anchor.",
+      "NextAction": "Build Support Zip immediately after the next crash."
+    },
+    {
+      "Component": "Experiment journal",
+      "Status": "Info",
+      "Score": 0,
+      "MaxScore": 10,
+      "Evidence": "0 logged attempt(s)",
+      "NextAction": "Log each changed variable and result so repeated tests become useful evidence."
+    },
+    {
+      "Component": "Overall",
+      "Status": "Strong",
+      "Score": 78,
+      "MaxScore": 100,
+      "Evidence": "78% evidence quality",
+      "NextAction": "Proceed with one-variable experiments."
+    }
+  ],
+  "Plan": [
+    {
+      "Step": 1,
+      "Phase": "Baseline",
+      "Variable": "Evidence",
+      "Action": "Export Stability Workbench, run Support Zip, and note the exact crash fingerprint before changing anything.",
+      "KeepConstant": "Same target, same launch path, same graphics settings, same account.",
+      "SuccessCheck": "Baseline has crash event, fingerprint, timeline, and package artifacts.",
+      "Evidence": "78% evidence quality",
+      "Risk": "Low"
+    },
+    {
+      "Step": 2,
+      "Phase": "Repro",
+      "Variable": "Control run",
+      "Action": "Launch once with no new fixes to confirm the crash still reproduces.",
+      "KeepConstant": "Do not change drivers, overlays, saves, config, or launch options between baseline and control.",
+      "SuccessCheck": "Same fingerprint repeats, or the app stays stable and journal records that surprise result.",
+      "Evidence": "16x c0000005 module=StackHash_2264",
+      "Risk": "Low"
+    },
+    {
+      "Step": 3,
+      "Phase": "Isolation",
+      "Variable": "Overlay/capture",
+      "Action": "Stop overlay, capture, tuning, input-hook, and performance-monitor tools for exactly one test.",
+      "KeepConstant": "Leave save data, driver, Windows settings, and launch path unchanged.",
+      "SuccessCheck": "Fingerprint disappears or changes when overlay/capture stack is absent.",
+      "Evidence": "PresentMonService; App capture=1; GameDVR enabled=1",
+      "Risk": "Low"
+    },
+    {
+      "Step": 4,
+      "Phase": "Isolation",
+      "Variable": "GPU path",
+      "Action": "Test a clean graphics path: no capture overlay, stable power mode, then clean-install/update GPU driver only if evidence still points there.",
+      "KeepConstant": "Do not wipe saves or change runtimes during the GPU-path test.",
+      "SuccessCheck": "GPU/TDR rows stop appearing near crashes, or crash code/module changes.",
+      "Evidence": "11 GPU/System display event(s) in 30 days",
+      "Risk": "Medium"
+    },
+    {
+      "Step": 5,
+      "Phase": "Repair",
+      "Variable": "Runtime/dependency",
+      "Action": "Repair VC++/.NET/DirectX/media prerequisites, then run one launch with all other variables frozen.",
+      "KeepConstant": "Do not change GPU driver, saves, or overlays in the same attempt.",
+      "SuccessCheck": "Access-violation/dependency fingerprint clears or changes.",
+      "Evidence": "16x Access violation c0000005 module=StackHash_2264; 8x Access violation 0xc0000005 module=unknown",
+      "Risk": "Low"
+    },
+    {
+      "Step": 6,
+      "Phase": "Isolation",
+      "Variable": "FH6 user data",
+      "Action": "With Steam Cloud off and backups present, run Deep Fresh for local save/cache/settings only.",
+      "KeepConstant": "Keep overlays, driver, runtimes, and launch path unchanged for this test.",
+      "SuccessCheck": "Fresh local data is recreated and the crash either clears or repeats with the same fingerprint.",
+      "Evidence": "FH6 target detected.",
+      "Risk": "Medium"
+    },
+    {
+      "Step": 7,
+      "Phase": "System isolation",
+      "Variable": "Clean boot",
+      "Action": "Use a Microsoft clean-boot style isolation only after simpler one-variable tests are logged.",
+      "KeepConstant": "Re-enable services/startup items in groups so the journal can identify the culprit.",
+      "SuccessCheck": "Crash reproduces only when a specific service/startup group returns, or remains stable in clean boot.",
+      "Evidence": "Used when no visible conflict process explains the crash.",
+      "Risk": "Medium"
+    },
+    {
+      "Step": 8,
+      "Phase": "Escalation",
+      "Variable": "Developer-grade evidence",
+      "Action": "If the same fingerprint survives controlled tests, collect dump/WPR/ProcMon-style evidence and export a full package.",
+      "KeepConstant": "Keep the repro short and targeted; do not leave heavy tracing enabled.",
+      "SuccessCheck": "Support package contains dump/config/timeline/runbook/journal evidence tied to one fingerprint.",
+      "Evidence": "Stable fingerprint after controlled experiments.",
+      "Risk": "Medium"
+    }
+  ],
+  "Journal": []
+}

@@ -1,7 +1,7 @@
 ﻿{
     "ToolName":  "FH6 Companion Doctor",
-    "Version":  "5.2",
-    "GeneratedAt":  "2026-06-09T01:36:48.8831707-05:00",
+    "Version":  "5.5",
+    "GeneratedAt":  "2026-06-09T17:56:25.5648951-05:00",
     "SafetyBoundary":  [
                            "No game install modification",
                            "No forzahorizon6.exe modification",
@@ -18,15 +18,18 @@
                     "Telemetry":  "C:\\Users\\boss\\Downloads\\FH6TOOLBELT\\CompanionDoctorData\\FH6_CompanionDoctor_Telemetry",
                     "Snapshots":  "C:\\Users\\boss\\Downloads\\FH6TOOLBELT\\CompanionDoctorData\\FH6_CompanionDoctor_Snapshots",
                     "Sessions":  "C:\\Users\\boss\\Downloads\\FH6TOOLBELT\\CompanionDoctorData\\FH6_CompanionDoctor_Sessions",
-                    "Bundles":  "C:\\Users\\boss\\Downloads\\FH6TOOLBELT\\CompanionDoctorData\\FH6_CompanionDoctor_PortableBundles"
+                    "Bundles":  "C:\\Users\\boss\\Downloads\\FH6TOOLBELT\\CompanionDoctorData\\FH6_CompanionDoctor_PortableBundles",
+                    "Experiments":  "C:\\Users\\boss\\Downloads\\FH6TOOLBELT\\CompanionDoctorData\\CrashExperimentLab",
+                    "Matrix":  "C:\\Users\\boss\\Downloads\\FH6TOOLBELT\\CompanionDoctorData\\CrashMatrix",
+                    "Ops":  "C:\\Users\\boss\\Downloads\\FH6TOOLBELT\\CompanionDoctorData\\CrashOpsCenter"
                 },
     "Files":  [
                   {
                       "Name":  "FH6-CompanionDoctor.ps1",
                       "Path":  "C:\\Users\\boss\\Downloads\\FH6TOOLBELT\\Tools\\FH6-CompanionDoctor.ps1",
-                      "Length":  321155,
-                      "LastWriteTime":  "\/Date(1780986732494)\/",
-                      "SHA256":  "3BB5834BDFEFB4CEF2F5EE841AC9D061B43DC899CFC400F53B0887939F7C5864"
+                      "Length":  417068,
+                      "LastWriteTime":  "\/Date(1781045513085)\/",
+                      "SHA256":  "9EE74EB37E475927376C47A368244F1C92C552B241D33930E828C2047AD8F263"
                   },
                   {
                       "Name":  "Run-FH6-CompanionDoctor.cmd",
@@ -38,9 +41,9 @@
                   {
                       "Name":  "FH6-CompanionDoctor-README.txt",
                       "Path":  "C:\\Users\\boss\\Downloads\\FH6TOOLBELT\\Tools\\FH6-CompanionDoctor-README.txt",
-                      "Length":  13630,
-                      "LastWriteTime":  "\/Date(1780986934924)\/",
-                      "SHA256":  "F29FDC325E2FFFDC14FF3B0295026D82F340B8F0ADA80B24A4C26BF278ABF22E"
+                      "Length":  18738,
+                      "LastWriteTime":  "\/Date(1781045716551)\/",
+                      "SHA256":  "EF727DFD35AC81EDA1B66CE2183099279EC294107A025D90965EDFDF330BA93B"
                   },
                   {
                       "Name":  "FH6-SaveDoctor.ps1",
@@ -111,6 +114,16 @@
                                    "Why":  "Official per-application dump configuration used by CrashScope command playbooks."
                                },
                                {
+                                   "Area":  "User-mode dump files",
+                                   "Url":  "https://learn.microsoft.com/en-us/windows-hardware/drivers/debugger/user-mode-dump-files",
+                                   "Why":  "Microsoft debugger reference explaining why user-mode dumps are useful for resolving application crashes."
+                               },
+                               {
+                                   "Area":  "Analyze user-mode dumps",
+                                   "Url":  "https://learn.microsoft.com/en-us/windows-hardware/drivers/debugger/analyzing-a-user-mode-dump-file",
+                                   "Why":  "Official WinDbg/CDB workflow for analyzing captured user-mode dump files."
+                               },
+                               {
                                    "Area":  "Sysinternals ProcDump",
                                    "Url":  "https://learn.microsoft.com/en-us/sysinternals/downloads/procdump",
                                    "Why":  "Microsoft Sysinternals utility for crash/hang dump capture when Event Viewer evidence is not enough."
@@ -121,9 +134,19 @@
                                    "Why":  "Official ETW recording workflow for system, driver, GPU, performance, and timing context."
                                },
                                {
+                                   "Area":  "WPR command-line options",
+                                   "Url":  "https://learn.microsoft.com/en-us/windows-hardware/test/wpt/wpr-command-line-options",
+                                   "Why":  "Official command-line reference for start/stop/status/profile WPR capture workflows used by Ops Center."
+                               },
+                               {
                                    "Area":  "Event Tracing for Windows",
                                    "Url":  "https://learn.microsoft.com/en-us/windows-hardware/test/wpt/event-tracing-for-windows",
                                    "Why":  "Core Windows tracing layer used by WPR/WPA for advanced system diagnosis."
+                               },
+                               {
+                                   "Area":  "Install WinDbg",
+                                   "Url":  "https://learn.microsoft.com/en-us/windows-hardware/drivers/debugger/",
+                                   "Why":  "Official debugger installation reference for dump analysis escalation."
                                },
                                {
                                    "Area":  "DirectX Diagnostic Tool",
@@ -134,6 +157,36 @@
                                    "Area":  "System File Checker",
                                    "Url":  "https://support.microsoft.com/en-us/windows/using-system-file-checker-in-windows-365e0031-36b1-6031-f804-8fd86e0ef4ca",
                                    "Why":  "Microsoft guidance for DISM/SFC repair flow when crashes affect multiple unrelated games or apps."
+                               },
+                               {
+                                   "Area":  "Repair a Windows image",
+                                   "Url":  "https://learn.microsoft.com/en-us/windows-hardware/manufacture/desktop/repair-a-windows-image?view=windows-11",
+                                   "Why":  "Official DISM repair reference for system-wide Windows component health checks."
+                               },
+                               {
+                                   "Area":  "Clean boot",
+                                   "Url":  "https://support.microsoft.com/en-us/help/929135/how-to-perform-a-clean-boot-in-windows",
+                                   "Why":  "Microsoft clean boot guidance used by Experiment Lab when isolating background service/startup interference."
+                               },
+                               {
+                                   "Area":  "Process Monitor",
+                                   "Url":  "https://learn.microsoft.com/en-us/sysinternals/downloads/procmon",
+                                   "Why":  "Sysinternals Process Monitor is an advanced file/registry/process tracing option for targeted escalation evidence."
+                               },
+                               {
+                                   "Area":  "Sysinternals Suite",
+                                   "Url":  "https://learn.microsoft.com/en-us/sysinternals/downloads/sysinternals-suite",
+                                   "Why":  "Official bundle containing ProcDump, Process Monitor, Process Explorer, RAMMap, TCPView, and other troubleshooting utilities."
+                               },
+                               {
+                                   "Area":  "TroubleShootingScript Toolset",
+                                   "Url":  "https://learn.microsoft.com/en-us/troubleshoot/windows-client/windows-tss/introduction-to-troubleshootingscript-toolset-tss",
+                                   "Why":  "Microsoft support-oriented data collection model that inspired the CrashOps evidence packaging approach."
+                               },
+                               {
+                                   "Area":  "Windows Memory Diagnostic",
+                                   "Url":  "https://www.microsoft.com/en-us/surface/do-more-with-surface/how-to-use-windows-memory-diagnostic",
+                                   "Why":  "RAM diagnostics concept for persistent access-violation/system-instability patterns after software causes are isolated."
                                },
                                {
                                    "Area":  "Game Bar known issues",
@@ -159,6 +212,11 @@
                                    "Area":  "Windows GPU TDR",
                                    "Url":  "https://learn.microsoft.com/en-us/windows-hardware/drivers/display/timeout-detection-and-recovery",
                                    "Why":  "Microsoft WDDM Timeout Detection and Recovery reference for GPU hangs, resets, and device-removed style crash patterns."
+                               },
+                               {
+                                   "Area":  "Kernel-Power Event ID 41",
+                                   "Url":  "https://learn.microsoft.com/en-us/troubleshoot/windows-client/performance/event-id-41-restart",
+                                   "Why":  "Microsoft guidance for unexpected restart/power-loss correlation when app crashes overlap with system instability."
                                },
                                {
                                    "Area":  "Reliability Monitor records",

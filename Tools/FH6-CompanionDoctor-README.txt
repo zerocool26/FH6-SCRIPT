@@ -1,4 +1,4 @@
-FH6 Companion Doctor v5.2
+FH6 Companion Doctor v5.5
 =======================
 
 Files:
@@ -27,7 +27,7 @@ Tabs:
     count, latest crash pattern, save/cache footprint, telemetry state, ranked
     expert recommendations, recent evidence timeline, and quick actions for
     refresh, runbook, Deep Fresh, tracked launch, support package, telemetry
-    check, Steam Cloud steps, Crash Watch, action plan, and reports.
+    check, Steam Cloud steps, Crash Watch, action plan, Ops Center, and reports.
 
   Guided Fix:
     Converts current evidence into a prioritized workflow. It can export the
@@ -56,6 +56,26 @@ Tabs:
     recent system changes, FH6 local reports, and user-data timestamps. It also
     creates evidence insights and a step-by-step runbook with risk and success
     checks.
+
+  Experiments:
+    Controlled crash-fix experiment lab. It scores evidence quality, generates
+    a one-variable-at-a-time test plan, logs Started/Crashed/Stable attempts,
+    and exports quality/plan/journal artifacts so every fix attempt is tied to
+    a fingerprint, evidence score, and outcome.
+
+  Matrix:
+    Universal crash matrix for the whole PC. It ranks all crashing apps, groups
+    shared code/module signature clusters, and surfaces system-wide signals such
+    as multi-app spread, repeated memory-fault signatures, GPU/TDR evidence,
+    security enforcement blocks, recent driver/update correlation, dump evidence
+    gaps, and advanced-tooling gaps.
+
+  Ops Center:
+    Crash operations workbench for deciding what evidence to capture next. It
+    scores readiness, generates a capture plan, builds a decision board, checks
+    advanced tool availability, and produces reviewable commands for snapshots,
+    DxDiag, WER LocalDumps, ProcDump, WPR, ProcMon, event-log export, DISM/SFC,
+    and WinDbg. It does not run system-level commands automatically.
 
   Health:
     Checks Gaming Services, Steam install path length, Steam manifest, Windows,
@@ -87,7 +107,8 @@ Tabs:
   Reports:
     Exports a detailed text report or a support package zip including DxDiag,
     health data, inventory, crash events, crash report metadata, device data,
-    Stability workbench artifacts, and tool logs.
+    Stability workbench artifacts, Experiment Lab artifacts, Crash Matrix
+    artifacts, CrashOps artifacts, and tool logs.
 
 Project-contained folder layout:
   FH6TOOLBELT\Tools
@@ -100,6 +121,9 @@ Project-contained folder layout:
   FH6TOOLBELT\CompanionDoctorData\FH6_CompanionDoctor_Sessions
   FH6TOOLBELT\CompanionDoctorData\FH6_CompanionDoctor_PortableBundles
   FH6TOOLBELT\CompanionDoctorData\CrashScope_Universal
+  FH6TOOLBELT\CompanionDoctorData\CrashExperimentLab
+  FH6TOOLBELT\CompanionDoctorData\CrashMatrix
+  FH6TOOLBELT\CompanionDoctorData\CrashOpsCenter
 
 Persistent settings:
   FH6_CompanionDoctor_Settings.json
@@ -254,6 +278,65 @@ v5.2 Stability Workbench additions:
     Access behavior, and GFlags/PageHeap documentation. Advanced instrumentation
     is documented but not silently enabled.
 
+v5.3 Experiment Lab additions:
+  - Experiments tab adds evidence-quality scoring for crash events, fingerprints,
+    WER reports, dump readiness, tool readiness, unified timeline quality,
+    post-crash package freshness, and attempt journal coverage.
+  - One-variable experiment plan turns current crash intelligence into controlled
+    tests with action, keep-constant, success-check, evidence, and risk fields.
+  - Attempt Journal logs Started, Crashed, and Stable outcomes with target,
+    top fingerprint, top cause, evidence quality, and notes.
+  - Experiment Lab exports write text, JSON, CSV quality, CSV plan, and CSV
+    journal artifacts into FH6TOOLBELT\CompanionDoctorData\CrashExperimentLab.
+  - Reports, support packages, snapshots, self-test, and no-GUI universal output
+    now include Experiment Lab artifacts.
+  - Official references now include Microsoft clean boot guidance, Process
+    Monitor, Sysinternals Suite, and Windows Memory Diagnostic.
+
+v5.4 Crash Matrix additions:
+  - Matrix tab ranks all crashing apps in the selected time window by count,
+    top code/module/class, severity, focus, and recommendation.
+  - Shared Signature Clusters group code/module patterns across apps so common
+    GPU, runtime, dependency, and memory-fault layers are easier to see.
+  - System-Wide Signals score multi-app spread, repeated memory faults,
+    GPU/device instability, Defender security blocks, recent driver/update
+    correlation, dump evidence gaps, and advanced-tooling gaps.
+  - Matrix exports write text, JSON, CSV app leaderboard, CSV clusters, and CSV
+    signals into FH6TOOLBELT\CompanionDoctorData\CrashMatrix.
+  - Reports, support packages, state snapshots, self-test, and no-GUI universal
+    output now include Crash Matrix artifacts.
+  - Official references now include Microsoft Kernel-Power Event ID 41 guidance
+    for unexpected-restart/power-loss correlation.
+
+v5.5 CrashOps Center additions:
+  - Ops Center tab turns crash triage into an evidence operations workflow:
+    readiness score, capture plan, decision board, command queue, and tool
+    readiness in one view.
+  - Readiness scoring checks crash evidence, fingerprint strength, evidence
+    quality, dump readiness, Microsoft/Sysinternals tool coverage, Matrix
+    system-wide signals, security enforcement events, support-package freshness,
+    and experiment journal coverage.
+  - Capture Plan recommends the right next evidence mode: baseline support
+    package, fingerprint control run, per-target user-mode dump, short WPR
+    trace, Process Monitor launch trace, DISM/SFC health evidence, clean boot,
+    or one-variable experiment.
+  - Decision Board explains whether to treat the issue as FH6-specific or
+    system-wide, when to capture dumps/traces, when to isolate overlays/clean
+    boot, and when the package is strong enough for escalation.
+  - Command Queue generates reviewable commands for snapshot, DxDiag, WER
+    LocalDumps, ProcDump crash/hang capture, WPR start/stop, Process Monitor,
+    wevtutil event export, DISM, SFC, and WinDbg. The tool does not silently run
+    these commands.
+  - CrashOps exports write text, JSON, CSV readiness, CSV capture plan, CSV
+    decisions, CSV command queue, and CSV tool inventory into
+    FH6TOOLBELT\CompanionDoctorData\CrashOpsCenter.
+  - Dashboard gets an Ops Center quick-action button, and reports, support
+    packages, state snapshots, self-test, manifest, and no-GUI universal output
+    include CrashOps artifacts.
+  - Official references now include WPR command-line options, WinDbg install and
+    user-mode dump analysis, Windows image repair, and Microsoft TSS-style
+    diagnostic collection guidance.
+
 Important Steam Cloud note:
   Turn off Steam Cloud for Forza Horizon 6 before deleting local saves, or Steam
   may restore the same cloud data on the next launch.
@@ -266,3 +349,5 @@ Good crash-test flow:
   5. Launch > Preflight.
   6. Launch FH6.
   7. If it crashes, Reports > Build Support Package.
+  8. Ops Center > Refresh, then follow the lowest-risk capture plan before
+     enabling heavier dump/WPR/ProcMon evidence.

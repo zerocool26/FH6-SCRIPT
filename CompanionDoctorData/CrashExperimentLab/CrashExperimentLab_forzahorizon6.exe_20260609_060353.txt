@@ -1,0 +1,69 @@
+Crash Experiment Lab
+====================
+Target: forzahorizon6.exe
+Generated: 06/09/2026 06:04:16
+
+Evidence quality:
+  [OK] Crash events: 20/20
+    Evidence: 28 event row(s)
+    Next: Reproduce once, then run Stability Analyze.
+  [OK] Fingerprint repeatability: 15/15
+    Evidence: 16x c0000005 module=StackHash_2264
+    Next: Use the same launch path and compare whether the top fingerprint changes.
+  [OK] WER reports: 10/10
+    Evidence: 9 WER folder(s)
+    Next: Export support package before WER evidence ages out.
+  [OK] Dump readiness: 15/15
+    Evidence: HKLM/<all apps>
+    Next: Use generated LocalDumps/ProcDump commands only when stronger evidence is needed.
+  [OK] Tool readiness: 8/10
+    Evidence: 4/6 evidence tools available
+    Next: Install/use Microsoft tools only as needed: DxDiag, WPR, ProcDump, WinDbg, SFC, DISM.
+  [OK] Stability timeline: 10/10
+    Evidence: 130 unified timeline row(s)
+    Next: Use Stability tab to correlate crash, GPU, security, and change lanes.
+  [Gap] Post-crash package: 0/10
+    Evidence: No support package newer than the latest crash anchor.
+    Next: Build Support Zip immediately after the next crash.
+  [Info] Experiment journal: 0/10
+    Evidence: 0 logged attempt(s)
+    Next: Log each changed variable and result so repeated tests become useful evidence.
+  [Strong] Overall: 78/100
+    Evidence: 78% evidence quality
+    Next: Proceed with one-variable experiments.
+
+Experiment plan:
+  1. Baseline / Evidence [risk=Low]
+     Action: Export Stability Workbench, run Support Zip, and note the exact crash fingerprint before changing anything.
+     Keep constant: Same target, same launch path, same graphics settings, same account.
+     Success check: Baseline has crash event, fingerprint, timeline, and package artifacts.
+  2. Repro / Control run [risk=Low]
+     Action: Launch once with no new fixes to confirm the crash still reproduces.
+     Keep constant: Do not change drivers, overlays, saves, config, or launch options between baseline and control.
+     Success check: Same fingerprint repeats, or the app stays stable and journal records that surprise result.
+  3. Isolation / Overlay/capture [risk=Low]
+     Action: Stop overlay, capture, tuning, input-hook, and performance-monitor tools for exactly one test.
+     Keep constant: Leave save data, driver, Windows settings, and launch path unchanged.
+     Success check: Fingerprint disappears or changes when overlay/capture stack is absent.
+  4. Isolation / GPU path [risk=Medium]
+     Action: Test a clean graphics path: no capture overlay, stable power mode, then clean-install/update GPU driver only if evidence still points there.
+     Keep constant: Do not wipe saves or change runtimes during the GPU-path test.
+     Success check: GPU/TDR rows stop appearing near crashes, or crash code/module changes.
+  5. Repair / Runtime/dependency [risk=Low]
+     Action: Repair VC++/.NET/DirectX/media prerequisites, then run one launch with all other variables frozen.
+     Keep constant: Do not change GPU driver, saves, or overlays in the same attempt.
+     Success check: Access-violation/dependency fingerprint clears or changes.
+  6. Isolation / FH6 user data [risk=Medium]
+     Action: With Steam Cloud off and backups present, run Deep Fresh for local save/cache/settings only.
+     Keep constant: Keep overlays, driver, runtimes, and launch path unchanged for this test.
+     Success check: Fresh local data is recreated and the crash either clears or repeats with the same fingerprint.
+  7. System isolation / Clean boot [risk=Medium]
+     Action: Use a Microsoft clean-boot style isolation only after simpler one-variable tests are logged.
+     Keep constant: Re-enable services/startup items in groups so the journal can identify the culprit.
+     Success check: Crash reproduces only when a specific service/startup group returns, or remains stable in clean boot.
+  8. Escalation / Developer-grade evidence [risk=Medium]
+     Action: If the same fingerprint survives controlled tests, collect dump/WPR/ProcMon-style evidence and export a full package.
+     Keep constant: Keep the repro short and targeted; do not leave heavy tracing enabled.
+     Success check: Support package contains dump/config/timeline/runbook/journal evidence tied to one fingerprint.
+
+Recent journal:
